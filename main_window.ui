@@ -1,0 +1,4631 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1598</width>
+    <height>924</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>QDLC Generator</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget {background-color: #F3F4F8;}
+
+QPushButton {background-color: #88282A3A;  color: #FFFFFF; border-radius: 8px;  font-weight: bold; font-size: 16px; }
+QPushButton::hover {background-color: qlineargradient( x1:0 y1:0, x2:0 y2:1, stop:0.9 #D2D4DA, stop:0.91 #88282A3A);}
+QPushButton[objectName^=&quot;button_next_tab&quot;] {background-color: qlineargradient( x1:0 y1:0, x2:0 y2:1, stop:0.9 #f4501e, stop:0.91 #8d2f13);  color: #FFFFFF; border-radius: 8px; }
+QPushButton[objectName^=&quot;button_next_tab&quot;]::hover {background-color: #aaf4501e;}
+
+QTextEdit {background-color: #D2D4DA;}
+QTextEdit::hover {background-color: #D2D4DA}
+
+QLabel {background-color: #282A3A; border-radius: 8px; color: #FFFFFF;}
+QLabel[objectName^=&quot;label_title&quot;] {background-color: #44282A3A; border-radius: 8px; color: #000000; border-bottom-right-radius: 0; border-bottom-left-radius: 0; border-bottom-width: 2px; border-bottom-color: #000000;}
+QLabel[objectName^=&quot;label_output&quot;] {background-color: #44282A3A; border-radius: 8px; color: #000000; border-top-right-radius: 0; border-top-left-radius: 0; }
+QLabel[objectName^=&quot;label_plot&quot;] {background-color: #44282A3A; border-radius: 8px; color: #000000;  border-top-right-radius: 0; border-top-left-radius: 0; }
+
+QLineEdit {border-radius: 8px;background-color: #D2D4DA; }
+QLineEdit::hover {background-color: #D2D4DA}
+
+QComboBox {border-radius: 8px; background-color: #D2D4DA;  padding-left: 10% }
+QComboBox::hover {background-color: #D2D4DA}
+
+QCheckBox {background-color: #D2D4DA;border-radius: 8px; padding-left:10% }
+QCheckBox::hover {background-color: #D2D4DA}
+
+QTextBrowser {background-color: #D2D4DA; }
+QTextBrowser[objectName^=&quot;text_output&quot;] {background-color: #44282A3A; border-radius: 8px; color: #000000; }
+
+QTabWidget::tab-bar {   border: 0px solid #282A3A;}
+QTabBar::tab {  background-color: #88282A3A;  color: white;  padding-left: 10px; padding-right:10px; padding-bottom: 10px; padding-top: 5px; font-weight: bold;}
+QTabBar::tab:selected { background-color: qlineargradient( x1:0 y1:0, x2:0 y2:1, stop:0.9 #282A3A, stop:0.91 #88282A3A); padding-right:50px; padding-left:50px; border-width: 2px; border-color: black}
+
+QListView::item {background:#D2D4DA; border-right-width:3px; border-color: #282A3A; padding: 20%;}
+QListView::item:selected:!active {background:#D2D4DA; border-right-width:3px; border-color: #aaf4501e;}
+QListView::item:selected:active {background: #88282A3A; border-right-width:3px; border-color: #aaf4501e;}
+QListView::item:hover {background: #D2D4DA; }
+QComboBox::down-arrow {background-color: #88282A3A; min-height: 40px; border-top-right-radius:10px; border-bottom-right-radius: 10px;}
+QComboBox::drop-down {border: 0px;}
+
+QScrollBar::handle:vertical {background-color: #282A3A; min-height: 30px;max-height: 20%;border-radius: 7px; margin: 0}
+QScrollBar::handle:vertical:hover{background-color: #88282A3A;}
+QScrollBar::handle:vertical:pressed {background-color: #f4501e;}
+QScrollBar::sub-line:vertical {border: none;background-color: #f4501e;height: 15px;border-top-left-radius: 7px;border-top-right-radius: 7px;subcontrol-position: top;subcontrol-origin: 0;max-height: 20%;}
+QScrollBar::sub-line:vertical:hover {background-color: #88282A3A;}
+QScrollBar::sub-line:vertical:pressed {background-color: #f4501e;}
+QScrollBar::add-line:vertical {border: none;background-color: #f4501e;height: 15px;border-bottom-left-radius: 7px;border-bottom-right-radius: 7px;subcontrol-position: bottom;subcontrol-origin: 0;max-height: 20%;}
+QScrollBar::add-line:vertical:hover {background-color: #88282A3A;}
+QScrollBar::add-line:vertical:pressed {background-color: #f4501e;}
+QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {background: none;}
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: none;}</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QTabWidget" name="tabWidget">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1600</width>
+      <height>900</height>
+     </rect>
+    </property>
+    <property name="tabShape">
+     <enum>QTabWidget::Rounded</enum>
+    </property>
+    <property name="currentIndex">
+     <number>1</number>
+    </property>
+    <widget class="QWidget" name="tab">
+     <property name="toolTip">
+      <string/>
+     </property>
+     <attribute name="title">
+      <string>System</string>
+     </attribute>
+     <widget class="QLabel" name="label_title_qdsystem">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>15</y>
+        <width>1561</width>
+        <height>50</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::NoFrame</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Plain</enum>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:700;&quot;&gt;QD System&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="button_add_electronic_state">
+      <property name="geometry">
+       <rect>
+        <x>1460</x>
+        <y>125</y>
+        <width>120</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>State</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_5">
+      <property name="geometry">
+       <rect>
+        <x>1460</x>
+        <y>75</y>
+        <width>120</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Add...&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="button_add_cavity">
+      <property name="geometry">
+       <rect>
+        <x>1460</x>
+        <y>175</y>
+        <width>120</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Cavity</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_6">
+      <property name="geometry">
+       <rect>
+        <x>1460</x>
+        <y>345</y>
+        <width>120</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Editing&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="button_add_optical_pulse">
+      <property name="geometry">
+       <rect>
+        <x>1460</x>
+        <y>225</y>
+        <width>120</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Pulse</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="button_add_electronic_shift">
+      <property name="geometry">
+       <rect>
+        <x>1460</x>
+        <y>275</y>
+        <width>120</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="mouseTracking">
+       <bool>true</bool>
+      </property>
+      <property name="text">
+       <string>Chirp</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="button_next_tab_system_to_config">
+      <property name="geometry">
+       <rect>
+        <x>1460</x>
+        <y>775</y>
+        <width>120</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Next</string>
+      </property>
+      <property name="checkable">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="button_modify_delete">
+      <property name="geometry">
+       <rect>
+        <x>1460</x>
+        <y>395</y>
+        <width>120</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Delete</string>
+      </property>
+      <property name="flat">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="button_modify_clear">
+      <property name="geometry">
+       <rect>
+        <x>1460</x>
+        <y>445</y>
+        <width>120</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Clear</string>
+      </property>
+      <property name="flat">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="button_input_system_redraw">
+      <property name="geometry">
+       <rect>
+        <x>1460</x>
+        <y>725</y>
+        <width>120</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>-1</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Redraw</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_output_system">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>75</y>
+        <width>1431</width>
+        <height>741</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::NoFrame</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Plain</enum>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="input_draw_details">
+      <property name="geometry">
+       <rect>
+        <x>1460</x>
+        <y>675</y>
+        <width>121</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="statusTip">
+       <string/>
+      </property>
+      <property name="text">
+       <string>Details</string>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_2">
+     <attribute name="title">
+      <string>Configuration</string>
+     </attribute>
+     <widget class="QLabel" name="label_title_time">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>15</y>
+        <width>1561</width>
+        <height>50</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::NoFrame</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Plain</enum>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:700;&quot;&gt;Time&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_9">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>75</y>
+        <width>151</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Starting Time&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="button_reset_timeinput">
+      <property name="geometry">
+       <rect>
+        <x>1460</x>
+        <y>75</y>
+        <width>120</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Reset</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="textinput_time_startingtime">
+      <property name="geometry">
+       <rect>
+        <x>170</x>
+        <y>75</y>
+        <width>121</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+      <property name="frame">
+       <bool>true</bool>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="textinput_time_endtime">
+      <property name="geometry">
+       <rect>
+        <x>450</x>
+        <y>75</y>
+        <width>121</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
+      </property>
+      <property name="text">
+       <string>auto</string>
+      </property>
+      <property name="frame">
+       <bool>true</bool>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_10">
+      <property name="geometry">
+       <rect>
+        <x>300</x>
+        <y>75</y>
+        <width>151</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;End Time&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_11">
+      <property name="geometry">
+       <rect>
+        <x>580</x>
+        <y>75</y>
+        <width>151</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Time Step&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="textinput_time_timestep">
+      <property name="geometry">
+       <rect>
+        <x>730</x>
+        <y>75</y>
+        <width>121</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
+      </property>
+      <property name="text">
+       <string>auto</string>
+      </property>
+      <property name="frame">
+       <bool>true</bool>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_title_solver">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>125</y>
+        <width>1561</width>
+        <height>50</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::NoFrame</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Plain</enum>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:700;&quot;&gt;Solver&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="input_rungekutta_order">
+      <property name="geometry">
+       <rect>
+        <x>170</x>
+        <y>185</y>
+        <width>401</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::WheelFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QComboBox{border-top-left-radius: 0px; border-bottom-left-radius: 0px; border-left-width: 0px}</string>
+      </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <item>
+       <property name="text">
+        <string>Variable Timestep Runge Kutta Dormand Prince</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Fixed Timestep Runge-Kutta Order 4</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Fixed Timestep Runge-Kutta Order 5</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Path Integral (PSADM IQUAPI)</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QLabel" name="label_12">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>185</y>
+        <width>151</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Main Solver&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_14">
+      <property name="geometry">
+       <rect>
+        <x>580</x>
+        <y>185</y>
+        <width>151</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Interpolator&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="input_interpolator_t">
+      <property name="geometry">
+       <rect>
+        <x>730</x>
+        <y>185</y>
+        <width>121</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::WheelFocus</enum>
+      </property>
+      <property name="statusTip">
+       <string>Main Direction Interpolator. If None, no interpolation will be used, meaning the main time output has non-equidistant elements</string>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-top-left-radius: 0px; border-bottom-left-radius: 0px; border-left-width: 0px</string>
+      </property>
+      <property name="frame">
+       <bool>true</bool>
+      </property>
+      <item>
+       <property name="text">
+        <string>None</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Linear</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Bicubic</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QLabel" name="label_15">
+      <property name="geometry">
+       <rect>
+        <x>860</x>
+        <y>185</y>
+        <width>151</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Grid Expander&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="input_interpolator_tau">
+      <property name="geometry">
+       <rect>
+        <x>1010</x>
+        <y>185</y>
+        <width>121</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::WheelFocus</enum>
+      </property>
+      <property name="statusTip">
+       <string>Tau-Direction Interpolator which expands the time calculations onto an equidistant grid. Usually linear is sufficient.</string>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-top-left-radius: 0px; border-bottom-left-radius: 0px; border-left-width: 0px</string>
+      </property>
+      <property name="frame">
+       <bool>true</bool>
+      </property>
+      <item>
+       <property name="text">
+        <string>Linear</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Bicubic</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QLabel" name="label_title_rates">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>235</y>
+        <width>1561</width>
+        <height>50</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::NoFrame</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Plain</enum>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:700;&quot;&gt;Rates&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_title_phonons">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>345</y>
+        <width>1561</width>
+        <height>50</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::NoFrame</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Plain</enum>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:700;&quot;&gt;Environment (Phonons)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_18">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>295</y>
+        <width>151</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Cavity Coupling&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_19">
+      <property name="geometry">
+       <rect>
+        <x>300</x>
+        <y>295</y>
+        <width>151</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Cavity Loss&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_20">
+      <property name="geometry">
+       <rect>
+        <x>580</x>
+        <y>295</y>
+        <width>151</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Radiative Loss&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_21">
+      <property name="geometry">
+       <rect>
+        <x>860</x>
+        <y>295</y>
+        <width>151</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Pure Dephasing&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="textinput_rates_cavity_coupling">
+      <property name="geometry">
+       <rect>
+        <x>170</x>
+        <y>295</y>
+        <width>121</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+      <property name="frame">
+       <bool>true</bool>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="textinput_rates_cavity_loss">
+      <property name="geometry">
+       <rect>
+        <x>450</x>
+        <y>295</y>
+        <width>121</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+      <property name="frame">
+       <bool>true</bool>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="textinput_rates_radiative_decay">
+      <property name="geometry">
+       <rect>
+        <x>730</x>
+        <y>295</y>
+        <width>121</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+      <property name="frame">
+       <bool>true</bool>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="textinput_rates_pure_dephasing">
+      <property name="geometry">
+       <rect>
+        <x>1010</x>
+        <y>295</y>
+        <width>121</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+      <property name="frame">
+       <bool>true</bool>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="button_reset_solver_config">
+      <property name="geometry">
+       <rect>
+        <x>1460</x>
+        <y>185</y>
+        <width>120</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Reset</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="button_reset_rates">
+      <property name="geometry">
+       <rect>
+        <x>1460</x>
+        <y>295</y>
+        <width>120</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Reset</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="button_next_tab_config_to_timeline">
+      <property name="geometry">
+       <rect>
+        <x>1460</x>
+        <y>775</y>
+        <width>120</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Next</string>
+      </property>
+      <property name="checkable">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_22">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>405</y>
+        <width>151</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Temperature&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="textinput_phonons_temperature">
+      <property name="geometry">
+       <rect>
+        <x>170</x>
+        <y>405</y>
+        <width>121</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
+      </property>
+      <property name="text">
+       <string>No Phonons</string>
+      </property>
+      <property name="frame">
+       <bool>true</bool>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_23">
+      <property name="geometry">
+       <rect>
+        <x>300</x>
+        <y>405</y>
+        <width>151</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Approximation&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="input_phonons_approximation">
+      <property name="geometry">
+       <rect>
+        <x>450</x>
+        <y>405</y>
+        <width>121</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::WheelFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-top-left-radius: 0px; border-bottom-left-radius: 0px; border-left-width: 0px</string>
+      </property>
+      <property name="currentIndex">
+       <number>1</number>
+      </property>
+      <property name="frame">
+       <bool>true</bool>
+      </property>
+      <item>
+       <property name="text">
+        <string>Full</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Matrixexponential</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Omit Transformation</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Analytical Rates</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Hybrid</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QLabel" name="label_24">
+      <property name="geometry">
+       <rect>
+        <x>860</x>
+        <y>405</y>
+        <width>151</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Adjust Rates&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="input_phonons_adjust_radiativeloss">
+      <property name="geometry">
+       <rect>
+        <x>1010</x>
+        <y>405</y>
+        <width>121</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="statusTip">
+       <string>Adjusts the radiative decay loss using the formula gamma_rad = gamma_rad*&lt;B&gt;</string>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-top-left-radius: 0px; border-bottom-left-radius: 0px; border-bottom-right-radius: 0px; border-top-right-radius: 0px; border-left-width: 0px</string>
+      </property>
+      <property name="text">
+       <string>Radiative Loss</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="input_phonons_adjust_renormalization">
+      <property name="geometry">
+       <rect>
+        <x>1260</x>
+        <y>405</y>
+        <width>131</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="toolTip">
+       <string>Enables the renomalization of the polaron shifted energies and rates, e.g. using the &lt;B&gt; and &lt;B&gt;^2 scalings</string>
+      </property>
+      <property name="statusTip">
+       <string>Enables the renomalization of the polaron shifted energies and rates, e.g. using the &lt;B&gt; and &lt;B&gt;^2 scalings</string>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-top-left-radius: 0px; border-bottom-left-radius: 0px; border-left-width: 0px</string>
+      </property>
+      <property name="text">
+       <string>Renormalization</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="input_phonons_adjust_pure_dephasing">
+      <property name="geometry">
+       <rect>
+        <x>1130</x>
+        <y>405</y>
+        <width>131</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="statusTip">
+       <string>Adjusts the pure dephasing rate using the formula pure_dephasing = 1mueV/K * temperature. This effect is quite strong and should probably not be used.</string>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-top-left-radius: 0px; border-bottom-left-radius: 0px; border-bottom-right-radius: 0px; border-top-right-radius: 0px; border-left-width: 0px</string>
+      </property>
+      <property name="text">
+       <string>Pure Dephasing</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="button_reset_phonons">
+      <property name="geometry">
+       <rect>
+        <x>1460</x>
+        <y>405</y>
+        <width>120</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Reset</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_25">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>555</y>
+        <width>151</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Quantum Dot&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_26">
+      <property name="geometry">
+       <rect>
+        <x>580</x>
+        <y>405</y>
+        <width>151</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Phonon Coupling&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="textinput_phonons_sd_alpha">
+      <property name="geometry">
+       <rect>
+        <x>730</x>
+        <y>405</y>
+        <width>121</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
+      </property>
+      <property name="text">
+       <string>0.03E-24</string>
+      </property>
+      <property name="frame">
+       <bool>true</bool>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_27">
+      <property name="geometry">
+       <rect>
+        <x>300</x>
+        <y>475</y>
+        <width>151</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Spectral Cutoff&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="textinput_phonons_sd_wcutoff">
+      <property name="geometry">
+       <rect>
+        <x>450</x>
+        <y>475</y>
+        <width>121</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
+      </property>
+      <property name="text">
+       <string>1meV</string>
+      </property>
+      <property name="frame">
+       <bool>true</bool>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_28">
+      <property name="geometry">
+       <rect>
+        <x>580</x>
+        <y>475</y>
+        <width>151</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Spectral Delta&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="textinput_phonons_sd_wdelta">
+      <property name="geometry">
+       <rect>
+        <x>730</x>
+        <y>475</y>
+        <width>121</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
+      </property>
+      <property name="text">
+       <string>0.01meV</string>
+      </property>
+      <property name="frame">
+       <bool>true</bool>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="textinput_phonons_sd_tcutoff">
+      <property name="geometry">
+       <rect>
+        <x>1010</x>
+        <y>475</y>
+        <width>121</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
+      </property>
+      <property name="text">
+       <string>4ps</string>
+      </property>
+      <property name="frame">
+       <bool>true</bool>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_29">
+      <property name="geometry">
+       <rect>
+        <x>860</x>
+        <y>475</y>
+        <width>151</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Time Cutoff&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="Line" name="line">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>455</y>
+        <width>1361</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="Line" name="line_2">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>525</y>
+        <width>1361</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_30">
+      <property name="geometry">
+       <rect>
+        <x>1140</x>
+        <y>475</y>
+        <width>151</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Ohm&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="textinput_phonons_sd_ohmamp">
+      <property name="geometry">
+       <rect>
+        <x>1290</x>
+        <y>475</y>
+        <width>101</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
+      </property>
+      <property name="text">
+       <string>3</string>
+      </property>
+      <property name="frame">
+       <bool>true</bool>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="button_reset_phonon_sd">
+      <property name="geometry">
+       <rect>
+        <x>1460</x>
+        <y>475</y>
+        <width>120</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Reset</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="textinput_phonons_sd_qd_de">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>170</x>
+        <y>605</y>
+        <width>121</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
+      </property>
+      <property name="text">
+       <string>7eV</string>
+      </property>
+      <property name="frame">
+       <bool>true</bool>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_31">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>605</y>
+        <width>151</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Electron Energy&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_32">
+      <property name="geometry">
+       <rect>
+        <x>300</x>
+        <y>605</y>
+        <width>151</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Hole Energy&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="textinput_phonons_sd_qd_dh">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>450</x>
+        <y>605</y>
+        <width>121</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
+      </property>
+      <property name="text">
+       <string>-3.5eV</string>
+      </property>
+      <property name="frame">
+       <bool>true</bool>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_33">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>655</y>
+        <width>151</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Material Density&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="textinput_phonons_sd_qd_rho">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>170</x>
+        <y>655</y>
+        <width>121</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="statusTip">
+       <string>Unit is kg/m^3</string>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
+      </property>
+      <property name="text">
+       <string>5370</string>
+      </property>
+      <property name="frame">
+       <bool>true</bool>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_34">
+      <property name="geometry">
+       <rect>
+        <x>300</x>
+        <y>655</y>
+        <width>151</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Speed of Sound&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="textinput_phonons_sd_qd_cs">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>450</x>
+        <y>655</y>
+        <width>121</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="statusTip">
+       <string>Unit is m/s</string>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
+      </property>
+      <property name="text">
+       <string>5110</string>
+      </property>
+      <property name="frame">
+       <bool>true</bool>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_35">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>705</y>
+        <width>151</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;E-H Ratio&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="textinput_phonons_sd_qd_aeah_ratio">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>170</x>
+        <y>705</y>
+        <width>121</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="statusTip">
+       <string>a_e/a_h ratio</string>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
+      </property>
+      <property name="text">
+       <string>1.15</string>
+      </property>
+      <property name="frame">
+       <bool>true</bool>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_36">
+      <property name="geometry">
+       <rect>
+        <x>300</x>
+        <y>705</y>
+        <width>151</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;QD Size&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="textinput_phonons_sd_qd_size">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>450</x>
+        <y>705</y>
+        <width>121</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="statusTip">
+       <string>Typical Values lie around 3nm to 6nm</string>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
+      </property>
+      <property name="text">
+       <string>3nm</string>
+      </property>
+      <property name="frame">
+       <bool>true</bool>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="input_phonons_use_qd">
+      <property name="geometry">
+       <rect>
+        <x>170</x>
+        <y>555</y>
+        <width>401</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-top-left-radius: 0px; border-bottom-left-radius: 0px; border-left-width: 0px</string>
+      </property>
+      <property name="text">
+       <string>Use QD Parameters Instead of Spectral Density</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_plot_spectral_density">
+      <property name="geometry">
+       <rect>
+        <x>630</x>
+        <y>605</y>
+        <width>371</width>
+        <height>141</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="Line" name="line_3">
+      <property name="geometry">
+       <rect>
+        <x>590</x>
+        <y>565</y>
+        <width>20</width>
+        <height>181</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_plot_lindblad_rates">
+      <property name="geometry">
+       <rect>
+        <x>1010</x>
+        <y>605</y>
+        <width>381</width>
+        <height>141</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_39">
+      <property name="geometry">
+       <rect>
+        <x>630</x>
+        <y>555</y>
+        <width>371</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Spectral Density Plot&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_40">
+      <property name="geometry">
+       <rect>
+        <x>1010</x>
+        <y>555</y>
+        <width>381</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;QD Rates&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="button_reset_phonon_qd">
+      <property name="geometry">
+       <rect>
+        <x>1460</x>
+        <y>705</y>
+        <width>120</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Reset</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="button_time_config_grid">
+      <property name="geometry">
+       <rect>
+        <x>1000</x>
+        <y>75</y>
+        <width>31</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>-1</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="toolTip">
+       <string>Configure a grid instead</string>
+      </property>
+      <property name="statusTip">
+       <string>Configure a grid instead</string>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-radius: 0px;</string>
+      </property>
+      <property name="text">
+       <string>G</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="button_time_config_tol">
+      <property name="geometry">
+       <rect>
+        <x>1280</x>
+        <y>75</y>
+        <width>31</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>-1</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="toolTip">
+       <string>Configure a grid instead</string>
+      </property>
+      <property name="statusTip">
+       <string>Configure a grid instead</string>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-radius: 0px;</string>
+      </property>
+      <property name="text">
+       <string>G</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_13">
+      <property name="geometry">
+       <rect>
+        <x>860</x>
+        <y>75</y>
+        <width>141</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="statusTip">
+       <string>Enter a fixed Gridresolution or configure a custom Grid using time-timestep tuples</string>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Gridresolution&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="textinput_time_gridresolution">
+      <property name="geometry">
+       <rect>
+        <x>1030</x>
+        <y>75</y>
+        <width>101</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
+      </property>
+      <property name="text">
+       <string>auto</string>
+      </property>
+      <property name="frame">
+       <bool>true</bool>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+      <property name="placeholderText">
+       <string>None</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="textinput_time_tolerance">
+      <property name="geometry">
+       <rect>
+        <x>1310</x>
+        <y>75</y>
+        <width>101</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
+      </property>
+      <property name="text">
+       <string>1E-6</string>
+      </property>
+      <property name="frame">
+       <bool>true</bool>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+      <property name="placeholderText">
+       <string>None</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_16">
+      <property name="geometry">
+       <rect>
+        <x>1140</x>
+        <y>75</y>
+        <width>141</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="statusTip">
+       <string>Enter a fixed Tolerance or configure a custom Tolerance using time-timestep tuples</string>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Tolerance&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="textinput_phonons_iterator_stepsize">
+      <property name="geometry">
+       <rect>
+        <x>170</x>
+        <y>475</y>
+        <width>121</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
+      </property>
+      <property name="text">
+       <string>auto</string>
+      </property>
+      <property name="frame">
+       <bool>true</bool>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_37">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>475</y>
+        <width>151</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Integral Stepsize&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <zorder>label_title_time</zorder>
+     <zorder>label_9</zorder>
+     <zorder>button_reset_timeinput</zorder>
+     <zorder>textinput_time_startingtime</zorder>
+     <zorder>textinput_time_endtime</zorder>
+     <zorder>label_10</zorder>
+     <zorder>label_11</zorder>
+     <zorder>textinput_time_timestep</zorder>
+     <zorder>label_title_solver</zorder>
+     <zorder>input_rungekutta_order</zorder>
+     <zorder>label_12</zorder>
+     <zorder>label_14</zorder>
+     <zorder>input_interpolator_t</zorder>
+     <zorder>label_15</zorder>
+     <zorder>input_interpolator_tau</zorder>
+     <zorder>label_title_rates</zorder>
+     <zorder>label_title_phonons</zorder>
+     <zorder>label_18</zorder>
+     <zorder>label_19</zorder>
+     <zorder>label_20</zorder>
+     <zorder>label_21</zorder>
+     <zorder>textinput_rates_cavity_coupling</zorder>
+     <zorder>textinput_rates_cavity_loss</zorder>
+     <zorder>textinput_rates_radiative_decay</zorder>
+     <zorder>textinput_rates_pure_dephasing</zorder>
+     <zorder>button_reset_solver_config</zorder>
+     <zorder>button_reset_rates</zorder>
+     <zorder>button_next_tab_config_to_timeline</zorder>
+     <zorder>label_22</zorder>
+     <zorder>textinput_phonons_temperature</zorder>
+     <zorder>label_23</zorder>
+     <zorder>input_phonons_approximation</zorder>
+     <zorder>label_24</zorder>
+     <zorder>input_phonons_adjust_radiativeloss</zorder>
+     <zorder>input_phonons_adjust_pure_dephasing</zorder>
+     <zorder>button_reset_phonons</zorder>
+     <zorder>label_25</zorder>
+     <zorder>label_26</zorder>
+     <zorder>textinput_phonons_sd_alpha</zorder>
+     <zorder>label_27</zorder>
+     <zorder>textinput_phonons_sd_wcutoff</zorder>
+     <zorder>label_28</zorder>
+     <zorder>textinput_phonons_sd_wdelta</zorder>
+     <zorder>textinput_phonons_sd_tcutoff</zorder>
+     <zorder>label_29</zorder>
+     <zorder>line</zorder>
+     <zorder>line_2</zorder>
+     <zorder>label_30</zorder>
+     <zorder>textinput_phonons_sd_ohmamp</zorder>
+     <zorder>button_reset_phonon_sd</zorder>
+     <zorder>textinput_phonons_sd_qd_de</zorder>
+     <zorder>label_31</zorder>
+     <zorder>label_32</zorder>
+     <zorder>textinput_phonons_sd_qd_dh</zorder>
+     <zorder>label_33</zorder>
+     <zorder>textinput_phonons_sd_qd_rho</zorder>
+     <zorder>label_34</zorder>
+     <zorder>textinput_phonons_sd_qd_cs</zorder>
+     <zorder>label_35</zorder>
+     <zorder>textinput_phonons_sd_qd_aeah_ratio</zorder>
+     <zorder>label_36</zorder>
+     <zorder>textinput_phonons_sd_qd_size</zorder>
+     <zorder>input_phonons_use_qd</zorder>
+     <zorder>label_plot_spectral_density</zorder>
+     <zorder>line_3</zorder>
+     <zorder>label_plot_lindblad_rates</zorder>
+     <zorder>label_39</zorder>
+     <zorder>label_40</zorder>
+     <zorder>button_reset_phonon_qd</zorder>
+     <zorder>button_time_config_tol</zorder>
+     <zorder>input_phonons_adjust_renormalization</zorder>
+     <zorder>button_time_config_grid</zorder>
+     <zorder>label_13</zorder>
+     <zorder>textinput_time_gridresolution</zorder>
+     <zorder>textinput_time_tolerance</zorder>
+     <zorder>label_16</zorder>
+     <zorder>textinput_phonons_iterator_stepsize</zorder>
+     <zorder>label_37</zorder>
+    </widget>
+    <widget class="QWidget" name="tab_3">
+     <attribute name="title">
+      <string>Timeline</string>
+     </attribute>
+     <widget class="QPushButton" name="button_next_tab_timeline_to_statistics">
+      <property name="geometry">
+       <rect>
+        <x>1460</x>
+        <y>775</y>
+        <width>120</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Next</string>
+      </property>
+      <property name="checkable">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_title_predicted_timeline">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>15</y>
+        <width>1561</width>
+        <height>50</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::NoFrame</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Plain</enum>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:700;&quot;&gt;Predicted Timeline&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="button_timeline_force_calculate">
+      <property name="geometry">
+       <rect>
+        <x>1140</x>
+        <y>775</y>
+        <width>141</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="statusTip">
+       <string>Calculate the actual temporal evolution. This disables the phonon interactions, such that calculations are fast.</string>
+      </property>
+      <property name="text">
+       <string>Calculate Time</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="input_timeline_enable_phonons">
+      <property name="geometry">
+       <rect>
+        <x>1000</x>
+        <y>775</y>
+        <width>131</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="statusTip">
+       <string/>
+      </property>
+      <property name="text">
+       <string>Disable Phonons</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_title_predicted_spectral">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>395</y>
+        <width>1561</width>
+        <height>50</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::NoFrame</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Plain</enum>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:700;&quot;&gt;Predicted Spectral Properties&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="button_timeline_force_calculate_2">
+      <property name="geometry">
+       <rect>
+        <x>1299</x>
+        <y>775</y>
+        <width>141</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="statusTip">
+       <string>Calculate the actual spectral properties using a small spectral window. This disables the phonon interactions, such that calculations are fast.</string>
+      </property>
+      <property name="text">
+       <string>Calculate Spectra</string>
+      </property>
+     </widget>
+     <widget class="PlotWidget" name="label_plot_spectral_prediction" native="true">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>455</y>
+        <width>1561</width>
+        <height>311</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="PlotWidget" name="label_plot_time_prediction" native="true">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>75</y>
+        <width>1561</width>
+        <height>311</height>
+       </rect>
+      </property>
+     </widget>
+     <zorder>button_next_tab_timeline_to_statistics</zorder>
+     <zorder>label_title_predicted_timeline</zorder>
+     <zorder>input_timeline_enable_phonons</zorder>
+     <zorder>label_title_predicted_spectral</zorder>
+     <zorder>button_timeline_force_calculate_2</zorder>
+     <zorder>button_timeline_force_calculate</zorder>
+     <zorder>label_plot_spectral_prediction</zorder>
+     <zorder>label_plot_time_prediction</zorder>
+    </widget>
+    <widget class="QWidget" name="tab_4">
+     <attribute name="title">
+      <string>Emission Statistics</string>
+     </attribute>
+     <widget class="QPushButton" name="button_next_tab_statistics_generate">
+      <property name="geometry">
+       <rect>
+        <x>1460</x>
+        <y>775</y>
+        <width>120</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Next</string>
+      </property>
+      <property name="checkable">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="button_time_config_grid_3">
+      <property name="geometry">
+       <rect>
+        <x>1330</x>
+        <y>775</y>
+        <width>121</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Time Grid</string>
+      </property>
+     </widget>
+     <widget class="QScrollArea" name="scrollArea">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>1600</width>
+        <height>831</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::NoFrame</enum>
+      </property>
+      <property name="verticalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOn</enum>
+      </property>
+      <property name="horizontalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOff</enum>
+      </property>
+      <property name="widgetResizable">
+       <bool>false</bool>
+      </property>
+      <widget class="QWidget" name="scrollAreaWidgetContents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>1570</width>
+         <height>900</height>
+        </rect>
+       </property>
+       <widget class="QLineEdit" name="textinput_concurrence_first">
+        <property name="geometry">
+         <rect>
+          <x>190</x>
+          <y>340</y>
+          <width>101</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="frame">
+         <bool>true</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="placeholderText">
+         <string>A=B+B=D</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="textinput_detector_wpower">
+        <property name="geometry">
+         <rect>
+          <x>750</x>
+          <y>660</y>
+          <width>101</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
+        </property>
+        <property name="text">
+         <string>2</string>
+        </property>
+        <property name="frame">
+         <bool>true</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="placeholderText">
+         <string/>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_51">
+        <property name="geometry">
+         <rect>
+          <x>580</x>
+          <y>120</y>
+          <width>171</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Normalize&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="textinput_concurrence_second">
+        <property name="geometry">
+         <rect>
+          <x>190</x>
+          <y>390</y>
+          <width>101</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="frame">
+         <bool>true</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="placeholderText">
+         <string>A=C+C=D</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_title_set_detector">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>550</y>
+          <width>1551</width>
+          <height>50</height>
+         </rect>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Plain</enum>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:700;&quot;&gt;Detector - G1 and G2 Adjustments&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_title_set_wigner">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>710</y>
+          <width>1551</width>
+          <height>50</height>
+         </rect>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Plain</enum>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:700;&quot;&gt;Wigner Function&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="textinput_detector_t0">
+        <property name="geometry">
+         <rect>
+          <x>190</x>
+          <y>610</y>
+          <width>191</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-radius: 0px;</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="frame">
+         <bool>true</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="placeholderText">
+         <string>start</string>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="input_spectrum_normalize">
+        <property name="geometry">
+         <rect>
+          <x>750</x>
+          <y>120</y>
+          <width>101</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="toolTip">
+         <string>Enables the renomalization of the polaron shifted energies and rates, e.g. using the &lt;B&gt; and &lt;B&gt;^2 scalings</string>
+        </property>
+        <property name="statusTip">
+         <string>Enables the renomalization of the polaron shifted energies and rates, e.g. using the &lt;B&gt; and &lt;B&gt;^2 scalings</string>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
+        </property>
+        <property name="text">
+         <string>To 1</string>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_115">
+        <property name="geometry">
+         <rect>
+          <x>580</x>
+          <y>390</y>
+          <width>171</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Resolution&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_title_set_concurrences">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>280</y>
+          <width>1551</width>
+          <height>50</height>
+         </rect>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Plain</enum>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:700;&quot;&gt;Concurrences&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_48">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>120</y>
+          <width>171</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Spectral Range&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_title_set_correlations">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>440</y>
+          <width>1551</width>
+          <height>50</height>
+         </rect>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Plain</enum>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:700;&quot;&gt;Correlation Functions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="button_add_concurrence_to_output">
+        <property name="geometry">
+         <rect>
+          <x>860</x>
+          <y>340</y>
+          <width>51</width>
+          <height>91</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>-1</pointsize>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Add</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="textinput_concurrence_spec_freq">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>470</x>
+          <y>390</y>
+          <width>101</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="statusTip">
+         <string>Calculate the spectrum for all of the used G2 functions. Check the Box to edit these values</string>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="frame">
+         <bool>true</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="placeholderText">
+         <string>0</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="textinput_spectrum_range_2">
+        <property name="geometry">
+         <rect>
+          <x>470</x>
+          <y>120</y>
+          <width>101</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
+        </property>
+        <property name="text">
+         <string>1000</string>
+        </property>
+        <property name="frame">
+         <bool>true</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="placeholderText">
+         <string/>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="textinput_indist_modes">
+        <property name="geometry">
+         <rect>
+          <x>190</x>
+          <y>230</y>
+          <width>101</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="frame">
+         <bool>true</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="placeholderText">
+         <string>A=B, c</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="textinput_spectrum_modes">
+        <property name="geometry">
+         <rect>
+          <x>190</x>
+          <y>70</y>
+          <width>101</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="frame">
+         <bool>true</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="placeholderText">
+         <string>A=B,c</string>
+        </property>
+       </widget>
+       <widget class="QTextBrowser" name="text_output_list_of_concurrences">
+        <property name="geometry">
+         <rect>
+          <x>920</x>
+          <y>340</y>
+          <width>651</width>
+          <height>91</height>
+         </rect>
+        </property>
+        <property name="placeholderText">
+         <string>List of Concurrences </string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="button_add_detector_spectral">
+        <property name="geometry">
+         <rect>
+          <x>860</x>
+          <y>660</y>
+          <width>51</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>-1</pointsize>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Add</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="textinput_detector_tpower">
+        <property name="geometry">
+         <rect>
+          <x>750</x>
+          <y>610</y>
+          <width>101</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
+        </property>
+        <property name="text">
+         <string>2</string>
+        </property>
+        <property name="frame">
+         <bool>true</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="placeholderText">
+         <string/>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="textinput_detector_wrange">
+        <property name="geometry">
+         <rect>
+          <x>190</x>
+          <y>660</y>
+          <width>121</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-radius: 0px;</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="frame">
+         <bool>true</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="placeholderText">
+         <string>range</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_title_set_indists">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>170</y>
+          <width>1551</width>
+          <height>50</height>
+         </rect>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Plain</enum>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:700;&quot;&gt;Indistinguishabilities&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+       <widget class="QComboBox" name="input_gfunc_integration">
+        <property name="geometry">
+         <rect>
+          <x>750</x>
+          <y>500</y>
+          <width>101</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>Integrated</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Matrix</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Both</string>
+         </property>
+        </item>
+       </widget>
+       <widget class="QTextBrowser" name="text_output_list_of_spectra">
+        <property name="geometry">
+         <rect>
+          <x>920</x>
+          <y>70</y>
+          <width>651</width>
+          <height>91</height>
+         </rect>
+        </property>
+        <property name="placeholderText">
+         <string>List of spectra </string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_114">
+        <property name="geometry">
+         <rect>
+          <x>580</x>
+          <y>340</y>
+          <width>171</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Range&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_117">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>610</y>
+          <width>171</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Time Window&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+       <widget class="QComboBox" name="input_spectrum_order">
+        <property name="geometry">
+         <rect>
+          <x>750</x>
+          <y>70</y>
+          <width>101</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>G1</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>G2</string>
+         </property>
+        </item>
+       </widget>
+       <widget class="QPushButton" name="button_add_detector_time">
+        <property name="geometry">
+         <rect>
+          <x>860</x>
+          <y>610</y>
+          <width>51</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>-1</pointsize>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Add</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_120">
+        <property name="geometry">
+         <rect>
+          <x>580</x>
+          <y>660</y>
+          <width>171</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Falloff Power&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_54">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>390</y>
+          <width>171</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Second Mode&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="textinput_correlation_modes">
+        <property name="geometry">
+         <rect>
+          <x>190</x>
+          <y>500</y>
+          <width>101</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="frame">
+         <bool>true</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="placeholderText">
+         <string>A=B, c</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_56">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>500</y>
+          <width>171</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;List of Modes&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_118">
+        <property name="geometry">
+         <rect>
+          <x>580</x>
+          <y>610</y>
+          <width>171</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Falloff Power&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+       <widget class="QTextBrowser" name="text_output_list_of_indists">
+        <property name="geometry">
+         <rect>
+          <x>920</x>
+          <y>230</y>
+          <width>651</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="placeholderText">
+         <string>List of Modes</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="textinput_spectrum_center">
+        <property name="geometry">
+         <rect>
+          <x>470</x>
+          <y>70</y>
+          <width>101</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="frame">
+         <bool>true</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="placeholderText">
+         <string>1eV</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_113">
+        <property name="geometry">
+         <rect>
+          <x>300</x>
+          <y>390</y>
+          <width>171</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Center&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="button_add_gfunc_to_output">
+        <property name="geometry">
+         <rect>
+          <x>860</x>
+          <y>500</y>
+          <width>51</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>-1</pointsize>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Add</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_116">
+        <property name="geometry">
+         <rect>
+          <x>580</x>
+          <y>500</y>
+          <width>171</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Outputmethod&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_55">
+        <property name="geometry">
+         <rect>
+          <x>300</x>
+          <y>340</y>
+          <width>171</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;G2 Spectra&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="textinput_detector_t1">
+        <property name="geometry">
+         <rect>
+          <x>380</x>
+          <y>610</y>
+          <width>191</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="frame">
+         <bool>true</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="placeholderText">
+         <string>end</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="textinput_detector_wcenter">
+        <property name="geometry">
+         <rect>
+          <x>310</x>
+          <y>660</y>
+          <width>121</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-radius: 0px;</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="frame">
+         <bool>true</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="placeholderText">
+         <string>center</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="button_add_spectrum_to_output">
+        <property name="geometry">
+         <rect>
+          <x>860</x>
+          <y>70</y>
+          <width>51</width>
+          <height>91</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>-1</pointsize>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Add</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_119">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>660</y>
+          <width>171</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Spectral Window&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_49">
+        <property name="geometry">
+         <rect>
+          <x>300</x>
+          <y>120</y>
+          <width>171</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Resolution&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_title_set_spectrum">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>15</y>
+          <width>1551</width>
+          <height>50</height>
+         </rect>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Plain</enum>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:700;&quot;&gt;Spectrum&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="textinput_detector_wnum">
+        <property name="geometry">
+         <rect>
+          <x>430</x>
+          <y>660</y>
+          <width>141</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="frame">
+         <bool>true</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="placeholderText">
+         <string>fourier points</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_46">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>70</y>
+          <width>171</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;List of Modes&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_47">
+        <property name="geometry">
+         <rect>
+          <x>300</x>
+          <y>70</y>
+          <width>171</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Spectral Center&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_50">
+        <property name="geometry">
+         <rect>
+          <x>580</x>
+          <y>70</y>
+          <width>171</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Correlation&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_52">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>230</y>
+          <width>171</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;List of Modes&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="textinput_spectrum_range">
+        <property name="geometry">
+         <rect>
+          <x>190</x>
+          <y>120</y>
+          <width>101</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="frame">
+         <bool>true</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="placeholderText">
+         <string>2meV</string>
+        </property>
+       </widget>
+       <widget class="QTextBrowser" name="text_output_list_of_detector">
+        <property name="geometry">
+         <rect>
+          <x>920</x>
+          <y>610</y>
+          <width>651</width>
+          <height>91</height>
+         </rect>
+        </property>
+        <property name="placeholderText">
+         <string>List of Detector functions </string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="textinput_concurrence_spec_range">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>750</x>
+          <y>340</y>
+          <width>101</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="statusTip">
+         <string>Calculate the spectrum for all of the used G2 functions. Check the Box to edit these values</string>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="frame">
+         <bool>true</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="placeholderText">
+         <string>0</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_57">
+        <property name="geometry">
+         <rect>
+          <x>300</x>
+          <y>500</y>
+          <width>171</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Order&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="input_concurrence_add_spectra">
+        <property name="geometry">
+         <rect>
+          <x>470</x>
+          <y>340</y>
+          <width>101</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="toolTip">
+         <string>Enables the renomalization of the polaron shifted energies and rates, e.g. using the &lt;B&gt; and &lt;B&gt;^2 scalings</string>
+        </property>
+        <property name="statusTip">
+         <string>Enables the renomalization of the polaron shifted energies and rates, e.g. using the &lt;B&gt; and &lt;B&gt;^2 scalings</string>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
+        </property>
+        <property name="text">
+         <string>All</string>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_53">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>340</y>
+          <width>171</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;First Mode&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="button_add_indist_to_output">
+        <property name="geometry">
+         <rect>
+          <x>860</x>
+          <y>230</y>
+          <width>51</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>-1</pointsize>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Add</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="textinput_concurrence_spec_res">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>750</x>
+          <y>390</y>
+          <width>101</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="statusTip">
+         <string>Calculate the spectrum for all of the used G2 functions. Check the Box to edit these values</string>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="frame">
+         <bool>true</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="placeholderText">
+         <string>0</string>
+        </property>
+       </widget>
+       <widget class="QTextBrowser" name="text_output_list_of_gfuncs">
+        <property name="geometry">
+         <rect>
+          <x>920</x>
+          <y>500</y>
+          <width>651</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="placeholderText">
+         <string>List of Correlation functions </string>
+        </property>
+       </widget>
+       <widget class="QComboBox" name="input_gfunc_order">
+        <property name="geometry">
+         <rect>
+          <x>470</x>
+          <y>500</y>
+          <width>101</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>G1</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>G2</string>
+         </property>
+        </item>
+       </widget>
+       <widget class="QLabel" name="label_122">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>770</y>
+          <width>171</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Modes&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="textinput_wigner_modes">
+        <property name="geometry">
+         <rect>
+          <x>190</x>
+          <y>770</y>
+          <width>101</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="frame">
+         <bool>true</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="placeholderText">
+         <string>A=B,c</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="textinput_wigner_x">
+        <property name="geometry">
+         <rect>
+          <x>470</x>
+          <y>770</y>
+          <width>101</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="statusTip">
+         <string>Alpha in -X:X range</string>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="frame">
+         <bool>true</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="placeholderText">
+         <string>0</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_123">
+        <property name="geometry">
+         <rect>
+          <x>300</x>
+          <y>770</y>
+          <width>171</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;X&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_124">
+        <property name="geometry">
+         <rect>
+          <x>300</x>
+          <y>820</y>
+          <width>171</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Y&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="textinput_wigner_modes_y">
+        <property name="geometry">
+         <rect>
+          <x>470</x>
+          <y>820</y>
+          <width>101</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="statusTip">
+         <string>Alpha in -Y:Y range</string>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="frame">
+         <bool>true</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="placeholderText">
+         <string>0</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="textinput_wigner_resolution">
+        <property name="geometry">
+         <rect>
+          <x>190</x>
+          <y>820</y>
+          <width>101</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="frame">
+         <bool>true</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="placeholderText">
+         <string>100</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_125">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>820</y>
+          <width>171</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Resolution&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_126">
+        <property name="geometry">
+         <rect>
+          <x>580</x>
+          <y>770</y>
+          <width>171</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Skip&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="textinput_wigner_skip">
+        <property name="geometry">
+         <rect>
+          <x>750</x>
+          <y>770</y>
+          <width>101</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="frame">
+         <bool>true</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="placeholderText">
+         <string>0</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="button_add_wigner">
+        <property name="geometry">
+         <rect>
+          <x>860</x>
+          <y>770</y>
+          <width>51</width>
+          <height>91</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>-1</pointsize>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Add</string>
+        </property>
+       </widget>
+       <widget class="QTextBrowser" name="text_output_list_of_gfuncs_3">
+        <property name="geometry">
+         <rect>
+          <x>920</x>
+          <y>770</y>
+          <width>651</width>
+          <height>91</height>
+         </rect>
+        </property>
+        <property name="placeholderText">
+         <string>List of Wigner Functions </string>
+        </property>
+       </widget>
+      </widget>
+     </widget>
+     <zorder>scrollArea</zorder>
+     <zorder>button_next_tab_statistics_generate</zorder>
+     <zorder>button_time_config_grid_3</zorder>
+    </widget>
+    <widget class="QWidget" name="tab_6">
+     <attribute name="title">
+      <string>Generate and Run</string>
+     </attribute>
+     <widget class="QPushButton" name="button_run_program">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>820</x>
+        <y>380</y>
+        <width>301</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>-1</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {background-color: qlineargradient( x1:0 y1:0, x2:0 y2:1, stop:0.9 #f4501e, stop:0.91 #8d2f13)}</string>
+      </property>
+      <property name="text">
+       <string>Run</string>
+      </property>
+      <property name="checkable">
+       <bool>false</bool>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_58">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>15</y>
+        <width>1561</width>
+        <height>50</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::NoFrame</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Plain</enum>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:700;&quot;&gt;Generate QDLC Command and Run&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="Line" name="line_4">
+      <property name="geometry">
+       <rect>
+        <x>790</x>
+        <y>80</y>
+        <width>20</width>
+        <height>761</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+     </widget>
+     <widget class="QTextBrowser" name="text_output_program_main">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>70</y>
+        <width>761</width>
+        <height>761</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::NoFrame</enum>
+      </property>
+      <property name="html">
+       <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="placeholderText">
+       <string>Output</string>
+      </property>
+     </widget>
+     <widget class="QTextBrowser" name="text_output_program_qdlc_command">
+      <property name="geometry">
+       <rect>
+        <x>820</x>
+        <y>70</y>
+        <width>761</width>
+        <height>251</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::NoFrame</enum>
+      </property>
+      <property name="readOnly">
+       <bool>false</bool>
+      </property>
+      <property name="html">
+       <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="placeholderText">
+       <string>./QDLC.exe ...</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_60">
+      <property name="geometry">
+       <rect>
+        <x>1430</x>
+        <y>330</y>
+        <width>151</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Output&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="input_logginglevel">
+      <property name="geometry">
+       <rect>
+        <x>1290</x>
+        <y>330</y>
+        <width>121</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::WheelFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
+      </property>
+      <item>
+       <property name="text">
+        <string>Normal</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Additional</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Verbose</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QLabel" name="label_62">
+      <property name="geometry">
+       <rect>
+        <x>1140</x>
+        <y>330</y>
+        <width>151</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Logging Level&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="input_add_output_eigenvalues">
+      <property name="geometry">
+       <rect>
+        <x>1430</x>
+        <y>380</y>
+        <width>151</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="statusTip">
+       <string/>
+      </property>
+      <property name="text">
+       <string>Eigenvalues</string>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="input_add_output_operators">
+      <property name="geometry">
+       <rect>
+        <x>1430</x>
+        <y>410</y>
+        <width>151</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="statusTip">
+       <string/>
+      </property>
+      <property name="text">
+       <string>Operator Matrices</string>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="input_add_output_rkerror">
+      <property name="geometry">
+       <rect>
+        <x>1430</x>
+        <y>440</y>
+        <width>151</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="statusTip">
+       <string/>
+      </property>
+      <property name="text">
+       <string>Runge-Kutta Error</string>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="input_add_output_vonneumannpath">
+      <property name="geometry">
+       <rect>
+        <x>1430</x>
+        <y>470</y>
+        <width>151</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="statusTip">
+       <string/>
+      </property>
+      <property name="text">
+       <string>von Neumann Path</string>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="input_add_output_detecotrtrafo">
+      <property name="geometry">
+       <rect>
+        <x>1430</x>
+        <y>500</y>
+        <width>151</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="statusTip">
+       <string/>
+      </property>
+      <property name="text">
+       <string>Detectorfunctions</string>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="input_add_output_greenf">
+      <property name="geometry">
+       <rect>
+        <x>1430</x>
+        <y>530</y>
+        <width>151</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="statusTip">
+       <string/>
+      </property>
+      <property name="text">
+       <string>Greenfunctions</string>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="input_add_output_phononj">
+      <property name="geometry">
+       <rect>
+        <x>1430</x>
+        <y>560</y>
+        <width>151</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="statusTip">
+       <string/>
+      </property>
+      <property name="text">
+       <string>Phonon Spectral J</string>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="input_add_output_phononcoeffs">
+      <property name="geometry">
+       <rect>
+        <x>1430</x>
+        <y>590</y>
+        <width>151</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="statusTip">
+       <string/>
+      </property>
+      <property name="text">
+       <string>Phononcoefficients</string>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="input_dm_mode">
+      <property name="geometry">
+       <rect>
+        <x>1290</x>
+        <y>380</y>
+        <width>121</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::WheelFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px;</string>
+      </property>
+      <property name="frame">
+       <bool>true</bool>
+      </property>
+      <item>
+       <property name="text">
+        <string>No Output</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Diagonal Elements</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Full Matrix</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QLabel" name="label_63">
+      <property name="geometry">
+       <rect>
+        <x>1140</x>
+        <y>380</y>
+        <width>151</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Density Matrix&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="input_dm_frame">
+      <property name="geometry">
+       <rect>
+        <x>1290</x>
+        <y>400</y>
+        <width>121</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::WheelFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-left-radius: 0px; border-top-width: 0px;</string>
+      </property>
+      <property name="frame">
+       <bool>true</bool>
+      </property>
+      <item>
+       <property name="text">
+        <string>Heisenberg</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Schrödinger</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QPushButton" name="button_next_tab_statistics_to_run">
+      <property name="geometry">
+       <rect>
+        <x>1460</x>
+        <y>775</y>
+        <width>120</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Next</string>
+      </property>
+      <property name="checkable">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_61">
+      <property name="geometry">
+       <rect>
+        <x>1140</x>
+        <y>430</y>
+        <width>151</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;CPU Cores&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="textinput_cpucores">
+      <property name="geometry">
+       <rect>
+        <x>1290</x>
+        <y>430</y>
+        <width>121</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
+      </property>
+      <property name="text">
+       <string>all</string>
+      </property>
+      <property name="frame">
+       <bool>true</bool>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="input_escape_output_command">
+      <property name="geometry">
+       <rect>
+        <x>820</x>
+        <y>480</y>
+        <width>301</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="statusTip">
+       <string/>
+      </property>
+      <property name="text">
+       <string>Escape Output Command</string>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="button_run_external">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>820</x>
+        <y>430</y>
+        <width>301</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>-1</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {background-color: qlineargradient( x1:0 y1:0, x2:0 y2:1, stop:0.9 #1e6cf4, stop:0.91 #133e8d)}</string>
+      </property>
+      <property name="text">
+       <string>Run on Noctua</string>
+      </property>
+      <property name="checkable">
+       <bool>false</bool>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="button_generate_run">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>820</x>
+        <y>330</y>
+        <width>301</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>-1</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {background-color: qlineargradient( x1:0 y1:0, x2:0 y2:1, stop:0.9 #f4771e, stop:0.91 #4f2609)}</string>
+      </property>
+      <property name="text">
+       <string>Generate</string>
+      </property>
+      <property name="checkable">
+       <bool>false</bool>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <zorder>button_run_program</zorder>
+     <zorder>label_58</zorder>
+     <zorder>line_4</zorder>
+     <zorder>text_output_program_main</zorder>
+     <zorder>text_output_program_qdlc_command</zorder>
+     <zorder>label_60</zorder>
+     <zorder>input_logginglevel</zorder>
+     <zorder>label_62</zorder>
+     <zorder>input_add_output_eigenvalues</zorder>
+     <zorder>input_add_output_operators</zorder>
+     <zorder>input_add_output_rkerror</zorder>
+     <zorder>input_add_output_vonneumannpath</zorder>
+     <zorder>input_add_output_detecotrtrafo</zorder>
+     <zorder>input_add_output_greenf</zorder>
+     <zorder>input_add_output_phononj</zorder>
+     <zorder>input_add_output_phononcoeffs</zorder>
+     <zorder>input_dm_mode</zorder>
+     <zorder>input_dm_frame</zorder>
+     <zorder>label_63</zorder>
+     <zorder>button_next_tab_statistics_to_run</zorder>
+     <zorder>label_61</zorder>
+     <zorder>textinput_cpucores</zorder>
+     <zorder>input_escape_output_command</zorder>
+     <zorder>button_run_external</zorder>
+     <zorder>button_generate_run</zorder>
+    </widget>
+    <widget class="QWidget" name="tab_5">
+     <attribute name="title">
+      <string>Sweep and Scan</string>
+     </attribute>
+     <widget class="QLabel" name="label_3">
+      <property name="geometry">
+       <rect>
+        <x>400</x>
+        <y>300</y>
+        <width>751</width>
+        <height>241</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>26</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;add ability to change different parameters using lambda expressions, generate output settings file. add goto run button and run sweep&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_7">
+     <attribute name="title">
+      <string>Plotting</string>
+     </attribute>
+     <widget class="QLabel" name="label_4">
+      <property name="geometry">
+       <rect>
+        <x>400</x>
+        <y>220</y>
+        <width>751</width>
+        <height>241</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>26</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Plot stuff&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;matrix plot, evaluation (enpoints, then plot, etc.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_8">
+     <attribute name="title">
+      <string>Optimization</string>
+     </attribute>
+     <widget class="QLabel" name="label_8">
+      <property name="geometry">
+       <rect>
+        <x>425</x>
+        <y>270</y>
+        <width>751</width>
+        <height>241</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>26</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Parameter optimization.&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;print runscript, let user change parameters to {0}, {1}, etc. then set parameter limits&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QStatusBar" name="statusbar">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1598</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuMenu">
+    <property name="geometry">
+     <rect>
+      <x>348</x>
+      <y>281</y>
+      <width>190</width>
+      <height>94</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionLoad_QDLC_Command"/>
+    <addaction name="actionExport_QDLC_Command"/>
+   </widget>
+   <addaction name="menuMenu"/>
+  </widget>
+  <action name="actionLoad_QDLC_Command">
+   <property name="text">
+    <string>Import QDLC Command</string>
+   </property>
+  </action>
+  <action name="actionExport_QDLC_Command">
+   <property name="text">
+    <string>Export QDLC Command</string>
+   </property>
+  </action>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>PlotWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">plotwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
