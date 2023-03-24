@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'input_formJmMtIT.ui'
+## Form generated from reading UI file 'input_formviTuTH.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.4.1
+## Created by: Qt User Interface Compiler version 6.4.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -15,14 +15,15 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QDialog, QFrame, QLabel,
-    QLineEdit, QPushButton, QSizePolicy, QWidget)
+from PySide6.QtWidgets import (QApplication, QDialog, QFrame, QGridLayout,
+    QLabel, QLineEdit, QPushButton, QSizePolicy,
+    QWidget)
 
 class Ui_InputDialog(object):
     def setupUi(self, InputDialog):
         if not InputDialog.objectName():
             InputDialog.setObjectName(u"InputDialog")
-        InputDialog.resize(860, 174)
+        InputDialog.resize(861, 196)
         InputDialog.setStyleSheet(u"QWidget {background-color: #F3F4F8;}\n"
 "\n"
 "QPushButton {background-color: #88282A3A;  color: #FFFFFF; border-radius: 8px;  font-weight: bold; font-size: 16px; }\n"
@@ -68,27 +69,39 @@ class Ui_InputDialog(object):
 "QScrollBar::add-line:vertical:pressed {background-color: #f4501e;}\n"
 "QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {background: none;}\n"
 "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: none;}")
-        self.title = QLabel(InputDialog)
-        self.title.setObjectName(u"title")
-        self.title.setGeometry(QRect(20, 10, 821, 51))
-        self.title.setFrameShape(QFrame.NoFrame)
-        self.title.setFrameShadow(QFrame.Plain)
-        self.button_confirm = QPushButton(InputDialog)
-        self.button_confirm.setObjectName(u"button_confirm")
-        self.button_confirm.setGeometry(QRect(20, 120, 410, 36))
-        self.button_confirm.setStyleSheet(u"border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px;")
+        self.gridLayout = QGridLayout(InputDialog)
+        self.gridLayout.setObjectName(u"gridLayout")
         self.button_cancel = QPushButton(InputDialog)
         self.button_cancel.setObjectName(u"button_cancel")
-        self.button_cancel.setGeometry(QRect(430, 120, 410, 36))
-        self.button_cancel.setStyleSheet(u"border-top-left-radius: 0px; border-bottom-left-radius: 0px; border-left-width: 0px;")
+        self.button_cancel.setMinimumSize(QSize(150, 40))
+
+        self.gridLayout.addWidget(self.button_cancel, 2, 1, 1, 1)
+
+        self.button_confirm = QPushButton(InputDialog)
+        self.button_confirm.setObjectName(u"button_confirm")
+        self.button_confirm.setMinimumSize(QSize(150, 40))
+
+        self.gridLayout.addWidget(self.button_confirm, 2, 0, 1, 1)
+
         self.input = QLineEdit(InputDialog)
         self.input.setObjectName(u"input")
-        self.input.setGeometry(QRect(20, 70, 821, 40))
+        self.input.setMinimumSize(QSize(150, 40))
         font = QFont()
         font.setPointSize(11)
         self.input.setFont(font)
         self.input.setFrame(True)
         self.input.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout.addWidget(self.input, 1, 0, 1, 2)
+
+        self.title = QLabel(InputDialog)
+        self.title.setObjectName(u"title")
+        self.title.setMinimumSize(QSize(150, 40))
+        self.title.setFrameShape(QFrame.NoFrame)
+        self.title.setFrameShadow(QFrame.Plain)
+
+        self.gridLayout.addWidget(self.title, 0, 0, 1, 2)
+
 
         self.retranslateUi(InputDialog)
 
@@ -97,10 +110,10 @@ class Ui_InputDialog(object):
 
     def retranslateUi(self, InputDialog):
         InputDialog.setWindowTitle(QCoreApplication.translate("InputDialog", u"Dialog", None))
-        self.title.setText(QCoreApplication.translate("InputDialog", u"<html><head/><body><p align=\"center\"><span style=\" font-size:14pt; font-weight:700;\">Question</span></p></body></html>", None))
-        self.button_confirm.setText(QCoreApplication.translate("InputDialog", u"Confirm", None))
         self.button_cancel.setText(QCoreApplication.translate("InputDialog", u"Cancel", None))
+        self.button_confirm.setText(QCoreApplication.translate("InputDialog", u"Confirm", None))
         self.input.setText("")
         self.input.setPlaceholderText(QCoreApplication.translate("InputDialog", u"Input", None))
+        self.title.setText(QCoreApplication.translate("InputDialog", u"<html><head/><body><p align=\"center\"><span style=\" font-size:14pt; font-weight:700;\">Question</span></p></body></html>", None))
     # retranslateUi
 

@@ -2,17 +2,19 @@ from ui_add_cavity import Ui_AddCavity
 from PySide6.QtWidgets import QDialog
 
 class DialogAddCavity(QDialog, Ui_AddCavity):
-    def __init__(self, *args, main_window=None, **kwargs):
+    def __init__(self, *args, main_window=None, load_existing = None, **kwargs):
         super(DialogAddCavity, self).__init__(*args, **kwargs)
         self.setupUi(self)
         self.retranslateUi(self)
-        def finished():
+        def finished(replace=False):
             name = self.textinput_name.text()
             energy = self.textinput_energy.text()
             transitions = tuple(self.textinput_transitions.text().split(","))
-            transition_scaling = (a for a in self.textinput_transition_scalings.text().split(","))
+            transition_scaling = ([a for a in self.textinput_transition_scalings.text().split(",")])
             decay = self.textinput_decay.text()
             photonnumber = self.textinput_photonnumber.text()
+            if replace:
+                main_window.system_components["CavityLevels"].pop(self.name_when_loaded)
             main_window.addCavity({"Name": name, "Energy": energy, "CoupledTo": transitions, "CoupledToScalings": transition_scaling, "DecayScaling": decay, "PhotonNumber": photonnumber})
             main_window.drawSystem()
         def set_scalings():
@@ -22,6 +24,7 @@ class DialogAddCavity(QDialog, Ui_AddCavity):
                 t.setText("")
         def load():
             level = self.textinput_name.text()
+            self.name_when_loaded = level
             if level not in main_window.system_components["CavityLevels"]:
                 main_window.sendErrorMessage("No Exist Error","A Cavity with this name does not exist!")
                 return
@@ -31,18 +34,14 @@ class DialogAddCavity(QDialog, Ui_AddCavity):
             self.textinput_transition_scalings.setText( ",".join(level["CoupledToScalings"]) )
             self.textinput_decay.setText( level["DecayScaling"] ) 
             self.textinput_photonnumber.setText( level["PhotonNumber"] ) 
-        def remove():
-            name = self.textinput_name.text()
-            if name in main_window.system_components["CavityLevels"]:
-                main_window.system_components["CavityLevels"].pop(name)
-            else:
-                main_window.sendErrorMessage("No Exist Error","A Cavity with this name does not exist!")
-            main_window.drawSystem()
-        self.button_remove.clicked.connect(remove)
         self.button_confirm.clicked.connect(finished)
+        self.button_confirm_replace.clicked.connect(lambda: finished(replace=True))
         self.button_setone.clicked.connect(set_scalings)
         self.button_reset.clicked.connect(reset)
         self.button_load.clicked.connect(load)
+        if load_existing is not None:
+            self.textinput_name.setText(load_existing)
+            load()
         self.exec()
         
 if __name__ == "__main__":

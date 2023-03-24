@@ -1,14 +1,14 @@
-from ui_add_pulse_wplot import Ui_AddPulse
+from ui_add_pulse import Ui_AddPulse
 from PySide6.QtWidgets import QDialog
 import numpy as np
 from unit_seperator import get_uv_scaled
 
 class DialogAddPulse(QDialog, Ui_AddPulse):
-    def __init__(self, *args, main_window=None, **kwargs):
+    def __init__(self, *args, main_window=None, load_existing = None, **kwargs):
         super(DialogAddPulse, self).__init__(*args, **kwargs)
         self.setupUi(self)
         self.retranslateUi(self)
-        def finished():
+        def finished(replace=False):
             name = self.textinput_name.text()
             transitions = tuple(self.textinput_transitions.text().split(","))
             amp = tuple(self.textinput_amp.text().split(","))
@@ -16,6 +16,8 @@ class DialogAddPulse(QDialog, Ui_AddPulse):
             t0 = tuple(self.textinput_center.text().split(","))
             width = tuple(self.textinput_width.text().split(","))
             pulse_type = tuple(self.textinput_type.text().split(","))
+            if replace:
+                main_window.system_components["Pulse"].pop(self.name_when_loaded)
             main_window.addPulse({"Name": name, "CoupledTo": transitions, "Amplitudes" : amp, "Frequencies" : freq, "Centers": t0, "Widths": width, "Type" : pulse_type})
             main_window.drawSystem()
         def reset():
@@ -24,8 +26,38 @@ class DialogAddPulse(QDialog, Ui_AddPulse):
             for t,u in zip([self.textinput_energy_unit, self.textinput_amp_unit, self.textinput_center_unit, self.textinput_width_unit],["eV","pi","ps","ps"]):
                 t.setText(u)
             self.textinput_type.setText("")
+        def plot():
+            # Get Time From timeconfig if checkbox is checked, else use bare minimum
+            widths = [get_uv_scaled(t) for t in self.textinput_width.text().split(",")]
+            centers = [get_uv_scaled(t) for t in self.textinput_center.text().split(",")]
+            amps = [get_uv_scaled(t) for t in self.textinput_amp.text().split(",")]
+            freqs = [get_uv_scaled(t) for t in self.textinput_energy.text().split(",")]
+            types = self.textinput_type.text().split(",")
+            if self.input_use_timeconfig.isChecked() and main_window.textinput_time_endtime.text() != "auto":
+                t0,t1 = get_uv_scaled(main_window.textinput_time_startingtime.text()), get_uv_scaled(main_window.textinput_time_endtime.text())
+            else:
+                margin = max( widths )
+                t0 = min( centers ) - 5*margin
+                t1 = max( centers ) + 5*margin
+            t = np.linspace(t0,t1,500)
+            self.plot_pulse.canvas.axes.clear()
+            max_freq = max(freqs)
+            for i,(a,f,c,w,type) in enumerate(zip( amps, freqs, centers, widths, types )):
+                madeup_freq = 4*3.1415*10/(t1-t0) * f/max_freq
+                if type == "cw":                    
+                    y = a*np.sin(madeup_freq*(t-c) + w)
+                else:
+                    y = a*np.exp( -(t-c)**2 / w**2 / 2 )
+                    y2 = y*np.sin(madeup_freq*(t-c))
+                    self.plot_pulse.canvas.axes.plot(t,y2,color=f"C{i}")
+                self.plot_pulse.canvas.axes.plot(t,y,color=f"C{i}")
+            #self.plot_pulse.canvas.axes.legend(('cosinus', 'sinus'),loc='upper right')
+            #self.plot_pulse.canvas.axes.set_title('Cosinus - Sinus Signals')
+            self.plot_pulse.canvas.draw()
+            
         def load():
             name = self.textinput_name.text()
+            self.name_when_loaded = name
             if name not in main_window.system_components["Pulse"]:
                 main_window.sendErrorMessage("No Exist Error","A Pulse with this name does not exist!")
                 return
@@ -37,39 +69,17 @@ class DialogAddPulse(QDialog, Ui_AddPulse):
             self.textinput_name.setText( pulse["Name"] ) 
             self.textinput_type.setText( ",".join(pulse["Type"]) ) 
             self.textinput_width.setText( ",".join(pulse["Widths"] )) 
+            plot()
 
-        def plot():
-            # Get Time From timeconfig if checkbox is checked, else use bare minimum
-            widths = [get_uv_scaled(t) for t in self.textinput_width.text().split(",")]
-            centers = [get_uv_scaled(t) for t in self.textinput_center.text().split(",")]
-            amps = [get_uv_scaled(t) for t in self.textinput_amp.text().split(",")]
-            freqs = [get_uv_scaled(t) for t in self.textinput_energy.text().split(",")]
-            if self.input_use_timeconfig.isChecked() and main_window.textinput_time_endtime.text() != "auto":
-                t0,t1 = get_uv_scaled(main_window.textinput_time_startingtime.text()), get_uv_scaled(main_window.textinput_time_endtime.text())
-            else:
-                margin = max( widths )
-                t0 = min( centers ) - 5*margin
-                t1 = max( centers ) + 5*margin
-            t = np.linspace(t0,t1,200)
-            self.plot_pulse.canvas.axes.clear()
-            for (a,f,c,w) in zip( amps, freqs, centers, widths ):
-                y = a*np.exp( -(t-c)**2 / w**2 / 2 )
-                self.plot_pulse.canvas.axes.plot(t,y)
-            #self.plot_pulse.canvas.axes.legend(('cosinus', 'sinus'),loc='upper right')
-            #self.plot_pulse.canvas.axes.set_title('Cosinus - Sinus Signals')
-            self.plot_pulse.canvas.draw()
-        def remove():
-            name = self.textinput_name.text()
-            if name in main_window.system_components["Pulse"]:
-                main_window.system_components["Pulse"].pop(name)
-            else:
-                main_window.sendErrorMessage("No Exist Error","A Pulse with this name does not exist!")
-            main_window.drawSystem()
-        self.button_remove.clicked.connect(remove)
+        
         self.button_plot.clicked.connect(plot)
         self.button_confirm.clicked.connect(finished)
+        self.button_confirm_replace.clicked.connect(lambda: finished(replace=True))
         self.button_reset.clicked.connect(reset)
         self.button_load.clicked.connect(load)
+        if load_existing is not None:
+            self.textinput_name.setText(load_existing)
+            load()
         self.exec()
         
 if __name__ == "__main__":

@@ -2,17 +2,19 @@ from ui_add_electronic import Ui_AddElectronic
 from PySide6.QtWidgets import QDialog
 
 class DialogAddElectronic(QDialog, Ui_AddElectronic):
-    def __init__(self, *args, main_window=None, **kwargs):
+    def __init__(self, *args, main_window=None, load_existing = None, **kwargs):
         super(DialogAddElectronic, self).__init__(*args, **kwargs)
         self.setupUi(self)
         self.retranslateUi(self)
-        def add():
+        def add(replace = False):
             name = self.textinput_name.text()
             energy = self.textinput_energy.text()
-            transitions = tuple(a for a in self.textinput_transitions.text().split(",") if len(a) > 0)
+            transitions = tuple([a for a in self.textinput_transitions.text().split(",") if len(a) > 0])
             decay = self.textinput_decay.text()
             dephasing = self.textinput_dephasing.text()
             phonons = self.textinput_phonons.text()
+            if replace:
+                main_window.system_components["EnergyLevels"].pop(self.name_when_loaded)
             main_window.addEnergyLevel({"Name": name, "Energy": energy, "CoupledTo": transitions, "DephasingScaling": dephasing, "DecayScaling": decay, "PhononScaling": phonons})
             main_window.drawSystem()
         def set_scalings(a: str, b: str, c: str):
@@ -24,6 +26,7 @@ class DialogAddElectronic(QDialog, Ui_AddElectronic):
             self.textinput_energy_unit.setText("eV")
         def load():
             level = self.textinput_name.text()
+            self.name_when_loaded = level
             if level not in main_window.system_components["EnergyLevels"]:
                 main_window.sendErrorMessage("No Exist Error","An Electronic State with this name does not exist!")
                 return
@@ -33,19 +36,15 @@ class DialogAddElectronic(QDialog, Ui_AddElectronic):
             self.textinput_dephasing.setText( level["DephasingScaling"] )
             self.textinput_decay.setText( level["DecayScaling"] )
             self.textinput_phonons.setText( level["PhononScaling"] )
-        def remove():
-            name = self.textinput_name.text()
-            if name in main_window.system_components["EnergyLevels"]:
-                main_window.system_components["EnergyLevels"].pop(name)
-            else:
-                main_window.sendErrorMessage("No Exist Error","An Electronic State with this name does not exist!")
-            main_window.drawSystem()
-        self.button_remove.clicked.connect(remove)
         self.button_confirm.clicked.connect(add)
+        self.button_confirm_replace.clicked.connect(lambda: add(replace=True))
         self.button_setzero.clicked.connect(lambda: set_scalings("1","0","0"))
         self.button_setone.clicked.connect(lambda: set_scalings("1","1","1"))
         self.button_reset.clicked.connect(reset)
         self.button_load.clicked.connect(load)
+        if load_existing is not None:
+            self.textinput_name.setText(load_existing)
+            load()
         self.exec()
 
 if __name__ == "__main__":

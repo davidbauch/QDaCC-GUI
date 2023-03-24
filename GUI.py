@@ -1,6 +1,6 @@
 import sys, os
-from PySide6.QtWidgets import QWidget,QMainWindow, QApplication,QLabel, QLineEdit,QTextEdit, QGridLayout, QTextBrowser, QTabWidget, QBoxLayout, QPushButton, QDialog, QFormLayout, QMessageBox
-from PySide6.QtGui import QIcon, QAction, QPainter, QColor, QPixmap,QFont, QPen, QPainterPath
+from PySide6.QtWidgets import QWidget,QMainWindow, QApplication,QLabel, QLineEdit,QTextEdit, QGridLayout, QTextBrowser, QTabWidget, QBoxLayout, QPushButton, QDialog, QFormLayout, QMessageBox, QFileDialog
+from PySide6.QtGui import QIcon, QAction, QPainter, QColor, QPixmap,QFont, QPen, QPainterPath, QStandardItemModel, QStandardItem
 from PySide6.QtCore import Qt,QRect,QPropertyAnimation
 
 import sys, os
@@ -16,6 +16,9 @@ from gui_time_grid_or_tolerance import DialogAddGridOrTolerance
 import numpy as np
 
 from collections import defaultdict
+
+# todo: alles in funktionen umwälzen die über kontextmenü callbar sind
+# save/loading.
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self, *args, obj=None, **kwargs):
@@ -35,14 +38,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.system_components = defaultdict(lambda: {})
         # Hoverable Widgets
         self.system_widgets = {}
-        ## Test:
-        self.addEnergyLevel({"Name": "G","Energy": "0","CoupledTo": ( "H","V" ),"DecayScaling" : "0","DephasingScaling": "1","PhononScaling": "0"} )
-        self.addEnergyLevel({"Name": "H","Energy": f"{1-2E-6}eV","CoupledTo": ( "Z", ),"DecayScaling" : "1","DephasingScaling": "1","PhononScaling": "1"} )
-        self.addEnergyLevel({"Name": "V","Energy": f"{1+2E-6}eV","CoupledTo": ( "Z", ),"DecayScaling" : "1","DephasingScaling": "1","PhononScaling": "1"} )
-        self.addEnergyLevel({"Name": "Z","Energy": f"{2-3E-3}eV","CoupledTo": tuple( ),"DecayScaling" : "1","DephasingScaling": "1","PhononScaling": "2"} )
-        self.addCavity({"Name": "h","Energy": f"{1+1E-3}eV","CoupledTo": ("G=H","H=Z"),"CoupledToScalings": ("1","1"), "PhotonNumber": "2", "DecayScaling": "1"})
-        self.addCavity({"Name": "v","Energy": "1eV","CoupledTo": ("G=V","V=Z"),"CoupledToScalings": ("1","1"), "PhotonNumber": "2", "DecayScaling": "1"})
-        self.addPulse({"Name": "p", "CoupledTo": ("G=H","H=Z"),"Frequencies": ("1eV","1eV"), "Amplitudes" : ("1pi","1pi"), "Centers" : ("15ps","30ps"), "Widths": ("5ps","5ps"), "Type": ("gauss","gauss")})
 
         # Cache sizes:
         self.fixed_energy_w, self.fixed_energy_h = None, None
@@ -51,11 +46,33 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.connect_functionality()
 
         self.show()
+        self.temp_biex()
         self.drawSystem()
+
+    def temp_biex(self):
+        self.addEnergyLevel({"Name": "G","Energy": "0","CoupledTo": ( "H","V" ),"DecayScaling" : "0","DephasingScaling": "1","PhononScaling": "0"} )
+        self.addEnergyLevel({"Name": "H","Energy": f"{1-2E-6}eV","CoupledTo": ( "Z", ),"DecayScaling" : "1","DephasingScaling": "1","PhononScaling": "1"} )
+        self.addEnergyLevel({"Name": "V","Energy": f"{1+2E-6}eV","CoupledTo": ( "Z", ),"DecayScaling" : "1","DephasingScaling": "1","PhononScaling": "1"} )
+        self.addEnergyLevel({"Name": "Z","Energy": f"{2-3E-3}eV","CoupledTo": tuple( ),"DecayScaling" : "1","DephasingScaling": "1","PhononScaling": "2"} )
+        self.addCavity({"Name": "h","Energy": f"{1+1E-3}eV","CoupledTo": ("G=H","H=Z"),"CoupledToScalings": ("1","1"), "PhotonNumber": "2", "DecayScaling": "1"})
+        self.addCavity({"Name": "v","Energy": "1eV","CoupledTo": ("G=V","V=Z"),"CoupledToScalings": ("1","1"), "PhotonNumber": "2", "DecayScaling": "1"})
+        self.addPulse({"Name": "p", "CoupledTo": ("G=H","H=Z"),"Frequencies": ("1eV","1eV"), "Amplitudes" : ("1pi","1pi"), "Centers" : ("15ps","30ps"), "Widths": ("5ps","5ps"), "Type": ("gauss","gauss")})
+
+    def save_to_qdlc_file(self, filepath = "settings.qdlc"):
+        from pickle import dump, HIGHEST_PROTOCOL
+        with open(filepath, "wb") as f:
+            dict(self.system_components)
+            dump(dict(self.system_components), f, protocol=HIGHEST_PROTOCOL)
+
+    def load_from_qdlc_file(self, filepath = "settings.qdlc"):
+        from pickle import load
+        with open(filepath, "rb") as f:
+            loaded = load(f)
+            self.system_components.update(loaded)
 
     def connect_functionality(self):
         # "Next" Buttons
-        for button in [self.button_next_tab_system_to_config, self.button_next_tab_config_to_timeline, self.button_next_tab_timeline_to_statistics, self.button_next_tab_statistics_to_run, self.button_next_tab_statistics_generate]:
+        for button in [self.button_next_tab_system_to_config, self.button_next_tab_config_to_timeline, self.button_next_tab_timeline_to_spectrum, self.button_next_tab_spectrum_to_indist, self.button_next_tab_indist_to_conc, self.button_next_tab_sconc_to_stats, self.button_next_tab_stats_to_detector, self.button_next_tab_detector_to_generate]:
             button.clicked.connect( lambda: self.tabWidget.setCurrentIndex( self.tabWidget.currentIndex() + 1 ) )
         # Add Stuff Dialog
         self.button_add_electronic_state.clicked.connect(lambda: DialogAddElectronic(main_window=self))
@@ -70,26 +87,78 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.drawSystem()
         self.input_draw_details.clicked.connect(modify)
         def delete_input():
-            dialog = InputDialogSmall(main_window=self)
-            result = dialog.input.text()
-            if len(result) > 0:
-                # Find everything that matches the input. ask to delete.
-                pass
+            current = self.list_components.currentIndex().data()
+            if current is None or current == "None":
+                return
+            name, category = current.split(" - ")
+            self.system_components[category].pop(name)
+            print(f"Dropped {name} from {category}")
+            self.drawSystem()
+            self.update_component_list()
         self.button_modify_delete.clicked.connect(delete_input)
+        def edit_input():
+            current = self.list_components.currentIndex().data()
+            print(current)
+            if current is None or current == "None":
+                return
+            name, category = current.split(" - ")
+            if category == "EnergyLevels":
+                DialogAddElectronic(main_window=self, load_existing=name)
+            elif category == "CavityLevels":
+                DialogAddCavity(main_window=self, load_existing=name)
+            elif category == "Pulse":
+                DialogAddPulse(main_window=self, load_existing=name)
+            elif category == "Chirp":
+                DialogAddChirp(main_window=self, load_existing=name)
+        self.button_modify_edit.clicked.connect(edit_input)
 
         # Config Inputs
         self.button_time_config_tol.clicked.connect(lambda: DialogAddGridOrTolerance(main_window=self,name="Tolerances"))
         self.button_time_config_grid.clicked.connect(lambda: DialogAddGridOrTolerance(main_window=self,name="Grid"))
 
+
+        # Loading / Saving
+        def export_command():
+            dlg = QFileDialog()
+            dlg.setFileMode(QFileDialog.AnyFile)
+            dlg.setAcceptMode(QFileDialog.AcceptSave)
+            dlg.setNameFilters(["*.qdlc", "*.log"])
+
+            if dlg.exec():
+                filenames = dlg.selectedFiles()
+                print(filenames)
+                print(f"Exporting to {filenames[0]}")
+                self.save_to_qdlc_file(filepath = filenames[0])
+
+        self.actionExport_QDLC_Command.triggered.connect(export_command)
+        def import_command():
+            dlg = QFileDialog()
+            dlg.setFileMode(QFileDialog.AnyFile)
+            dlg.setAcceptMode(QFileDialog.AcceptOpen)
+            dlg.setNameFilters(["*.qdlc", "*.log"])
+            if dlg.exec():
+                filenames = dlg.selectedFiles()
+                self.load_from_qdlc_file(filepath = filenames[0])
+                self.drawSystem()
+                self.update_component_list()
+        self.actionLoad_QDLC_Command.triggered.connect(import_command)
+
+        # BIGTODO:
+        ## Sowas hier in richtige funktion auslagern. funktion dann auch über tableiste aufrufbar.
         # Reset Buttons
         # Reset time parameters
-        self.button_reset_timeinput.clicked.connect(lambda: [self.textinput_time_startingtime.setText("0"),self.textinput_time_endtime.setText("auto"),self.textinput_time_timestep.setText("auto"),self.textinput_time_tolerance.setText("1E-6"),self.textinput_time_gridresolution.setText("auto")])
+        #self.button_reset_timeinput.clicked.connect(lambda: [self.textinput_time_startingtime.setText("0"),self.textinput_time_endtime.setText("auto"),self.textinput_time_timestep.setText("auto"),self.textinput_time_tolerance.setText("1E-6"),self.textinput_time_gridresolution.setText("auto")])
         # Reset solver parameters
-        self.button_reset_solver_config.clicked.connect(lambda: [self.input_rungekutta_order.setCurrentIndex(0),self.input_interpolator_t.setCurrentIndex(0),self.input_interpolator_tau.setCurrentIndex(0)])
+        #self.button_reset_solver_config.clicked.connect(lambda: [self.input_rungekutta_order.setCurrentIndex(0),self.input_interpolator_t.setCurrentIndex(0),self.input_interpolator_tau.setCurrentIndex(0)])
         # ...
 
         # Dynamic change stuff
-        self.input_phonons_use_qd.stateChanged.connect(lambda: [a.setEnabled(self.input_phonons_use_qd.isChecked()) for a in [self.textinput_phonons_sd_qd_de,self.textinput_phonons_sd_qd_dh,self.textinput_phonons_sd_qd_rho,self.textinput_phonons_sd_qd_cs,self.textinput_phonons_sd_qd_aeah_ratio,self.textinput_phonons_sd_qd_size]])
+        def toggle_phonon_inputs():
+            enable = self.input_phonons_use_qd.isChecked()
+            for a in [self.textinput_phonons_sd_qd_de,self.textinput_phonons_sd_qd_dh,self.textinput_phonons_sd_qd_rho,self.textinput_phonons_sd_qd_cs,self.textinput_phonons_sd_qd_aeah_ratio,self.textinput_phonons_sd_qd_size]:
+                a.setEnabled(enable)
+            self.textinput_phonons_sd_alpha.setEnabled(not enable)
+        self.input_phonons_use_qd.stateChanged.connect(toggle_phonon_inputs)
 
         # Run
         def generate_command():
@@ -121,10 +190,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.system_cavity_level_groups = list()
         self.system_components["Pulse"] = {}
         self.system_components["Shift"] = {}
+        self.update_component_list()
         self.drawSystem()
 
     def sort_energy_levels(self, group_threshold: float = 0.05) -> None:
         levels = [a for a in self.system_components["EnergyLevels"].values()]
+        if len(levels) < 2:
+            return
         levels.sort(key=lambda l: get_uv_scaled(l["Energy"]))
         # Check grouping
         grouping_threshold = abs(get_uv_scaled(levels[0]["Energy"]) - get_uv_scaled(levels[-1]["Energy"])) * group_threshold
@@ -140,17 +212,28 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     ###########################################################################################################
     ########################################### Adding System Components ######################################
     ###########################################################################################################
-    def add_generic(self, category: str, struct: dict) -> None:
+    def add_component(self, category: str, struct: dict) -> None:
         name = struct["Name"]
         changed = "Added" if name not in self.system_components[category] else "Replaced"
         self.system_components[category][name] = struct
+
+        self.update_component_list()
+        self.drawSystem()
         print(changed, self.system_components[category][name])
 
+    def update_component_list(self):
+        model = QStandardItemModel()
+        self.list_components.setModel(model)
+        for cat in self.system_components:
+            for name in self.system_components[cat]:
+                item = QStandardItem(name + " - " + cat)
+                model.appendRow(item)
+
     def addEnergyLevel(self, p: dict ):
-        self.add_generic( "EnergyLevels", p )
+        self.add_component( "EnergyLevels", p )
         
     def addCavity(self, p: dict):
-        self.add_generic( "CavityLevels", p )
+        self.add_component( "CavityLevels", p )
 
     def addPulse(self, p: dict):
         # Confirm that Pulse sizes are the same:
@@ -158,10 +241,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if not (a==f and f==c and c==w and w==t):
             self.sendErrorMessage("Wrong Pulse Dimensions", "The arrays you entered for the Pulse parameters must be of equal length!")
             return
-        self.add_generic( "Pulse", p )
+        self.add_component( "Pulse", p )
         
     def addShift(self, p: dict):
-        self.add_generic( "Shift", p )
+        self.add_component( "Shift", p )
     
     # Parses All configs from always-on entries like time, solver, etc.
     def parseConfig(self):
@@ -178,6 +261,49 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.system_components["ConfigSolver"]["Solver"] = self.input_rungekutta_order.currentIndex()
         self.system_components["ConfigSolver"]["Interpolator"] = self.input_interpolator_t.currentText()
         self.system_components["ConfigSolver"]["InterpolatorGrid"] = self.input_interpolator_tau.currentText()
+        self.system_components["ConfigSolver"]["NC"] = self.textinput_phonons_nc.text()
+        # System Parameters
+        self.system_components["ConfigSystem"]["Coupling"] = self.textinput_rates_cavity_coupling.text()
+        self.system_components["ConfigSystem"]["CavityLosses"] = self.textinput_rates_cavity_loss.text()
+        self.system_components["ConfigSystem"]["RadiativeLosses"] = self.textinput_rates_radiative_decay.text()
+        self.system_components["ConfigSystem"]["DephasingLosses"] = self.textinput_rates_pure_dephasing.text()
+        # Phonons
+        self.system_components["ConfigPhonons"]["Temperature"] = self.textinput_phonons_temperature.text()
+        self.system_components["ConfigPhonons"]["IteratorStep"] = self.textinput_phonons_iterator_stepsize.text()
+        self.system_components["ConfigPhonons"]["Approximation"] = self.input_phonons_approximation.currentIndex()
+        self.system_components["ConfigPhonons"]["ARRad"] = self.input_phonons_adjust_radiativeloss.isChecked()
+        self.system_components["ConfigPhonons"]["ARDep"] = self.input_phonons_adjust_pure_dephasing.isChecked()
+        self.system_components["ConfigPhonons"]["Renormalization"] = self.input_phonons_adjust_renormalization.isChecked()
+        ## Phonon Parameters
+        self.system_components["ConfigPhonons"]["Alpha"] = self.textinput_phonons_sd_alpha.text()
+        self.system_components["ConfigPhonons"]["SpectralCutoff"] = self.textinput_phonons_sd_wcutoff.text()
+        self.system_components["ConfigPhonons"]["SpectralDelta"] = self.textinput_phonons_sd_wdelta.text()
+        self.system_components["ConfigPhonons"]["TimeCutoff"] = self.textinput_phonons_sd_tcutoff.text()
+        self.system_components["ConfigPhonons"]["Ohm"] = self.textinput_phonons_sd_ohmamp.text()
+        ## Phonon QD
+        self.system_components["ConfigPhonons"]["UseQD"] = self.input_phonons_use_qd.isChecked()
+        self.system_components["ConfigPhonons"]["QDde"] = self.textinput_phonons_sd_qd_de.text()
+        self.system_components["ConfigPhonons"]["QDdh"] = self.textinput_phonons_sd_qd_dh.text()
+        self.system_components["ConfigPhonons"]["QDrho"] = self.textinput_phonons_sd_qd_rho.text()
+        self.system_components["ConfigPhonons"]["QDcs"] = self.textinput_phonons_sd_qd_cs.text()
+        self.system_components["ConfigPhonons"]["QDeh"] = self.textinput_phonons_sd_qd_aeah_ratio.text()
+        self.system_components["ConfigPhonons"]["QDs"] = self.textinput_phonons_sd_qd_size.text()
+    
+    def insertConfig(self):
+        # Time
+        self.system_components["ConfigTime"] = {
+            "Start" : self.textinput_time_startingtime.text(),
+            "End" : self.textinput_time_endtime.text(),
+            "Step" : self.textinput_time_timestep.text()
+        }
+        # Grids
+        self.system_components["ConfigGrid"]["Resolution"] = self.textinput_time_gridresolution.text()
+        self.system_components["ConfigTolerances"]["Resolution"] = self.textinput_time_tolerance.text()
+        # Solver and Interpolator
+        self.system_components["ConfigSolver"]["Solver"] = self.input_rungekutta_order.currentIndex()
+        self.system_components["ConfigSolver"]["Interpolator"] = self.input_interpolator_t.currentText()
+        self.system_components["ConfigSolver"]["InterpolatorGrid"] = self.input_interpolator_tau.currentText()
+        self.system_components["ConfigSolver"]["NC"] = self.textinput_phonons_nc.text()
         # System Parameters
         self.system_components["ConfigSystem"]["Coupling"] = self.textinput_rates_cavity_coupling.text()
         self.system_components["ConfigSystem"]["CavityLosses"] = self.textinput_rates_cavity_loss.text()
@@ -264,6 +390,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             pen.setCapStyle(Qt.PenCapStyle.RoundCap)
             qp.setPen(pen)
             qp.drawArc(int(x1),int(y1),int(_w),int(_h),int(startangle),int(arcangle))
+
+        def draw_exp(x1,y1,_w,_h,_lw = 3,_color = transition_color):
+            x = np.linspace(-1,1,300)
+            xfunc = _w*x
+            func = _h*np.exp(-8*x*x)*np.sin(10*np.pi*x)
+            for x1,x2,y1,y2 in zip(x1+xfunc,x1+xfunc[1:],y1-func,y1-func[1:]):
+                draw_line(int(x1), int(y1), int(x2),int(y2), _w = _lw, _style = Qt.PenStyle.SolidLine, _color = _color)
             
 
         # Draw Energy Levels from bottom to top
@@ -342,8 +475,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     #draw_line(cavity_x2 + c*cavity_x_delta, cavity_y1, cavity_x2 + c*cavity_x_delta, cavity_y1 + cavity_height, _color = cavity_color, _style = Qt.PenStyle.SolidLine)
                     #draw_line(cavity_x2 + c*cavity_x_delta - cavity_width/4, cavity_y1, cavity_x2 + c*cavity_x_delta + cavity_width/4, cavity_y1, _color = cavity_color, _style = Qt.PenStyle.SolidLine)
                     #draw_line(cavity_x2 + c*cavity_x_delta - cavity_width/4, cavity_y1+cavity_height, cavity_x2 + c*cavity_x_delta + cavity_width/4, cavity_y1+cavity_height, _color = cavity_color, _style = Qt.PenStyle.SolidLine)
-        # Draw Indicator for Pulse and chirp
-        for i,el in enumerate(list(self.system_components["Pulse"].values()) + list(self.system_components["Shift"].values())):
+        
+        # Draw Indicator for Pulses
+        for i,el in enumerate(list(self.system_components["Pulse"].values())): #+ list(self.system_components["Shift"].values())):
             text = "Pulse: " if el["Name"] in self.system_components["Pulse"] else "Shift: "
             lowest_level = 0.9*h
             highest_level = 0.2*h
@@ -356,7 +490,18 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             width = level_width*w
             height = level_height*h
             name = el["Name"]
-            draw_rect(xpos,ypos,width,height,f"{text}{name}",font_size = 0.5,offset_name=(0.25*width,-0.25*height))
+            transitions = [t.split("=") if "=" in t else t for t in el["CoupledTo"]]
+            for transition in transitions:
+                if isinstance(transition, list) and len(transition) > 1 and transition[0] in self.system_components["EnergyLevels"] and transition[1] in self.system_components["EnergyLevels"]: # electronic transition
+                    e0 = self.system_components["EnergyLevels"][transition[0]]["Coords"]
+                    e1 = self.system_components["EnergyLevels"][transition[1]]["Coords"]
+                    x1 = e0[0] + e0[2]/2.
+                    y1 = e0[1] + e0[3]/2
+                    x2 = e1[0] + e1[2]/2.
+                    y2 = e1[1] + e1[3]/2
+                    x = (x1+x2)/2
+                    y = (y1+y2)/2
+                    draw_exp(x,y, 100, 50)
         qp.end()
 
         self.label_output_system.setPixmap(self.output_system_canvas)

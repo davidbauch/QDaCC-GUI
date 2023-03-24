@@ -17,11 +17,13 @@ class DialogSmall(QDialog, Ui_Dialog):
         self.exec()
 
 class InputDialogSmall(QDialog, Ui_InputDialog):
-    def __init__(self, *args, main_window=None, **kwargs):
+    def __init__(self, *args, main_window=None, callback = None, **kwargs):
         super(InputDialogSmall, self).__init__(*args, **kwargs)
         self.setupUi(self)
         self.retranslateUi(self)
         def finished():
+            if callback is not None:
+                callback(self.input.text())
             self.accept()
         def cancel():
             self.input.setText("")

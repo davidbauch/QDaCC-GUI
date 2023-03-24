@@ -4,16 +4,18 @@ import numpy as np
 from unit_seperator import get_uv_scaled
 
 class DialogAddChirp(QDialog, Ui_AddChirp):
-    def __init__(self, *args, main_window=None, **kwargs):
+    def __init__(self, *args, main_window=None, load_existing = None, **kwargs):
         super(DialogAddChirp, self).__init__(*args, **kwargs)
         self.setupUi(self)
         self.retranslateUi(self)
         self.vector = []
-        def finished():
+        def finished(replace=False):
             name = self.textinput_name.text()
             states = tuple(self.textinput_states.text().split(","))
             state_couplings = tuple(self.textinput_state_couplings.text().split(","))
             shift_type = self.textinput_type.text()
+            if replace:
+                main_window.system_components["Chirp"].pop(self.name_when_loaded)
             main_window.addShift({"Name": name, "CoupledTo": states, "CoupledToScalings": state_couplings, "Amplitudes" : tuple(a for t,a in self.vector), "Times": tuple(t for t,a in self.vector), "Type" : shift_type})
             main_window.drawSystem()
         def reset():
@@ -22,6 +24,7 @@ class DialogAddChirp(QDialog, Ui_AddChirp):
             self.textinput_type.setText("monotone")
         def load():
             name = self.textinput_name.text()
+            self.name_when_loaded = name
             if name not in main_window.system_components["Shift"]:
                 main_window.sendErrorMessage("No Exist Error","A Shift with this name does not exist!")
                 return
@@ -62,21 +65,17 @@ class DialogAddChirp(QDialog, Ui_AddChirp):
             #self.plot_chirp.canvas.axes.legend(('cosinus', 'sinus'),loc='upper right')
             #self.plot_chirp.canvas.axes.set_title('Cosinus - Sinus Signals')
             self.plot_chirp.canvas.draw()
-        def remove():
-            name = self.textinput_name.text()
-            if name in main_window.system_components["Shift"]:
-                main_window.system_components["Shift"].pop(name)
-            else:
-                main_window.sendErrorMessage("No Exist Error","A Shift with this name does not exist!")
-            main_window.drawSystem()
-        self.button_remove.clicked.connect(remove)
         self.button_plot.clicked.connect(plot)
         self.button_confirm.clicked.connect(finished)
+        self.button_confirm_replace.clicked.connect(lambda: finished(replace=True))
         self.button_reset.clicked.connect(reset)
         self.button_load.clicked.connect(load)
         self.button_add.clicked.connect(add)
         self.button_remove_points.clicked.connect(remove_points)
         self.button_setone.clicked.connect(set_scalings)
+        if load_existing is not None:
+            self.textinput_name.setText(load_existing)
+            load()
         self.exec()
         
 if __name__ == "__main__":

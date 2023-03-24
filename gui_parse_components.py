@@ -1,4 +1,4 @@
-from unit_seperator import  get_uv_scaled
+from unit_seperator import  get_uv_scaled, get_unit, get_unit_value
 
 def _parse_electronic_system(components: dict, escape_symbol: str = "'", callback = None) -> str:
     ret = ""
@@ -81,7 +81,10 @@ def _parse_config_solver(components: dict, escape_symbol: str = "", callback = N
         if (components["ConfigPhonons"]["Temperature"] == "No Phonons"):
             callback("If the PathIntegral PSADM IQUAPI Solver is chosen, the temperature must be set to T >= 0!")
         else:
-            ret += "--phononorder 5"
+            nc = s["NC"]
+            cutoff, unit = get_unit_value(components["ConfigPhonons"]["TimeCutoff"]), get_unit(components["ConfigPhonons"]["TimeCutoff"])
+            tstep = float(cutoff) / float(nc)
+            ret += f"--phononorder 5 --NC {nc} --tstepPath {tstep}{unit}"
     # Interpolator
     if s['Interpolator'] != "None":
         ret += " -interpolate"
