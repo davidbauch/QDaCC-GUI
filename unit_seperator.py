@@ -6,12 +6,14 @@
 
 
 def seperate_unit(value: str):
-    one_over_hbare = 6.582119569E16
-    units_trail = ["ms","mus","ns","ps","fs","Hz","meV","mueV","pi","eV","s"]
-    scalings_unit = {"s" : 1, "ms" : 1E-3, "mus" : 1E-6, "ns" : 1E-9, "ps" : 1E-12, "fs" : 1E-15, "Hz" : 1, "eV" : one_over_hbare, "meV" : one_over_hbare*1E-3, "mueV" : one_over_hbare*1E-6, "pi" : 1}
+    hbar = 1.0545718E-34
+    electron_charge = 1.60217662E-19
+    one_over_hbare = 1/6.582119516885722624e-16
+    units_trail = ["ms","mus","ns","ps","fs","Hz","meV","mueV","pi","eV","s","nm","mum","hbar"]
+    scalings_unit = {"s" : 1, "ms" : 1E-3, "mus" : 1E-6, "ns" : 1E-9, "ps" : 1E-12, "fs" : 1E-15, "Hz" : 1, "eV" : one_over_hbare, "meV" : one_over_hbare*1E-3, "mueV" : one_over_hbare*1E-6, "pi" : 1, "nm" : 1E-9, "mum" : 1E-6, "hbar" : hbar}
     if not any( [a in value for a in units_trail] ):
         return value,"",1
-    index = [i for i,a in enumerate(units_trail) if a in value]
+    index = [i for i,a in enumerate(units_trail) if value.endswith(a)]
     if len(index) == 0:
         return value,"",1
     index = index[0]

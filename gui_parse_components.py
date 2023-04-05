@@ -112,6 +112,98 @@ def _parse_config_phonons(components: dict, escape_symbol: str = "", callback = 
         ret += f" --phononalpha {p['Alpha']} --phononwcutoff {p['SpectralCutoff']} --phononwcutoffdelta {p['SpectralDelta']} --phonontcutoff {p['TimeCutoff']}"
     return ret
 
+def _parse_config_spectra(components: dict, escape_symbol: str = "", callback = None) -> str:
+    p = components["Spectrum"]
+    if len(p.values()) == 0:
+        return ""
+    ret = f"--GS {escape_symbol}"
+    for spectrum in p.values():
+        ret += f"{','.join(spectrum['Modes'])}:{spectrum['Center']}:{spectrum['Range']}:{spectrum['Res']}:{spectrum['Order']}:{spectrum['Norm']};"
+    ret = ret[:-1] + escape_symbol
+    return ret
+
+def _parse_config_initial_state(components: dict, escape_symbol: str = "", callback = None) -> str:
+    p = components["InitialState"]
+    if "State" not in p or len(p["State"]) == 0:
+        callback("Please enter the initial State!")
+        return ""
+    return f"--R {escape_symbol}:{p['State']};{escape_symbol}"
+
+def _parse_runconfig(components: dict, escape_symbol: str = "", callback = None) -> str:
+    p = components["RunConfig"]
+    ret = ""
+    ret += ["", "-L2 ", "-L3 "][p["LoggingLevel"]]
+    if p["CPUCores"] == "all":
+        ret += "--Threads -1 "
+    elif p["CPUCores"] != 0:
+        ret += f"--Threads {p['CPUCores']} "
+    return ret
+
+def _parse_output_flags(components: dict, escape_symbol: str = "", callback = None) -> str:
+    p = components["OutputFlags"]
+    # --output flag
+    ret = ";".join([ name for name,checked in p.items() if checked])
+    if len(ret) > 0:
+        ret =  f"--output {escape_symbol}{ret}{escape_symbol} "
+    # dm output and dm frame
+    p = components["RunConfig"]
+    ret += f"--DMconfig {['none','diagonal','full'][p['DMOutputMode']]}:{['int', 'schroedinger'][p['OutputFrame']]}"
+    return ret
+
+def _parse_indistinguishabilities(components: dict, escape_symbol: str = "", callback = None) -> str:
+    p = components["Indistinguishability"]
+    if not len(p.values()):
+        return ""
+    ret = f"--GI {escape_symbol}"
+    for ind in p.values():
+        ret += f"{ind['Mode']};"
+    return ret[:-1] + escape_symbol
+
+def _parse_concurrences(components: dict, escape_symbol: str = "", callback = None) -> str:
+    p = components["Concurrence"]
+    if not len(p.values()):
+        return ""
+    ret = f"--GC {escape_symbol}"
+    for ind in p.values():
+        ret += f"{ind['Mode']}"
+        if "ConcurrenceSpectrum" in components:
+            p2 = components["ConcurrenceSpectrum"]
+            if p2["Active"]:
+                    ret += f":{p2['Center']}:{p2['Range']}:{p2['Res']}"
+        ret +=";"
+    ret = ret[:-1]
+    return ret + escape_symbol
+
+def _parse_g1g2_func(components: dict, escape_symbol: str = "", callback = None) -> str:
+    p = components["G1G2"]
+    if not len(p.values()):
+        return ""
+    ret = f"--GF {escape_symbol}"
+    for setting in p.values():
+        ret += f"{setting['Mode']}:{setting['Order']}:{setting['Method']};"
+    return ret[:-1] + escape_symbol
+
+def _parse_wigner_function(components: dict, escape_symbol: str = "", callback = None) -> str:
+    p = components["Wigner"]
+    if not len(p.values()):
+        return ""
+    ret = f"--GW {escape_symbol}"
+    for setting in p.values():
+        ret += f"{setting['Mode']}:{setting['XMax']}:{setting['YMax']}:{setting['Resolution']}:{setting['Skip']};"
+    return ret[:-1] + escape_symbol
+
+def _parse_detector(components: dict, escape_symbol: str = "", callback = None) -> str:
+    p1 = components["DetectorTime"]
+    p2 = components["DetectorSpectrum"]
+    if not len(p1.values()) and not len(p2.values()):
+        return ""
+    ret = f"--detector {escape_symbol}"
+    for d in p1.values():
+        ret += f"{d['t0']}:{d['t1']}:{d['Power']};"
+    for d in p2.values():
+        ret += f"{d['w0']}:{d['w1']}:{d['Points']}:{d['Power']};"
+    return ret[:-1] + escape_symbol
+
 _component_parser = {
     "EnergyLevels" : _parse_electronic_system,
     "CavityLevels" : _parse_cavity_system,
@@ -123,6 +215,15 @@ _component_parser = {
     "ConfigSolver": _parse_config_solver,
     "ConfigSystem": _parse_config_system,
     "ConfigPhonons": _parse_config_phonons,
+    "Spectrum": _parse_config_spectra,
+    "InitialState": _parse_config_initial_state,
+    "RunConfig": _parse_runconfig,
+    "OutputFlags": _parse_output_flags,
+    "Indistinguishability": _parse_indistinguishabilities,
+    "Concurrence": _parse_concurrences,
+    "G1G2": _parse_g1g2_func,
+    "Wigner": _parse_wigner_function,
+    "DetectorTime": _parse_detector,
 }
 
 def component_parser(component: str, escaped: bool, components: dict, escape_symbol: str = "'", callback = None) -> str:
