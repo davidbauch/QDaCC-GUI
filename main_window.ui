@@ -319,8 +319,176 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: none;}
         <property name="bottomMargin">
          <number>0</number>
         </property>
-        <item row="5" column="1">
-         <widget class="QLineEdit" name="textinput_rates_radiative_decay">
+        <item row="16" column="1">
+         <widget class="QLineEdit" name="textinput_phonons_sd_qd_de">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>140</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>11</pointsize>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>7eV</string>
+          </property>
+          <property name="frame">
+           <bool>true</bool>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="16" column="2">
+         <widget class="QLabel" name="label_32">
+          <property name="minimumSize">
+           <size>
+            <width>142</width>
+            <height>42</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Hole Energy&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item row="15" column="5" rowspan="4" colspan="5">
+         <widget class="PlotWidget" name="label_plot_spectral_density" native="true"/>
+        </item>
+        <item row="2" column="9">
+         <widget class="QLabel" name="label_title_adjust_rates">
+          <property name="minimumSize">
+           <size>
+            <width>142</width>
+            <height>42</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Adjust Rates&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QLabel" name="label_19">
+          <property name="minimumSize">
+           <size>
+            <width>142</width>
+            <height>42</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Cavity Loss&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="2">
+         <widget class="QLabel" name="label_22">
+          <property name="minimumSize">
+           <size>
+            <width>142</width>
+            <height>42</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Temperature&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item row="14" column="5" colspan="5">
+         <widget class="QLabel" name="label_39">
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Spectral Density Plot&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="9">
+         <widget class="QCheckBox" name="input_phonons_adjust_renormalization">
+          <property name="minimumSize">
+           <size>
+            <width>150</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="toolTip">
+           <string>Enables the renomalization of the polaron shifted energies and rates, e.g. using the &lt;B&gt; and &lt;B&gt;^2 scalings</string>
+          </property>
+          <property name="statusTip">
+           <string>Enables the renomalization of the polaron shifted energies and rates, e.g. using the &lt;B&gt; and &lt;B&gt;^2 scalings</string>
+          </property>
+          <property name="text">
+           <string>Renormalization</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="6">
+         <widget class="QLineEdit" name="textinput_phonons_sd_tcutoff">
+          <property name="minimumSize">
+           <size>
+            <width>140</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>11</pointsize>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>4ps</string>
+          </property>
+          <property name="frame">
+           <bool>true</bool>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="5">
+         <widget class="QLabel" name="label_29">
+          <property name="minimumSize">
+           <size>
+            <width>142</width>
+            <height>42</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Time Cutoff&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="0">
+         <widget class="QLabel" name="label_20">
+          <property name="minimumSize">
+           <size>
+            <width>142</width>
+            <height>42</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Radiative Loss&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="1">
+         <widget class="QLineEdit" name="textinput_rates_pure_dephasing">
           <property name="minimumSize">
            <size>
             <width>140</width>
@@ -344,8 +512,28 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: none;}
           </property>
          </widget>
         </item>
-        <item row="3" column="8">
-         <widget class="QLineEdit" name="textinput_phonons_sd_alpha">
+        <item row="17" column="2">
+         <widget class="QLabel" name="label_34">
+          <property name="minimumSize">
+           <size>
+            <width>142</width>
+            <height>42</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Speed of Sound&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item row="15" column="4" rowspan="4">
+         <widget class="Line" name="line_3">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="6">
+         <widget class="QLineEdit" name="textinput_phonons_iterator_stepsize">
           <property name="minimumSize">
            <size>
             <width>140</width>
@@ -359,7 +547,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: none;}
            </font>
           </property>
           <property name="text">
-           <string>0.03E-24</string>
+           <string>auto</string>
           </property>
           <property name="frame">
            <bool>true</bool>
@@ -369,45 +557,20 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: none;}
           </property>
          </widget>
         </item>
-        <item row="9" column="7" colspan="2">
-         <widget class="QPushButton" name="button_reset_phonons_3">
+        <item row="16" column="0">
+         <widget class="QLabel" name="label_31">
           <property name="minimumSize">
            <size>
-            <width>140</width>
-            <height>40</height>
+            <width>142</width>
+            <height>42</height>
            </size>
           </property>
           <property name="text">
-           <string>Reset</string>
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Electron Energy&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
          </widget>
         </item>
-        <item row="4" column="3">
-         <widget class="QLineEdit" name="textinput_phonons_sd_ohmamp">
-          <property name="minimumSize">
-           <size>
-            <width>140</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>11</pointsize>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>3</string>
-          </property>
-          <property name="frame">
-           <bool>true</bool>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="19" column="0">
+        <item row="18" column="0">
          <widget class="QLabel" name="label_35">
           <property name="minimumSize">
            <size>
@@ -417,6 +580,114 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: none;}
           </property>
           <property name="text">
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;E-H Ratio&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0" colspan="2">
+         <widget class="QLabel" name="label_title_rates">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:700;&quot;&gt;Rates&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="label_18">
+          <property name="minimumSize">
+           <size>
+            <width>142</width>
+            <height>42</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Cavity Coupling&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item row="13" column="0" colspan="10">
+         <widget class="Line" name="line_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="0">
+         <widget class="QLabel" name="label_21">
+          <property name="minimumSize">
+           <size>
+            <width>142</width>
+            <height>42</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Pure Dephasing&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="7" colspan="2">
+         <widget class="QLabel" name="label_title_phonons_3">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:700;&quot;&gt;PME Settings&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="9">
+         <widget class="QCheckBox" name="input_phonons_adjust_radiativeloss">
+          <property name="minimumSize">
+           <size>
+            <width>150</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="statusTip">
+           <string>Adjusts the radiative decay loss using the formula gamma_rad = gamma_rad*&lt;B&gt;</string>
+          </property>
+          <property name="text">
+           <string>Radiative Loss</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="5">
+         <widget class="QLabel" name="label_27">
+          <property name="minimumSize">
+           <size>
+            <width>142</width>
+            <height>42</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Spectral Cutoff&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
          </widget>
         </item>
@@ -445,88 +716,8 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: none;}
           </property>
          </widget>
         </item>
-        <item row="16" column="0">
-         <widget class="QLabel" name="label_25">
-          <property name="minimumSize">
-           <size>
-            <width>142</width>
-            <height>42</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Quantum Dot&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0" colspan="2">
-         <widget class="QLabel" name="label_title_rates">
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="frameShape">
-           <enum>QFrame::NoFrame</enum>
-          </property>
-          <property name="frameShadow">
-           <enum>QFrame::Plain</enum>
-          </property>
-          <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:700;&quot;&gt;Rates&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="5">
-         <widget class="QLabel" name="label_37">
-          <property name="minimumSize">
-           <size>
-            <width>142</width>
-            <height>42</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Integral Stepsize&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="2" colspan="2">
-         <widget class="QLabel" name="label_title_phonons">
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="frameShape">
-           <enum>QFrame::NoFrame</enum>
-          </property>
-          <property name="frameShadow">
-           <enum>QFrame::Plain</enum>
-          </property>
-          <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:700;&quot;&gt;Environment (Phonons)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="5">
-         <widget class="QLabel" name="label_27">
-          <property name="minimumSize">
-           <size>
-            <width>142</width>
-            <height>42</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Spectral Cutoff&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-         </widget>
-        </item>
-        <item row="18" column="3">
-         <widget class="QLineEdit" name="textinput_phonons_sd_qd_cs">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
+        <item row="4" column="3">
+         <widget class="QLineEdit" name="textinput_phonons_sd_ohmamp">
           <property name="minimumSize">
            <size>
             <width>140</width>
@@ -539,442 +730,14 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: none;}
             <bold>true</bold>
            </font>
           </property>
-          <property name="statusTip">
-           <string>Unit is m/s</string>
-          </property>
           <property name="text">
-           <string>5110</string>
+           <string>3</string>
           </property>
           <property name="frame">
            <bool>true</bool>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="9">
-         <widget class="QCheckBox" name="input_phonons_adjust_pure_dephasing">
-          <property name="minimumSize">
-           <size>
-            <width>150</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="statusTip">
-           <string>Adjusts the pure dephasing rate using the formula pure_dephasing = 1mueV/K * temperature. This effect is quite strong and should probably not be used.</string>
-          </property>
-          <property name="text">
-           <string>Pure Dephasing</string>
-          </property>
-         </widget>
-        </item>
-        <item row="20" column="9">
-         <widget class="QPushButton" name="button_next_tab_config_to_timeline">
-          <property name="minimumSize">
-           <size>
-            <width>140</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>150</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Next</string>
-          </property>
-          <property name="checkable">
-           <bool>false</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="16" column="1" colspan="3">
-         <widget class="QCheckBox" name="input_phonons_use_qd">
-          <property name="minimumSize">
-           <size>
-            <width>150</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>11</pointsize>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>Use QD Parameters Instead of PME Settings</string>
-          </property>
-         </widget>
-        </item>
-        <item row="14" column="0" colspan="10">
-         <widget class="Line" name="line_2">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="0">
-         <widget class="QLabel" name="label_20">
-          <property name="minimumSize">
-           <size>
-            <width>142</width>
-            <height>42</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Radiative Loss&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="2">
-         <widget class="QLabel" name="label_23">
-          <property name="minimumSize">
-           <size>
-            <width>142</width>
-            <height>42</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Approximation&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="5">
-         <widget class="QLabel" name="label_28">
-          <property name="minimumSize">
-           <size>
-            <width>142</width>
-            <height>42</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Spectral Delta&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-         </widget>
-        </item>
-        <item row="18" column="2">
-         <widget class="QLabel" name="label_34">
-          <property name="minimumSize">
-           <size>
-            <width>142</width>
-            <height>42</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Speed of Sound&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-         </widget>
-        </item>
-        <item row="19" column="2">
-         <widget class="QLabel" name="label_36">
-          <property name="minimumSize">
-           <size>
-            <width>142</width>
-            <height>42</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;QD Size&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-         </widget>
-        </item>
-        <item row="17" column="1">
-         <widget class="QLineEdit" name="textinput_phonons_sd_qd_de">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>140</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>11</pointsize>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>7eV</string>
-          </property>
-          <property name="frame">
-           <bool>true</bool>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="19" column="3">
-         <widget class="QLineEdit" name="textinput_phonons_sd_qd_size">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>140</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>11</pointsize>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="statusTip">
-           <string>Typical Values lie around 3nm to 6nm</string>
-          </property>
-          <property name="text">
-           <string>3nm</string>
-          </property>
-          <property name="frame">
-           <bool>true</bool>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="1">
-         <widget class="QLineEdit" name="textinput_rates_cavity_loss">
-          <property name="minimumSize">
-           <size>
-            <width>140</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>11</pointsize>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>0</string>
-          </property>
-          <property name="frame">
-           <bool>true</bool>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="6">
-         <widget class="QLineEdit" name="textinput_phonons_sd_wcutoff">
-          <property name="minimumSize">
-           <size>
-            <width>140</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>11</pointsize>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>1meV</string>
-          </property>
-          <property name="frame">
-           <bool>true</bool>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="2">
-         <widget class="QLabel" name="label_22">
-          <property name="minimumSize">
-           <size>
-            <width>142</width>
-            <height>42</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Temperature&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-         </widget>
-        </item>
-        <item row="20" column="8">
-         <widget class="QPushButton" name="button_reset_phonon_qd">
-          <property name="minimumSize">
-           <size>
-            <width>140</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Reset</string>
-          </property>
-         </widget>
-        </item>
-        <item row="9" column="5" colspan="2">
-         <widget class="QPushButton" name="button_reset_phonons_2">
-          <property name="minimumSize">
-           <size>
-            <width>140</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Reset</string>
-          </property>
-         </widget>
-        </item>
-        <item row="15" column="0" colspan="4">
-         <widget class="QLabel" name="label_title_phonons_4">
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="frameShape">
-           <enum>QFrame::NoFrame</enum>
-          </property>
-          <property name="frameShadow">
-           <enum>QFrame::Plain</enum>
-          </property>
-          <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:700;&quot;&gt;QD Settings&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="0">
-         <widget class="QLabel" name="label_21">
-          <property name="minimumSize">
-           <size>
-            <width>142</width>
-            <height>42</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Pure Dephasing&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-         </widget>
-        </item>
-        <item row="16" column="4" rowspan="4">
-         <widget class="Line" name="line_3">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="17" column="2">
-         <widget class="QLabel" name="label_32">
-          <property name="minimumSize">
-           <size>
-            <width>142</width>
-            <height>42</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Hole Energy&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-         </widget>
-        </item>
-        <item row="9" column="2" colspan="2">
-         <widget class="QPushButton" name="button_reset_phonons">
-          <property name="minimumSize">
-           <size>
-            <width>140</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Reset</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="0">
-         <widget class="QLabel" name="label_18">
-          <property name="minimumSize">
-           <size>
-            <width>142</width>
-            <height>42</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Cavity Coupling&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-         </widget>
-        </item>
-        <item row="17" column="0">
-         <widget class="QLabel" name="label_31">
-          <property name="minimumSize">
-           <size>
-            <width>142</width>
-            <height>42</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Electron Energy&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="5">
-         <widget class="QLabel" name="label_29">
-          <property name="minimumSize">
-           <size>
-            <width>142</width>
-            <height>42</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Time Cutoff&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-         </widget>
-        </item>
-        <item row="9" column="9">
-         <widget class="QPushButton" name="button_reset_phonon_sd">
-          <property name="minimumSize">
-           <size>
-            <width>140</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Reset</string>
-          </property>
-         </widget>
-        </item>
-        <item row="18" column="0">
-         <widget class="QLabel" name="label_33">
-          <property name="minimumSize">
-           <size>
-            <width>142</width>
-            <height>42</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Material Density&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="2">
-         <widget class="QLabel" name="label_30">
-          <property name="minimumSize">
-           <size>
-            <width>142</width>
-            <height>42</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Ohm&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
          </widget>
         </item>
@@ -1028,7 +791,489 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: none;}
           </item>
          </widget>
         </item>
-        <item row="19" column="1">
+        <item row="17" column="0">
+         <widget class="QLabel" name="label_33">
+          <property name="minimumSize">
+           <size>
+            <width>142</width>
+            <height>42</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Material Density&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="5" colspan="2">
+         <widget class="QLabel" name="label_title_phonons_2">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:700;&quot;&gt;Phonon Integral&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item row="16" column="3">
+         <widget class="QLineEdit" name="textinput_phonons_sd_qd_dh">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>140</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>11</pointsize>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>-3.5eV</string>
+          </property>
+          <property name="frame">
+           <bool>true</bool>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="15" column="0">
+         <widget class="QLabel" name="label_25">
+          <property name="minimumSize">
+           <size>
+            <width>142</width>
+            <height>42</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Quantum Dot&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="9">
+         <widget class="QCheckBox" name="input_phonons_adjust_pure_dephasing">
+          <property name="minimumSize">
+           <size>
+            <width>150</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="statusTip">
+           <string>Adjusts the pure dephasing rate using the formula pure_dephasing = 1mueV/K * temperature. This effect is quite strong and should probably not be used.</string>
+          </property>
+          <property name="text">
+           <string>Pure Dephasing</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="2">
+         <widget class="QLabel" name="label_30">
+          <property name="minimumSize">
+           <size>
+            <width>142</width>
+            <height>42</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Ohm&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="1">
+         <widget class="QLineEdit" name="textinput_rates_radiative_decay">
+          <property name="minimumSize">
+           <size>
+            <width>140</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>11</pointsize>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>0</string>
+          </property>
+          <property name="frame">
+           <bool>true</bool>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="18" column="3">
+         <widget class="QLineEdit" name="textinput_phonons_sd_qd_size">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>140</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>11</pointsize>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="statusTip">
+           <string>Typical Values lie around 3nm to 6nm</string>
+          </property>
+          <property name="text">
+           <string>3nm</string>
+          </property>
+          <property name="frame">
+           <bool>true</bool>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="19" column="9">
+         <widget class="QPushButton" name="button_next_tab_config_to_timeline">
+          <property name="minimumSize">
+           <size>
+            <width>140</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>150</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Next</string>
+          </property>
+          <property name="checkable">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="5">
+         <widget class="QLabel" name="label_37">
+          <property name="minimumSize">
+           <size>
+            <width>142</width>
+            <height>42</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Integral Stepsize&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item row="17" column="1">
+         <widget class="QLineEdit" name="textinput_phonons_sd_qd_rho">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>140</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>11</pointsize>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="statusTip">
+           <string>Unit is kg/m^3</string>
+          </property>
+          <property name="text">
+           <string>5370</string>
+          </property>
+          <property name="frame">
+           <bool>true</bool>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="7">
+         <widget class="QLabel" name="label_26">
+          <property name="minimumSize">
+           <size>
+            <width>142</width>
+            <height>42</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Phonon Coupling&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item row="14" column="0" colspan="4">
+         <widget class="QLabel" name="label_title_phonons_4">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:700;&quot;&gt;QD Settings&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="8">
+         <widget class="QLineEdit" name="textinput_phonons_sd_alpha">
+          <property name="minimumSize">
+           <size>
+            <width>140</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>11</pointsize>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>0.03E-24</string>
+          </property>
+          <property name="frame">
+           <bool>true</bool>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="18" column="2">
+         <widget class="QLabel" name="label_36">
+          <property name="minimumSize">
+           <size>
+            <width>142</width>
+            <height>42</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;QD Size&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="6">
+         <widget class="QLineEdit" name="textinput_phonons_sd_wcutoff">
+          <property name="minimumSize">
+           <size>
+            <width>140</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>11</pointsize>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>1meV</string>
+          </property>
+          <property name="frame">
+           <bool>true</bool>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="15" column="1" colspan="3">
+         <widget class="QCheckBox" name="input_phonons_use_qd">
+          <property name="minimumSize">
+           <size>
+            <width>150</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>11</pointsize>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>Use QD Parameters Instead of PME Settings</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="2" colspan="2">
+         <widget class="QLabel" name="label_title_phonons">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:700;&quot;&gt;Environment (Phonons)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="2">
+         <widget class="QLabel" name="label_23">
+          <property name="minimumSize">
+           <size>
+            <width>142</width>
+            <height>42</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Approximation&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="5">
+         <widget class="QLabel" name="label_28">
+          <property name="minimumSize">
+           <size>
+            <width>142</width>
+            <height>42</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Spectral Delta&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="QLineEdit" name="textinput_rates_cavity_loss">
+          <property name="minimumSize">
+           <size>
+            <width>140</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>11</pointsize>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>0</string>
+          </property>
+          <property name="frame">
+           <bool>true</bool>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="17" column="3">
+         <widget class="QLineEdit" name="textinput_phonons_sd_qd_cs">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>140</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>11</pointsize>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="statusTip">
+           <string>Unit is m/s</string>
+          </property>
+          <property name="text">
+           <string>5110</string>
+          </property>
+          <property name="frame">
+           <bool>true</bool>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="6">
+         <widget class="QLineEdit" name="textinput_phonons_sd_wdelta">
+          <property name="minimumSize">
+           <size>
+            <width>140</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>11</pointsize>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>0.01meV</string>
+          </property>
+          <property name="frame">
+           <bool>true</bool>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="19" column="8">
+         <widget class="QPushButton" name="button_reset_phonon_qd">
+          <property name="minimumSize">
+           <size>
+            <width>140</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Reset</string>
+          </property>
+         </widget>
+        </item>
+        <item row="18" column="1">
          <widget class="QLineEdit" name="textinput_phonons_sd_qd_aeah_ratio">
           <property name="enabled">
            <bool>false</bool>
@@ -1081,316 +1326,6 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: none;}
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="9">
-         <widget class="QLabel" name="label_title_adjust_rates">
-          <property name="minimumSize">
-           <size>
-            <width>142</width>
-            <height>42</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Adjust Rates&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-         </widget>
-        </item>
-        <item row="17" column="3">
-         <widget class="QLineEdit" name="textinput_phonons_sd_qd_dh">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>140</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>11</pointsize>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>-3.5eV</string>
-          </property>
-          <property name="frame">
-           <bool>true</bool>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="7" colspan="2">
-         <widget class="QLabel" name="label_title_phonons_3">
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="frameShape">
-           <enum>QFrame::NoFrame</enum>
-          </property>
-          <property name="frameShadow">
-           <enum>QFrame::Plain</enum>
-          </property>
-          <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:700;&quot;&gt;PME Settings&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="1">
-         <widget class="QLineEdit" name="textinput_rates_pure_dephasing">
-          <property name="minimumSize">
-           <size>
-            <width>140</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>11</pointsize>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>0</string>
-          </property>
-          <property name="frame">
-           <bool>true</bool>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="6">
-         <widget class="QLineEdit" name="textinput_phonons_sd_wdelta">
-          <property name="minimumSize">
-           <size>
-            <width>140</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>11</pointsize>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>0.01meV</string>
-          </property>
-          <property name="frame">
-           <bool>true</bool>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="5" colspan="2">
-         <widget class="QLabel" name="label_title_phonons_2">
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="frameShape">
-           <enum>QFrame::NoFrame</enum>
-          </property>
-          <property name="frameShadow">
-           <enum>QFrame::Plain</enum>
-          </property>
-          <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:700;&quot;&gt;Phonon Integral&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="0">
-         <widget class="QLabel" name="label_19">
-          <property name="minimumSize">
-           <size>
-            <width>142</width>
-            <height>42</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Cavity Loss&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="7">
-         <widget class="QLabel" name="label_26">
-          <property name="minimumSize">
-           <size>
-            <width>142</width>
-            <height>42</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Phonon Coupling&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="9">
-         <widget class="QCheckBox" name="input_phonons_adjust_renormalization">
-          <property name="minimumSize">
-           <size>
-            <width>150</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="toolTip">
-           <string>Enables the renomalization of the polaron shifted energies and rates, e.g. using the &lt;B&gt; and &lt;B&gt;^2 scalings</string>
-          </property>
-          <property name="statusTip">
-           <string>Enables the renomalization of the polaron shifted energies and rates, e.g. using the &lt;B&gt; and &lt;B&gt;^2 scalings</string>
-          </property>
-          <property name="text">
-           <string>Renormalization</string>
-          </property>
-          <property name="checked">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="9">
-         <widget class="QCheckBox" name="input_phonons_adjust_radiativeloss">
-          <property name="minimumSize">
-           <size>
-            <width>150</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="statusTip">
-           <string>Adjusts the radiative decay loss using the formula gamma_rad = gamma_rad*&lt;B&gt;</string>
-          </property>
-          <property name="text">
-           <string>Radiative Loss</string>
-          </property>
-          <property name="checked">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="18" column="1">
-         <widget class="QLineEdit" name="textinput_phonons_sd_qd_rho">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>140</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>11</pointsize>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="statusTip">
-           <string>Unit is kg/m^3</string>
-          </property>
-          <property name="text">
-           <string>5370</string>
-          </property>
-          <property name="frame">
-           <bool>true</bool>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="6">
-         <widget class="QLineEdit" name="textinput_phonons_sd_tcutoff">
-          <property name="minimumSize">
-           <size>
-            <width>140</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>11</pointsize>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>4ps</string>
-          </property>
-          <property name="frame">
-           <bool>true</bool>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="6">
-         <widget class="QLineEdit" name="textinput_phonons_iterator_stepsize">
-          <property name="minimumSize">
-           <size>
-            <width>140</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>11</pointsize>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>auto</string>
-          </property>
-          <property name="frame">
-           <bool>true</bool>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="9" column="0" colspan="2">
-         <widget class="QPushButton" name="button_reset_rates">
-          <property name="minimumSize">
-           <size>
-            <width>140</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Reset</string>
-          </property>
-         </widget>
-        </item>
-        <item row="16" column="5" rowspan="4" colspan="5">
-         <widget class="PlotWidget" name="label_plot_spectral_density" native="true"/>
-        </item>
-        <item row="15" column="5" colspan="5">
-         <widget class="QLabel" name="label_39">
-          <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Spectral Density Plot&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
          </widget>
         </item>
@@ -2443,9 +2378,6 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: none;}
             <bold>true</bold>
            </font>
           </property>
-          <property name="styleSheet">
-           <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
-          </property>
           <property name="text">
            <string/>
           </property>
@@ -2483,12 +2415,9 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: none;}
          <widget class="QLabel" name="label_52">
           <property name="minimumSize">
            <size>
-            <width>141</width>
+            <width>142</width>
             <height>42</height>
            </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
           </property>
           <property name="text">
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Mode&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -2544,7 +2473,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: none;}
          <widget class="QLabel" name="label_114">
           <property name="minimumSize">
            <size>
-            <width>141</width>
+            <width>142</width>
             <height>42</height>
            </size>
           </property>
@@ -2553,9 +2482,6 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: none;}
             <width>200</width>
             <height>16777215</height>
            </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
           </property>
           <property name="text">
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Range&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -2566,7 +2492,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: none;}
          <widget class="QLabel" name="label_115">
           <property name="minimumSize">
            <size>
-            <width>141</width>
+            <width>142</width>
             <height>42</height>
            </size>
           </property>
@@ -2575,9 +2501,6 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: none;}
             <width>200</width>
             <height>16777215</height>
            </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
           </property>
           <property name="text">
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Resolution&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -2588,7 +2511,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: none;}
          <widget class="QLabel" name="label_55">
           <property name="minimumSize">
            <size>
-            <width>141</width>
+            <width>142</width>
             <height>42</height>
            </size>
           </property>
@@ -2597,9 +2520,6 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: none;}
             <width>200</width>
             <height>16777215</height>
            </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
           </property>
           <property name="text">
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;G2 Spectra&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -2610,7 +2530,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: none;}
          <widget class="QLabel" name="label_54">
           <property name="minimumSize">
            <size>
-            <width>141</width>
+            <width>142</width>
             <height>42</height>
            </size>
           </property>
@@ -2619,9 +2539,6 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: none;}
             <width>200</width>
             <height>16777215</height>
            </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
           </property>
           <property name="text">
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Second Mode&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -2632,7 +2549,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: none;}
          <widget class="QLabel" name="label_113">
           <property name="minimumSize">
            <size>
-            <width>141</width>
+            <width>142</width>
             <height>42</height>
            </size>
           </property>
@@ -2641,9 +2558,6 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: none;}
             <width>200</width>
             <height>16777215</height>
            </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
           </property>
           <property name="text">
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Center&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -2654,7 +2568,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: none;}
          <widget class="QLabel" name="label_53">
           <property name="minimumSize">
            <size>
-            <width>141</width>
+            <width>142</width>
             <height>42</height>
            </size>
           </property>
@@ -2663,9 +2577,6 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: none;}
             <width>200</width>
             <height>16777215</height>
            </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
           </property>
           <property name="text">
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;First Mode&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -2749,9 +2660,6 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: none;}
             <bold>true</bold>
            </font>
           </property>
-          <property name="styleSheet">
-           <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
-          </property>
           <property name="text">
            <string/>
           </property>
@@ -2779,9 +2687,6 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: none;}
             <pointsize>11</pointsize>
             <bold>true</bold>
            </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
           </property>
           <property name="text">
            <string/>
@@ -2839,15 +2744,6 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: none;}
             <bold>true</bold>
            </font>
           </property>
-          <property name="toolTip">
-           <string>Enables the renomalization of the polaron shifted energies and rates, e.g. using the &lt;B&gt; and &lt;B&gt;^2 scalings</string>
-          </property>
-          <property name="statusTip">
-           <string>Enables the renomalization of the polaron shifted energies and rates, e.g. using the &lt;B&gt; and &lt;B&gt;^2 scalings</string>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
-          </property>
           <property name="text">
            <string>All</string>
           </property>
@@ -2872,12 +2768,6 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: none;}
             <pointsize>11</pointsize>
             <bold>true</bold>
            </font>
-          </property>
-          <property name="statusTip">
-           <string>Calculate the spectrum for all of the used G2 functions. Check the Box to edit these values</string>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
           </property>
           <property name="text">
            <string/>
@@ -2910,12 +2800,6 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: none;}
             <bold>true</bold>
            </font>
           </property>
-          <property name="statusTip">
-           <string>Calculate the spectrum for all of the used G2 functions. Check the Box to edit these values</string>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
-          </property>
           <property name="text">
            <string/>
           </property>
@@ -2946,12 +2830,6 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: none;}
             <pointsize>11</pointsize>
             <bold>true</bold>
            </font>
-          </property>
-          <property name="statusTip">
-           <string>Calculate the spectrum for all of the used G2 functions. Check the Box to edit these values</string>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
           </property>
           <property name="text">
            <string/>
@@ -3557,9 +3435,6 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: none;}
             <bold>true</bold>
            </font>
           </property>
-          <property name="styleSheet">
-           <string notr="true">border-radius: 0px;</string>
-          </property>
           <property name="text">
            <string/>
           </property>
@@ -3578,7 +3453,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: none;}
          <widget class="QLabel" name="label_128">
           <property name="minimumSize">
            <size>
-            <width>141</width>
+            <width>142</width>
             <height>42</height>
            </size>
           </property>
@@ -3587,9 +3462,6 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: none;}
             <width>16777215</width>
             <height>40</height>
            </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
           </property>
           <property name="text">
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Width&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -3609,9 +3481,6 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: none;}
             <pointsize>11</pointsize>
             <bold>true</bold>
            </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
           </property>
           <property name="text">
            <string>2</string>
@@ -3726,7 +3595,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: none;}
          <widget class="QLabel" name="label_117">
           <property name="minimumSize">
            <size>
-            <width>141</width>
+            <width>142</width>
             <height>42</height>
            </size>
           </property>
@@ -3735,9 +3604,6 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: none;}
             <width>16777215</width>
             <height>40</height>
            </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
           </property>
           <property name="text">
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Time Center&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -3767,7 +3633,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: none;}
          <widget class="QLabel" name="label_118">
           <property name="minimumSize">
            <size>
-            <width>141</width>
+            <width>142</width>
             <height>42</height>
            </size>
           </property>
@@ -3776,9 +3642,6 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: none;}
             <width>16777215</width>
             <height>40</height>
            </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
           </property>
           <property name="text">
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Falloff Power&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -3798,9 +3661,6 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: none;}
             <pointsize>11</pointsize>
             <bold>true</bold>
            </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
           </property>
           <property name="text">
            <string/>
@@ -3830,9 +3690,6 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: none;}
             <bold>true</bold>
            </font>
           </property>
-          <property name="styleSheet">
-           <string notr="true">border-radius: 0px;</string>
-          </property>
           <property name="text">
            <string/>
           </property>
@@ -3861,9 +3718,6 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: none;}
             <bold>true</bold>
            </font>
           </property>
-          <property name="styleSheet">
-           <string notr="true">border-radius: 0px;</string>
-          </property>
           <property name="text">
            <string/>
           </property>
@@ -3882,12 +3736,9 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: none;}
          <widget class="QLabel" name="label_119">
           <property name="minimumSize">
            <size>
-            <width>141</width>
+            <width>142</width>
             <height>42</height>
            </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
           </property>
           <property name="text">
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Spectral Range&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -3898,12 +3749,9 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: none;}
          <widget class="QLabel" name="label_121">
           <property name="minimumSize">
            <size>
-            <width>141</width>
+            <width>142</width>
             <height>42</height>
            </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
           </property>
           <property name="text">
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Spectral Center&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -3914,12 +3762,9 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: none;}
          <widget class="QLabel" name="label_127">
           <property name="minimumSize">
            <size>
-            <width>141</width>
+            <width>142</width>
             <height>42</height>
            </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
           </property>
           <property name="text">
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Fourier Points&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -3940,9 +3785,6 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: none;}
             <bold>true</bold>
            </font>
           </property>
-          <property name="styleSheet">
-           <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
-          </property>
           <property name="text">
            <string/>
           </property>
@@ -3961,12 +3803,9 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: none;}
          <widget class="QLabel" name="label_120">
           <property name="minimumSize">
            <size>
-            <width>141</width>
+            <width>142</width>
             <height>42</height>
            </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px</string>
           </property>
           <property name="text">
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Falloff Power&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -3986,9 +3825,6 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: none;}
             <pointsize>11</pointsize>
             <bold>true</bold>
            </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;</string>
           </property>
           <property name="text">
            <string>2</string>
@@ -4989,7 +4825,7 @@ QPushButton::hover {background-color: qlineargradient( x1:0 y1:0, x2:0 y2:1, sto
           </property>
          </widget>
         </item>
-        <item row="3" column="6" rowspan="11">
+        <item row="3" column="6" rowspan="19">
          <widget class="Line" name="line_5">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -5003,15 +4839,8 @@ QPushButton::hover {background-color: qlineargradient( x1:0 y1:0, x2:0 y2:1, sto
         <string>Sweep and Scan</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_6">
-        <item row="1" column="3" colspan="3">
-         <widget class="QCheckBox" name="checkbox_activate_scan_parameter_1">
-          <property name="text">
-           <string>Activate</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="2">
-         <widget class="QLabel" name="label_title_qdsystem_12">
+        <item row="0" column="2" colspan="4">
+         <widget class="QLabel" name="label_title_qdsystem_7">
           <property name="maximumSize">
            <size>
             <width>16777215</width>
@@ -5025,7 +4854,7 @@ QPushButton::hover {background-color: qlineargradient( x1:0 y1:0, x2:0 y2:1, sto
            <enum>QFrame::Plain</enum>
           </property>
           <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;# Points&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Parameter Scanner&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
          </widget>
         </item>
@@ -5048,276 +4877,6 @@ QPushButton::hover {background-color: qlineargradient( x1:0 y1:0, x2:0 y2:1, sto
           </property>
          </widget>
         </item>
-        <item row="3" column="2">
-         <widget class="QLabel" name="label_title_qdsystem_5">
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="frameShape">
-           <enum>QFrame::NoFrame</enum>
-          </property>
-          <property name="frameShadow">
-           <enum>QFrame::Plain</enum>
-          </property>
-          <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;To&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-         </widget>
-        </item>
-        <item row="8" column="3" colspan="3">
-         <widget class="QLineEdit" name="textinput_scan_parameter_2_from"/>
-        </item>
-        <item row="7" column="2">
-         <widget class="QLabel" name="label_title_qdsystem_8">
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="frameShape">
-           <enum>QFrame::NoFrame</enum>
-          </property>
-          <property name="frameShadow">
-           <enum>QFrame::Plain</enum>
-          </property>
-          <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Parameter x2&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-         </widget>
-        </item>
-        <item row="11" column="3" colspan="3">
-         <widget class="QLineEdit" name="textinput_scan_parameter_2_lambda">
-          <property name="text">
-           <string>x2</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="3" colspan="3">
-         <widget class="QLineEdit" name="textinput_scan_parameter_1_to"/>
-        </item>
-        <item row="1" column="2">
-         <widget class="QLabel" name="label_title_qdsystem_2">
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="frameShape">
-           <enum>QFrame::NoFrame</enum>
-          </property>
-          <property name="frameShadow">
-           <enum>QFrame::Plain</enum>
-          </property>
-          <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Parameter x1&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="3" colspan="3">
-         <widget class="QLineEdit" name="textinput_scan_parameter_1_points"/>
-        </item>
-        <item row="10" column="2">
-         <widget class="QLabel" name="label_title_qdsystem_13">
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="frameShape">
-           <enum>QFrame::NoFrame</enum>
-          </property>
-          <property name="frameShadow">
-           <enum>QFrame::Plain</enum>
-          </property>
-          <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;# Points&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="0" colspan="2">
-         <widget class="QLabel" name="label_title_qdsystem_3">
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="frameShape">
-           <enum>QFrame::NoFrame</enum>
-          </property>
-          <property name="frameShadow">
-           <enum>QFrame::Plain</enum>
-          </property>
-          <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;QDLC Runstring&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="3" colspan="3">
-         <widget class="QLineEdit" name="textinput_scan_parameter_1_lambda">
-          <property name="text">
-           <string>x1</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="2" colspan="4">
-         <widget class="QLabel" name="label_title_qdsystem_7">
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="frameShape">
-           <enum>QFrame::NoFrame</enum>
-          </property>
-          <property name="frameShadow">
-           <enum>QFrame::Plain</enum>
-          </property>
-          <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Parameter Scanner&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-         </widget>
-        </item>
-        <item row="9" column="3" colspan="3">
-         <widget class="QLineEdit" name="textinput_scan_parameter_2_to"/>
-        </item>
-        <item row="2" column="3" colspan="3">
-         <widget class="QLineEdit" name="textinput_scan_parameter_1_from"/>
-        </item>
-        <item row="17" column="5">
-         <widget class="QPushButton" name="button_sweeper_plot">
-          <property name="text">
-           <string>Plot</string>
-          </property>
-         </widget>
-        </item>
-        <item row="11" column="2">
-         <widget class="QLabel" name="label_title_qdsystem_11">
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="frameShape">
-           <enum>QFrame::NoFrame</enum>
-          </property>
-          <property name="frameShadow">
-           <enum>QFrame::Plain</enum>
-          </property>
-          <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;P2(x2,...) =&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="2">
-         <widget class="QLabel" name="label_title_qdsystem_6">
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="frameShape">
-           <enum>QFrame::NoFrame</enum>
-          </property>
-          <property name="frameShadow">
-           <enum>QFrame::Plain</enum>
-          </property>
-          <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;P1(x1,...) =&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="2" colspan="4">
-         <widget class="Line" name="line">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="7" column="3" colspan="3">
-         <widget class="QCheckBox" name="checkbox_activate_scan_parameter_2">
-          <property name="text">
-           <string>Activate</string>
-          </property>
-         </widget>
-        </item>
-        <item row="10" column="3" colspan="3">
-         <widget class="QLineEdit" name="textinput_scan_parameter_2_points"/>
-        </item>
-        <item row="2" column="2">
-         <widget class="QLabel" name="label_title_qdsystem_4">
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="frameShape">
-           <enum>QFrame::NoFrame</enum>
-          </property>
-          <property name="frameShadow">
-           <enum>QFrame::Plain</enum>
-          </property>
-          <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;From&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-         </widget>
-        </item>
-        <item row="8" column="2">
-         <widget class="QLabel" name="label_title_qdsystem_9">
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="frameShape">
-           <enum>QFrame::NoFrame</enum>
-          </property>
-          <property name="frameShadow">
-           <enum>QFrame::Plain</enum>
-          </property>
-          <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;From&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-         </widget>
-        </item>
-        <item row="12" column="2" colspan="4">
-         <widget class="Line" name="line_9">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="13" column="2" rowspan="4" colspan="2">
-         <widget class="PlotWidget" name="plot_sweep_parameter_first" native="true">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>150</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-        <item row="13" column="4" rowspan="4" colspan="2">
-         <widget class="PlotWidget" name="plot_sweep_parameter_second" native="true">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>150</height>
-           </size>
-          </property>
-         </widget>
-        </item>
         <item row="13" column="0" colspan="2">
          <widget class="QPushButton" name="button_sweeper_get_runstring">
           <property name="text">
@@ -5325,33 +4884,11 @@ QPushButton::hover {background-color: qlineargradient( x1:0 y1:0, x2:0 y2:1, sto
           </property>
          </widget>
         </item>
-        <item row="14" column="0" rowspan="4" colspan="2">
-         <widget class="QLabel" name="label_3">
-          <property name="text">
-           <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-hr { height: 1px; border-width: 0; }
-li.unchecked::marker { content: &quot;\2610&quot;; }
-li.checked::marker { content: &quot;\2612&quot;; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Segoe UI'; font-size:9pt; font-weight:700; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;How to Use:&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;- Activate one or both parameters&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;- Replace parameters in runstring with {0} and {1}, respectively&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;- Choose parameter range from-to&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;- Choose number of points&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;- Optional: Chose f(x)&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Use the &amp;quot;Generate Settingfile&amp;quot; Button in the &amp;quot;Generate and Run&amp;quot; Tab to generate the settingfile&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Additional Parameters available (lower case = SI, upper case = number):&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;- g and G for Cavity-Coupling&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;- k and K for Cavity Losses&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;- y and Y for Radiative Decay&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;- d and D for Pure Dephasing&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;- T for Temperature&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;- np.function for all Numpy Functions&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-         </widget>
+        <item row="8" column="3" colspan="3">
+         <widget class="QLineEdit" name="textinput_scan_parameter_2_from"/>
+        </item>
+        <item row="2" column="3" colspan="3">
+         <widget class="QLineEdit" name="textinput_scan_parameter_1_from"/>
         </item>
         <item row="1" column="0" rowspan="6" colspan="2">
          <widget class="QTextBrowser" name="text_output_program_qdlc_command_sweep">
@@ -5379,6 +4916,279 @@ li.checked::marker { content: &quot;\2612&quot;; }
           </property>
           <property name="placeholderText">
            <string>./QDLC.exe ...</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="2">
+         <widget class="QLabel" name="label_title_qdsystem_12">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;# Points&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="2">
+         <widget class="QLabel" name="label_title_qdsystem_6">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;P1(x1,...) =&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="2">
+         <widget class="QLabel" name="label_title_qdsystem_8">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Parameter x2&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="2">
+         <widget class="QLabel" name="label_title_qdsystem_5">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;To&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="2">
+         <widget class="QLabel" name="label_title_qdsystem_4">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;From&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="3" colspan="3">
+         <widget class="QLineEdit" name="textinput_scan_parameter_1_points"/>
+        </item>
+        <item row="10" column="3" colspan="3">
+         <widget class="QLineEdit" name="textinput_scan_parameter_2_points"/>
+        </item>
+        <item row="7" column="3" colspan="3">
+         <widget class="QCheckBox" name="checkbox_activate_scan_parameter_2">
+          <property name="text">
+           <string>Activate</string>
+          </property>
+         </widget>
+        </item>
+        <item row="11" column="3" colspan="3">
+         <widget class="QLineEdit" name="textinput_scan_parameter_2_lambda">
+          <property name="text">
+           <string>x2</string>
+          </property>
+         </widget>
+        </item>
+        <item row="10" column="2">
+         <widget class="QLabel" name="label_title_qdsystem_13">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;# Points&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item row="15" column="0" rowspan="4" colspan="2">
+         <widget class="QLabel" name="label_3">
+          <property name="text">
+           <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Segoe UI'; font-size:9pt; font-weight:700; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;How to Use:&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;- Activate one or both parameters&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;- Replace parameters in runstring with {0} and {1}, respectively&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;- Choose parameter range from-to&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;- Choose number of points&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;-- Optional: Chose f(x)&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;- Use the &amp;quot;Generate Variables&amp;quot; Button to generate and plot the Parameters&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;- Use the &amp;quot;Generate Settingfile&amp;quot; Button in the &amp;quot;Generate and Run&amp;quot; Tab to generate the settingfile&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Additional Parameters available (lower case = SI, upper case = number):&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;- g and G for Cavity-Coupling&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;- k and K for Cavity Losses&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;- y and Y for Radiative Decay&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;- d and D for Pure Dephasing&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;- T for Temperature&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;- np.function for all Numpy Functions&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item row="11" column="2">
+         <widget class="QLabel" name="label_title_qdsystem_11">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;P2(x2,...) =&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="3" colspan="3">
+         <widget class="QLineEdit" name="textinput_scan_parameter_1_to"/>
+        </item>
+        <item row="0" column="0" colspan="2">
+         <widget class="QLabel" name="label_title_qdsystem_3">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;QDLC Runstring&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item row="9" column="3" colspan="3">
+         <widget class="QLineEdit" name="textinput_scan_parameter_2_to"/>
+        </item>
+        <item row="1" column="3" colspan="3">
+         <widget class="QCheckBox" name="checkbox_activate_scan_parameter_1">
+          <property name="text">
+           <string>Activate</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="3" colspan="3">
+         <widget class="QLineEdit" name="textinput_scan_parameter_1_lambda">
+          <property name="text">
+           <string>x1</string>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="2" colspan="4">
+         <widget class="Line" name="line">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="12" column="2" colspan="4">
+         <widget class="Line" name="line_9">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <widget class="QLabel" name="label_title_qdsystem_2">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Parameter x1&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="2">
+         <widget class="QLabel" name="label_title_qdsystem_9">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;From&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
          </widget>
         </item>
@@ -5411,6 +5221,37 @@ li.checked::marker { content: &quot;\2612&quot;; }
           </property>
           <property name="placeholderText">
            <string>Settingfile Output</string>
+          </property>
+         </widget>
+        </item>
+        <item row="14" column="0" colspan="2">
+         <widget class="QPushButton" name="button_sweeper_plot">
+          <property name="styleSheet">
+           <string notr="true">QPushButton {background-color: qlineargradient( x1:0 y1:0, x2:0 y2:1, stop:0.9 #f4771e, stop:0.91 #4f2609); color: #ffffff;}
+QPushButton::hover {background-color: qlineargradient( x1:0 y1:0, x2:0 y2:1, stop:0.9 #f7954f, stop:0.91 #4f2609); color: #ffffff;}</string>
+          </property>
+          <property name="text">
+           <string>Generate Variables</string>
+          </property>
+         </widget>
+        </item>
+        <item row="13" column="2" rowspan="6" colspan="2">
+         <widget class="PlotWidget" name="plot_sweep_parameter_first" native="true">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>150</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="13" column="4" rowspan="6" colspan="2">
+         <widget class="PlotWidget" name="plot_sweep_parameter_second" native="true">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>150</height>
+           </size>
           </property>
          </widget>
         </item>
@@ -5448,14 +5289,14 @@ li.checked::marker { content: &quot;\2612&quot;; }
          <widget class="QGraphicsView" name="graphicsView"/>
         </item>
         <item row="0" column="0" colspan="2">
-         <widget class="QPushButton" name="pushButton">
+         <widget class="QPushButton" name="button_plot_everything">
           <property name="text">
            <string>Plot Everything</string>
           </property>
          </widget>
         </item>
         <item row="2" column="0" colspan="2">
-         <widget class="QPushButton" name="pushButton_3">
+         <widget class="QPushButton" name="button_open_destination_folder">
           <property name="text">
            <string>Open Destination Folder</string>
           </property>
@@ -5538,12 +5379,12 @@ li.checked::marker { content: &quot;\2612&quot;; }
    </widget>
    <widget class="QMenu" name="menuDeveloper_Tools">
     <property name="title">
-     <string>Developer Tools</string>
+     <string>Debug Tools</string>
     </property>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
-     <string>Edit</string>
+     <string>Tools</string>
     </property>
    </widget>
    <addaction name="menuMenu"/>
@@ -5623,7 +5464,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
   <tabstop>textinput_detector_tpower</tabstop>
   <tabstop>input_timeline_enable_phonons_at_spectra</tabstop>
   <tabstop>button_add_detector_time</tabstop>
-  <tabstop>button_reset_phonons_2</tabstop>
   <tabstop>button_next_tab_detector_to_generate</tabstop>
   <tabstop>input_add_output_greenf</tabstop>
   <tabstop>input_add_output_phononj</tabstop>
@@ -5639,20 +5479,16 @@ li.checked::marker { content: &quot;\2612&quot;; }
   <tabstop>button_timeline_force_calculate</tabstop>
   <tabstop>button_timeline_force_calculate_spectra</tabstop>
   <tabstop>text_output_list_of_detector_spec</tabstop>
-  <tabstop>button_reset_phonon_sd</tabstop>
   <tabstop>input_timeline_enable_phonons</tabstop>
-  <tabstop>button_reset_rates</tabstop>
   <tabstop>button_remove_spectrum_from_output</tabstop>
   <tabstop>text_output_list_of_detector_time</tabstop>
   <tabstop>textinput_concurrence_spec_range</tabstop>
   <tabstop>text_output_program_qdlc_command</tabstop>
   <tabstop>textinput_concurrence_spec_freq</tabstop>
   <tabstop>text_output_program_main</tabstop>
-  <tabstop>button_reset_phonons</tabstop>
   <tabstop>input_concurrence_add_spectra</tabstop>
   <tabstop>textinput_concurrence_spec_res</tabstop>
   <tabstop>text_output_list_of_concurrences</tabstop>
-  <tabstop>button_reset_phonons_3</tabstop>
   <tabstop>button_reset_phonon_qd</tabstop>
   <tabstop>list_components</tabstop>
   <tabstop>button_remove_concurrence_from_output</tabstop>

@@ -2,10 +2,11 @@ from ui_add_cavity import Ui_AddCavity
 from PySide6.QtWidgets import QDialog
 
 class DialogAddCavity(QDialog, Ui_AddCavity):
-    def __init__(self, *args, main_window=None, load_existing = None, **kwargs):
+    def __init__(self, *args, main_window=None, load_existing = None, style_sheet = "", **kwargs):
         super(DialogAddCavity, self).__init__(*args, **kwargs)
         self.setupUi(self)
         self.retranslateUi(self)
+        self.setStyleSheet(style_sheet)
         def finished(replace=False):
             name = self.textinput_name.text()
             energy = self.textinput_energy.text()

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'main_windowtggkEm.ui'
+## Form generated from reading UI file 'main_windownphsbQ.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.4.2
 ##
@@ -210,47 +210,175 @@ class Ui_MainWindow(object):
         self.gridLayout_3 = QGridLayout(self.tab_environment)
         self.gridLayout_3.setObjectName(u"gridLayout_3")
         self.gridLayout_3.setContentsMargins(-1, -1, -1, 0)
-        self.textinput_rates_radiative_decay = QLineEdit(self.tab_environment)
-        self.textinput_rates_radiative_decay.setObjectName(u"textinput_rates_radiative_decay")
-        self.textinput_rates_radiative_decay.setMinimumSize(QSize(140, 40))
+        self.textinput_phonons_sd_qd_de = QLineEdit(self.tab_environment)
+        self.textinput_phonons_sd_qd_de.setObjectName(u"textinput_phonons_sd_qd_de")
+        self.textinput_phonons_sd_qd_de.setEnabled(False)
+        self.textinput_phonons_sd_qd_de.setMinimumSize(QSize(140, 40))
         font = QFont()
         font.setPointSize(11)
         font.setBold(True)
-        self.textinput_rates_radiative_decay.setFont(font)
-        self.textinput_rates_radiative_decay.setFrame(True)
-        self.textinput_rates_radiative_decay.setAlignment(Qt.AlignCenter)
+        self.textinput_phonons_sd_qd_de.setFont(font)
+        self.textinput_phonons_sd_qd_de.setFrame(True)
+        self.textinput_phonons_sd_qd_de.setAlignment(Qt.AlignCenter)
 
-        self.gridLayout_3.addWidget(self.textinput_rates_radiative_decay, 5, 1, 1, 1)
+        self.gridLayout_3.addWidget(self.textinput_phonons_sd_qd_de, 16, 1, 1, 1)
 
-        self.textinput_phonons_sd_alpha = QLineEdit(self.tab_environment)
-        self.textinput_phonons_sd_alpha.setObjectName(u"textinput_phonons_sd_alpha")
-        self.textinput_phonons_sd_alpha.setMinimumSize(QSize(140, 40))
-        self.textinput_phonons_sd_alpha.setFont(font)
-        self.textinput_phonons_sd_alpha.setFrame(True)
-        self.textinput_phonons_sd_alpha.setAlignment(Qt.AlignCenter)
+        self.label_32 = QLabel(self.tab_environment)
+        self.label_32.setObjectName(u"label_32")
+        self.label_32.setMinimumSize(QSize(142, 42))
 
-        self.gridLayout_3.addWidget(self.textinput_phonons_sd_alpha, 3, 8, 1, 1)
+        self.gridLayout_3.addWidget(self.label_32, 16, 2, 1, 1)
 
-        self.button_reset_phonons_3 = QPushButton(self.tab_environment)
-        self.button_reset_phonons_3.setObjectName(u"button_reset_phonons_3")
-        self.button_reset_phonons_3.setMinimumSize(QSize(140, 40))
+        self.label_plot_spectral_density = PlotWidget(self.tab_environment)
+        self.label_plot_spectral_density.setObjectName(u"label_plot_spectral_density")
 
-        self.gridLayout_3.addWidget(self.button_reset_phonons_3, 9, 7, 1, 2)
+        self.gridLayout_3.addWidget(self.label_plot_spectral_density, 15, 5, 4, 5)
 
-        self.textinput_phonons_sd_ohmamp = QLineEdit(self.tab_environment)
-        self.textinput_phonons_sd_ohmamp.setObjectName(u"textinput_phonons_sd_ohmamp")
-        self.textinput_phonons_sd_ohmamp.setMinimumSize(QSize(140, 40))
-        self.textinput_phonons_sd_ohmamp.setFont(font)
-        self.textinput_phonons_sd_ohmamp.setFrame(True)
-        self.textinput_phonons_sd_ohmamp.setAlignment(Qt.AlignCenter)
+        self.label_title_adjust_rates = QLabel(self.tab_environment)
+        self.label_title_adjust_rates.setObjectName(u"label_title_adjust_rates")
+        self.label_title_adjust_rates.setMinimumSize(QSize(142, 42))
 
-        self.gridLayout_3.addWidget(self.textinput_phonons_sd_ohmamp, 4, 3, 1, 1)
+        self.gridLayout_3.addWidget(self.label_title_adjust_rates, 2, 9, 1, 1)
+
+        self.label_19 = QLabel(self.tab_environment)
+        self.label_19.setObjectName(u"label_19")
+        self.label_19.setMinimumSize(QSize(142, 42))
+
+        self.gridLayout_3.addWidget(self.label_19, 4, 0, 1, 1)
+
+        self.label_22 = QLabel(self.tab_environment)
+        self.label_22.setObjectName(u"label_22")
+        self.label_22.setMinimumSize(QSize(142, 42))
+
+        self.gridLayout_3.addWidget(self.label_22, 3, 2, 1, 1)
+
+        self.label_39 = QLabel(self.tab_environment)
+        self.label_39.setObjectName(u"label_39")
+
+        self.gridLayout_3.addWidget(self.label_39, 14, 5, 1, 5)
+
+        self.input_phonons_adjust_renormalization = QCheckBox(self.tab_environment)
+        self.input_phonons_adjust_renormalization.setObjectName(u"input_phonons_adjust_renormalization")
+        self.input_phonons_adjust_renormalization.setMinimumSize(QSize(150, 40))
+        font1 = QFont()
+        font1.setBold(True)
+        self.input_phonons_adjust_renormalization.setFont(font1)
+        self.input_phonons_adjust_renormalization.setChecked(True)
+
+        self.gridLayout_3.addWidget(self.input_phonons_adjust_renormalization, 5, 9, 1, 1)
+
+        self.textinput_phonons_sd_tcutoff = QLineEdit(self.tab_environment)
+        self.textinput_phonons_sd_tcutoff.setObjectName(u"textinput_phonons_sd_tcutoff")
+        self.textinput_phonons_sd_tcutoff.setMinimumSize(QSize(140, 40))
+        self.textinput_phonons_sd_tcutoff.setFont(font)
+        self.textinput_phonons_sd_tcutoff.setFrame(True)
+        self.textinput_phonons_sd_tcutoff.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_3.addWidget(self.textinput_phonons_sd_tcutoff, 6, 6, 1, 1)
+
+        self.label_29 = QLabel(self.tab_environment)
+        self.label_29.setObjectName(u"label_29")
+        self.label_29.setMinimumSize(QSize(142, 42))
+
+        self.gridLayout_3.addWidget(self.label_29, 6, 5, 1, 1)
+
+        self.label_20 = QLabel(self.tab_environment)
+        self.label_20.setObjectName(u"label_20")
+        self.label_20.setMinimumSize(QSize(142, 42))
+
+        self.gridLayout_3.addWidget(self.label_20, 5, 0, 1, 1)
+
+        self.textinput_rates_pure_dephasing = QLineEdit(self.tab_environment)
+        self.textinput_rates_pure_dephasing.setObjectName(u"textinput_rates_pure_dephasing")
+        self.textinput_rates_pure_dephasing.setMinimumSize(QSize(140, 40))
+        self.textinput_rates_pure_dephasing.setFont(font)
+        self.textinput_rates_pure_dephasing.setFrame(True)
+        self.textinput_rates_pure_dephasing.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_3.addWidget(self.textinput_rates_pure_dephasing, 6, 1, 1, 1)
+
+        self.label_34 = QLabel(self.tab_environment)
+        self.label_34.setObjectName(u"label_34")
+        self.label_34.setMinimumSize(QSize(142, 42))
+
+        self.gridLayout_3.addWidget(self.label_34, 17, 2, 1, 1)
+
+        self.line_3 = QFrame(self.tab_environment)
+        self.line_3.setObjectName(u"line_3")
+        self.line_3.setFrameShape(QFrame.VLine)
+        self.line_3.setFrameShadow(QFrame.Sunken)
+
+        self.gridLayout_3.addWidget(self.line_3, 15, 4, 4, 1)
+
+        self.textinput_phonons_iterator_stepsize = QLineEdit(self.tab_environment)
+        self.textinput_phonons_iterator_stepsize.setObjectName(u"textinput_phonons_iterator_stepsize")
+        self.textinput_phonons_iterator_stepsize.setMinimumSize(QSize(140, 40))
+        self.textinput_phonons_iterator_stepsize.setFont(font)
+        self.textinput_phonons_iterator_stepsize.setFrame(True)
+        self.textinput_phonons_iterator_stepsize.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_3.addWidget(self.textinput_phonons_iterator_stepsize, 3, 6, 1, 1)
+
+        self.label_31 = QLabel(self.tab_environment)
+        self.label_31.setObjectName(u"label_31")
+        self.label_31.setMinimumSize(QSize(142, 42))
+
+        self.gridLayout_3.addWidget(self.label_31, 16, 0, 1, 1)
 
         self.label_35 = QLabel(self.tab_environment)
         self.label_35.setObjectName(u"label_35")
         self.label_35.setMinimumSize(QSize(142, 42))
 
-        self.gridLayout_3.addWidget(self.label_35, 19, 0, 1, 1)
+        self.gridLayout_3.addWidget(self.label_35, 18, 0, 1, 1)
+
+        self.label_title_rates = QLabel(self.tab_environment)
+        self.label_title_rates.setObjectName(u"label_title_rates")
+        self.label_title_rates.setMaximumSize(QSize(16777215, 40))
+        self.label_title_rates.setFrameShape(QFrame.NoFrame)
+        self.label_title_rates.setFrameShadow(QFrame.Plain)
+
+        self.gridLayout_3.addWidget(self.label_title_rates, 2, 0, 1, 2)
+
+        self.label_18 = QLabel(self.tab_environment)
+        self.label_18.setObjectName(u"label_18")
+        self.label_18.setMinimumSize(QSize(142, 42))
+
+        self.gridLayout_3.addWidget(self.label_18, 3, 0, 1, 1)
+
+        self.line_2 = QFrame(self.tab_environment)
+        self.line_2.setObjectName(u"line_2")
+        self.line_2.setFrameShape(QFrame.HLine)
+        self.line_2.setFrameShadow(QFrame.Sunken)
+
+        self.gridLayout_3.addWidget(self.line_2, 13, 0, 1, 10)
+
+        self.label_21 = QLabel(self.tab_environment)
+        self.label_21.setObjectName(u"label_21")
+        self.label_21.setMinimumSize(QSize(142, 42))
+
+        self.gridLayout_3.addWidget(self.label_21, 6, 0, 1, 1)
+
+        self.label_title_phonons_3 = QLabel(self.tab_environment)
+        self.label_title_phonons_3.setObjectName(u"label_title_phonons_3")
+        self.label_title_phonons_3.setMaximumSize(QSize(16777215, 40))
+        self.label_title_phonons_3.setFrameShape(QFrame.NoFrame)
+        self.label_title_phonons_3.setFrameShadow(QFrame.Plain)
+
+        self.gridLayout_3.addWidget(self.label_title_phonons_3, 2, 7, 1, 2)
+
+        self.input_phonons_adjust_radiativeloss = QCheckBox(self.tab_environment)
+        self.input_phonons_adjust_radiativeloss.setObjectName(u"input_phonons_adjust_radiativeloss")
+        self.input_phonons_adjust_radiativeloss.setMinimumSize(QSize(150, 40))
+        self.input_phonons_adjust_radiativeloss.setFont(font1)
+        self.input_phonons_adjust_radiativeloss.setChecked(True)
+
+        self.gridLayout_3.addWidget(self.input_phonons_adjust_radiativeloss, 3, 9, 1, 1)
+
+        self.label_27 = QLabel(self.tab_environment)
+        self.label_27.setObjectName(u"label_27")
+        self.label_27.setMinimumSize(QSize(142, 42))
+
+        self.gridLayout_3.addWidget(self.label_27, 4, 5, 1, 1)
 
         self.textinput_phonons_temperature = QLineEdit(self.tab_environment)
         self.textinput_phonons_temperature.setObjectName(u"textinput_phonons_temperature")
@@ -261,235 +389,14 @@ class Ui_MainWindow(object):
 
         self.gridLayout_3.addWidget(self.textinput_phonons_temperature, 3, 3, 1, 1)
 
-        self.label_25 = QLabel(self.tab_environment)
-        self.label_25.setObjectName(u"label_25")
-        self.label_25.setMinimumSize(QSize(142, 42))
-
-        self.gridLayout_3.addWidget(self.label_25, 16, 0, 1, 1)
-
-        self.label_title_rates = QLabel(self.tab_environment)
-        self.label_title_rates.setObjectName(u"label_title_rates")
-        self.label_title_rates.setMaximumSize(QSize(16777215, 40))
-        self.label_title_rates.setFrameShape(QFrame.NoFrame)
-        self.label_title_rates.setFrameShadow(QFrame.Plain)
-
-        self.gridLayout_3.addWidget(self.label_title_rates, 2, 0, 1, 2)
-
-        self.label_37 = QLabel(self.tab_environment)
-        self.label_37.setObjectName(u"label_37")
-        self.label_37.setMinimumSize(QSize(142, 42))
-
-        self.gridLayout_3.addWidget(self.label_37, 3, 5, 1, 1)
-
-        self.label_title_phonons = QLabel(self.tab_environment)
-        self.label_title_phonons.setObjectName(u"label_title_phonons")
-        self.label_title_phonons.setMaximumSize(QSize(16777215, 40))
-        self.label_title_phonons.setFrameShape(QFrame.NoFrame)
-        self.label_title_phonons.setFrameShadow(QFrame.Plain)
-
-        self.gridLayout_3.addWidget(self.label_title_phonons, 2, 2, 1, 2)
-
-        self.label_27 = QLabel(self.tab_environment)
-        self.label_27.setObjectName(u"label_27")
-        self.label_27.setMinimumSize(QSize(142, 42))
-
-        self.gridLayout_3.addWidget(self.label_27, 4, 5, 1, 1)
-
-        self.textinput_phonons_sd_qd_cs = QLineEdit(self.tab_environment)
-        self.textinput_phonons_sd_qd_cs.setObjectName(u"textinput_phonons_sd_qd_cs")
-        self.textinput_phonons_sd_qd_cs.setEnabled(False)
-        self.textinput_phonons_sd_qd_cs.setMinimumSize(QSize(140, 40))
-        self.textinput_phonons_sd_qd_cs.setFont(font)
-        self.textinput_phonons_sd_qd_cs.setFrame(True)
-        self.textinput_phonons_sd_qd_cs.setAlignment(Qt.AlignCenter)
-
-        self.gridLayout_3.addWidget(self.textinput_phonons_sd_qd_cs, 18, 3, 1, 1)
-
-        self.input_phonons_adjust_pure_dephasing = QCheckBox(self.tab_environment)
-        self.input_phonons_adjust_pure_dephasing.setObjectName(u"input_phonons_adjust_pure_dephasing")
-        self.input_phonons_adjust_pure_dephasing.setMinimumSize(QSize(150, 40))
-        font1 = QFont()
-        font1.setBold(True)
-        self.input_phonons_adjust_pure_dephasing.setFont(font1)
-
-        self.gridLayout_3.addWidget(self.input_phonons_adjust_pure_dephasing, 4, 9, 1, 1)
-
-        self.button_next_tab_config_to_timeline = QPushButton(self.tab_environment)
-        self.button_next_tab_config_to_timeline.setObjectName(u"button_next_tab_config_to_timeline")
-        self.button_next_tab_config_to_timeline.setMinimumSize(QSize(140, 40))
-        self.button_next_tab_config_to_timeline.setMaximumSize(QSize(150, 16777215))
-        self.button_next_tab_config_to_timeline.setCheckable(False)
-
-        self.gridLayout_3.addWidget(self.button_next_tab_config_to_timeline, 20, 9, 1, 1)
-
-        self.input_phonons_use_qd = QCheckBox(self.tab_environment)
-        self.input_phonons_use_qd.setObjectName(u"input_phonons_use_qd")
-        self.input_phonons_use_qd.setMinimumSize(QSize(150, 40))
-        self.input_phonons_use_qd.setFont(font)
-
-        self.gridLayout_3.addWidget(self.input_phonons_use_qd, 16, 1, 1, 3)
-
-        self.line_2 = QFrame(self.tab_environment)
-        self.line_2.setObjectName(u"line_2")
-        self.line_2.setFrameShape(QFrame.HLine)
-        self.line_2.setFrameShadow(QFrame.Sunken)
-
-        self.gridLayout_3.addWidget(self.line_2, 14, 0, 1, 10)
-
-        self.label_20 = QLabel(self.tab_environment)
-        self.label_20.setObjectName(u"label_20")
-        self.label_20.setMinimumSize(QSize(142, 42))
-
-        self.gridLayout_3.addWidget(self.label_20, 5, 0, 1, 1)
-
-        self.label_23 = QLabel(self.tab_environment)
-        self.label_23.setObjectName(u"label_23")
-        self.label_23.setMinimumSize(QSize(142, 42))
-
-        self.gridLayout_3.addWidget(self.label_23, 5, 2, 1, 1)
-
-        self.label_28 = QLabel(self.tab_environment)
-        self.label_28.setObjectName(u"label_28")
-        self.label_28.setMinimumSize(QSize(142, 42))
-
-        self.gridLayout_3.addWidget(self.label_28, 5, 5, 1, 1)
-
-        self.label_34 = QLabel(self.tab_environment)
-        self.label_34.setObjectName(u"label_34")
-        self.label_34.setMinimumSize(QSize(142, 42))
-
-        self.gridLayout_3.addWidget(self.label_34, 18, 2, 1, 1)
-
-        self.label_36 = QLabel(self.tab_environment)
-        self.label_36.setObjectName(u"label_36")
-        self.label_36.setMinimumSize(QSize(142, 42))
-
-        self.gridLayout_3.addWidget(self.label_36, 19, 2, 1, 1)
-
-        self.textinput_phonons_sd_qd_de = QLineEdit(self.tab_environment)
-        self.textinput_phonons_sd_qd_de.setObjectName(u"textinput_phonons_sd_qd_de")
-        self.textinput_phonons_sd_qd_de.setEnabled(False)
-        self.textinput_phonons_sd_qd_de.setMinimumSize(QSize(140, 40))
-        self.textinput_phonons_sd_qd_de.setFont(font)
-        self.textinput_phonons_sd_qd_de.setFrame(True)
-        self.textinput_phonons_sd_qd_de.setAlignment(Qt.AlignCenter)
-
-        self.gridLayout_3.addWidget(self.textinput_phonons_sd_qd_de, 17, 1, 1, 1)
-
-        self.textinput_phonons_sd_qd_size = QLineEdit(self.tab_environment)
-        self.textinput_phonons_sd_qd_size.setObjectName(u"textinput_phonons_sd_qd_size")
-        self.textinput_phonons_sd_qd_size.setEnabled(False)
-        self.textinput_phonons_sd_qd_size.setMinimumSize(QSize(140, 40))
-        self.textinput_phonons_sd_qd_size.setFont(font)
-        self.textinput_phonons_sd_qd_size.setFrame(True)
-        self.textinput_phonons_sd_qd_size.setAlignment(Qt.AlignCenter)
-
-        self.gridLayout_3.addWidget(self.textinput_phonons_sd_qd_size, 19, 3, 1, 1)
-
-        self.textinput_rates_cavity_loss = QLineEdit(self.tab_environment)
-        self.textinput_rates_cavity_loss.setObjectName(u"textinput_rates_cavity_loss")
-        self.textinput_rates_cavity_loss.setMinimumSize(QSize(140, 40))
-        self.textinput_rates_cavity_loss.setFont(font)
-        self.textinput_rates_cavity_loss.setFrame(True)
-        self.textinput_rates_cavity_loss.setAlignment(Qt.AlignCenter)
-
-        self.gridLayout_3.addWidget(self.textinput_rates_cavity_loss, 4, 1, 1, 1)
-
-        self.textinput_phonons_sd_wcutoff = QLineEdit(self.tab_environment)
-        self.textinput_phonons_sd_wcutoff.setObjectName(u"textinput_phonons_sd_wcutoff")
-        self.textinput_phonons_sd_wcutoff.setMinimumSize(QSize(140, 40))
-        self.textinput_phonons_sd_wcutoff.setFont(font)
-        self.textinput_phonons_sd_wcutoff.setFrame(True)
-        self.textinput_phonons_sd_wcutoff.setAlignment(Qt.AlignCenter)
-
-        self.gridLayout_3.addWidget(self.textinput_phonons_sd_wcutoff, 4, 6, 1, 1)
-
-        self.label_22 = QLabel(self.tab_environment)
-        self.label_22.setObjectName(u"label_22")
-        self.label_22.setMinimumSize(QSize(142, 42))
-
-        self.gridLayout_3.addWidget(self.label_22, 3, 2, 1, 1)
-
-        self.button_reset_phonon_qd = QPushButton(self.tab_environment)
-        self.button_reset_phonon_qd.setObjectName(u"button_reset_phonon_qd")
-        self.button_reset_phonon_qd.setMinimumSize(QSize(140, 40))
-
-        self.gridLayout_3.addWidget(self.button_reset_phonon_qd, 20, 8, 1, 1)
-
-        self.button_reset_phonons_2 = QPushButton(self.tab_environment)
-        self.button_reset_phonons_2.setObjectName(u"button_reset_phonons_2")
-        self.button_reset_phonons_2.setMinimumSize(QSize(140, 40))
-
-        self.gridLayout_3.addWidget(self.button_reset_phonons_2, 9, 5, 1, 2)
-
-        self.label_title_phonons_4 = QLabel(self.tab_environment)
-        self.label_title_phonons_4.setObjectName(u"label_title_phonons_4")
-        self.label_title_phonons_4.setMaximumSize(QSize(16777215, 40))
-        self.label_title_phonons_4.setFrameShape(QFrame.NoFrame)
-        self.label_title_phonons_4.setFrameShadow(QFrame.Plain)
-
-        self.gridLayout_3.addWidget(self.label_title_phonons_4, 15, 0, 1, 4)
-
-        self.label_21 = QLabel(self.tab_environment)
-        self.label_21.setObjectName(u"label_21")
-        self.label_21.setMinimumSize(QSize(142, 42))
-
-        self.gridLayout_3.addWidget(self.label_21, 6, 0, 1, 1)
-
-        self.line_3 = QFrame(self.tab_environment)
-        self.line_3.setObjectName(u"line_3")
-        self.line_3.setFrameShape(QFrame.VLine)
-        self.line_3.setFrameShadow(QFrame.Sunken)
-
-        self.gridLayout_3.addWidget(self.line_3, 16, 4, 4, 1)
-
-        self.label_32 = QLabel(self.tab_environment)
-        self.label_32.setObjectName(u"label_32")
-        self.label_32.setMinimumSize(QSize(142, 42))
-
-        self.gridLayout_3.addWidget(self.label_32, 17, 2, 1, 1)
-
-        self.button_reset_phonons = QPushButton(self.tab_environment)
-        self.button_reset_phonons.setObjectName(u"button_reset_phonons")
-        self.button_reset_phonons.setMinimumSize(QSize(140, 40))
-
-        self.gridLayout_3.addWidget(self.button_reset_phonons, 9, 2, 1, 2)
-
-        self.label_18 = QLabel(self.tab_environment)
-        self.label_18.setObjectName(u"label_18")
-        self.label_18.setMinimumSize(QSize(142, 42))
-
-        self.gridLayout_3.addWidget(self.label_18, 3, 0, 1, 1)
-
-        self.label_31 = QLabel(self.tab_environment)
-        self.label_31.setObjectName(u"label_31")
-        self.label_31.setMinimumSize(QSize(142, 42))
-
-        self.gridLayout_3.addWidget(self.label_31, 17, 0, 1, 1)
-
-        self.label_29 = QLabel(self.tab_environment)
-        self.label_29.setObjectName(u"label_29")
-        self.label_29.setMinimumSize(QSize(142, 42))
-
-        self.gridLayout_3.addWidget(self.label_29, 6, 5, 1, 1)
-
-        self.button_reset_phonon_sd = QPushButton(self.tab_environment)
-        self.button_reset_phonon_sd.setObjectName(u"button_reset_phonon_sd")
-        self.button_reset_phonon_sd.setMinimumSize(QSize(140, 40))
-
-        self.gridLayout_3.addWidget(self.button_reset_phonon_sd, 9, 9, 1, 1)
-
-        self.label_33 = QLabel(self.tab_environment)
-        self.label_33.setObjectName(u"label_33")
-        self.label_33.setMinimumSize(QSize(142, 42))
-
-        self.gridLayout_3.addWidget(self.label_33, 18, 0, 1, 1)
-
-        self.label_30 = QLabel(self.tab_environment)
-        self.label_30.setObjectName(u"label_30")
-        self.label_30.setMinimumSize(QSize(142, 42))
-
-        self.gridLayout_3.addWidget(self.label_30, 4, 2, 1, 1)
+        self.textinput_phonons_sd_ohmamp = QLineEdit(self.tab_environment)
+        self.textinput_phonons_sd_ohmamp.setObjectName(u"textinput_phonons_sd_ohmamp")
+        self.textinput_phonons_sd_ohmamp.setMinimumSize(QSize(140, 40))
+        self.textinput_phonons_sd_ohmamp.setFont(font)
+        self.textinput_phonons_sd_ohmamp.setFrame(True)
+        self.textinput_phonons_sd_ohmamp.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_3.addWidget(self.textinput_phonons_sd_ohmamp, 4, 3, 1, 1)
 
         self.input_phonons_approximation = QComboBox(self.tab_environment)
         self.input_phonons_approximation.addItem("")
@@ -505,30 +412,19 @@ class Ui_MainWindow(object):
 
         self.gridLayout_3.addWidget(self.input_phonons_approximation, 5, 3, 1, 1)
 
-        self.textinput_phonons_sd_qd_aeah_ratio = QLineEdit(self.tab_environment)
-        self.textinput_phonons_sd_qd_aeah_ratio.setObjectName(u"textinput_phonons_sd_qd_aeah_ratio")
-        self.textinput_phonons_sd_qd_aeah_ratio.setEnabled(False)
-        self.textinput_phonons_sd_qd_aeah_ratio.setMinimumSize(QSize(140, 40))
-        self.textinput_phonons_sd_qd_aeah_ratio.setFont(font)
-        self.textinput_phonons_sd_qd_aeah_ratio.setFrame(True)
-        self.textinput_phonons_sd_qd_aeah_ratio.setAlignment(Qt.AlignCenter)
+        self.label_33 = QLabel(self.tab_environment)
+        self.label_33.setObjectName(u"label_33")
+        self.label_33.setMinimumSize(QSize(142, 42))
 
-        self.gridLayout_3.addWidget(self.textinput_phonons_sd_qd_aeah_ratio, 19, 1, 1, 1)
+        self.gridLayout_3.addWidget(self.label_33, 17, 0, 1, 1)
 
-        self.textinput_rates_cavity_coupling = QLineEdit(self.tab_environment)
-        self.textinput_rates_cavity_coupling.setObjectName(u"textinput_rates_cavity_coupling")
-        self.textinput_rates_cavity_coupling.setMinimumSize(QSize(140, 40))
-        self.textinput_rates_cavity_coupling.setFont(font)
-        self.textinput_rates_cavity_coupling.setFrame(True)
-        self.textinput_rates_cavity_coupling.setAlignment(Qt.AlignCenter)
+        self.label_title_phonons_2 = QLabel(self.tab_environment)
+        self.label_title_phonons_2.setObjectName(u"label_title_phonons_2")
+        self.label_title_phonons_2.setMaximumSize(QSize(16777215, 40))
+        self.label_title_phonons_2.setFrameShape(QFrame.NoFrame)
+        self.label_title_phonons_2.setFrameShadow(QFrame.Plain)
 
-        self.gridLayout_3.addWidget(self.textinput_rates_cavity_coupling, 3, 1, 1, 1)
-
-        self.label_title_adjust_rates = QLabel(self.tab_environment)
-        self.label_title_adjust_rates.setObjectName(u"label_title_adjust_rates")
-        self.label_title_adjust_rates.setMinimumSize(QSize(142, 42))
-
-        self.gridLayout_3.addWidget(self.label_title_adjust_rates, 2, 9, 1, 1)
+        self.gridLayout_3.addWidget(self.label_title_phonons_2, 2, 5, 1, 2)
 
         self.textinput_phonons_sd_qd_dh = QLineEdit(self.tab_environment)
         self.textinput_phonons_sd_qd_dh.setObjectName(u"textinput_phonons_sd_qd_dh")
@@ -538,24 +434,153 @@ class Ui_MainWindow(object):
         self.textinput_phonons_sd_qd_dh.setFrame(True)
         self.textinput_phonons_sd_qd_dh.setAlignment(Qt.AlignCenter)
 
-        self.gridLayout_3.addWidget(self.textinput_phonons_sd_qd_dh, 17, 3, 1, 1)
+        self.gridLayout_3.addWidget(self.textinput_phonons_sd_qd_dh, 16, 3, 1, 1)
 
-        self.label_title_phonons_3 = QLabel(self.tab_environment)
-        self.label_title_phonons_3.setObjectName(u"label_title_phonons_3")
-        self.label_title_phonons_3.setMaximumSize(QSize(16777215, 40))
-        self.label_title_phonons_3.setFrameShape(QFrame.NoFrame)
-        self.label_title_phonons_3.setFrameShadow(QFrame.Plain)
+        self.label_25 = QLabel(self.tab_environment)
+        self.label_25.setObjectName(u"label_25")
+        self.label_25.setMinimumSize(QSize(142, 42))
 
-        self.gridLayout_3.addWidget(self.label_title_phonons_3, 2, 7, 1, 2)
+        self.gridLayout_3.addWidget(self.label_25, 15, 0, 1, 1)
 
-        self.textinput_rates_pure_dephasing = QLineEdit(self.tab_environment)
-        self.textinput_rates_pure_dephasing.setObjectName(u"textinput_rates_pure_dephasing")
-        self.textinput_rates_pure_dephasing.setMinimumSize(QSize(140, 40))
-        self.textinput_rates_pure_dephasing.setFont(font)
-        self.textinput_rates_pure_dephasing.setFrame(True)
-        self.textinput_rates_pure_dephasing.setAlignment(Qt.AlignCenter)
+        self.input_phonons_adjust_pure_dephasing = QCheckBox(self.tab_environment)
+        self.input_phonons_adjust_pure_dephasing.setObjectName(u"input_phonons_adjust_pure_dephasing")
+        self.input_phonons_adjust_pure_dephasing.setMinimumSize(QSize(150, 40))
+        self.input_phonons_adjust_pure_dephasing.setFont(font1)
 
-        self.gridLayout_3.addWidget(self.textinput_rates_pure_dephasing, 6, 1, 1, 1)
+        self.gridLayout_3.addWidget(self.input_phonons_adjust_pure_dephasing, 4, 9, 1, 1)
+
+        self.label_30 = QLabel(self.tab_environment)
+        self.label_30.setObjectName(u"label_30")
+        self.label_30.setMinimumSize(QSize(142, 42))
+
+        self.gridLayout_3.addWidget(self.label_30, 4, 2, 1, 1)
+
+        self.textinput_rates_radiative_decay = QLineEdit(self.tab_environment)
+        self.textinput_rates_radiative_decay.setObjectName(u"textinput_rates_radiative_decay")
+        self.textinput_rates_radiative_decay.setMinimumSize(QSize(140, 40))
+        self.textinput_rates_radiative_decay.setFont(font)
+        self.textinput_rates_radiative_decay.setFrame(True)
+        self.textinput_rates_radiative_decay.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_3.addWidget(self.textinput_rates_radiative_decay, 5, 1, 1, 1)
+
+        self.textinput_phonons_sd_qd_size = QLineEdit(self.tab_environment)
+        self.textinput_phonons_sd_qd_size.setObjectName(u"textinput_phonons_sd_qd_size")
+        self.textinput_phonons_sd_qd_size.setEnabled(False)
+        self.textinput_phonons_sd_qd_size.setMinimumSize(QSize(140, 40))
+        self.textinput_phonons_sd_qd_size.setFont(font)
+        self.textinput_phonons_sd_qd_size.setFrame(True)
+        self.textinput_phonons_sd_qd_size.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_3.addWidget(self.textinput_phonons_sd_qd_size, 18, 3, 1, 1)
+
+        self.button_next_tab_config_to_timeline = QPushButton(self.tab_environment)
+        self.button_next_tab_config_to_timeline.setObjectName(u"button_next_tab_config_to_timeline")
+        self.button_next_tab_config_to_timeline.setMinimumSize(QSize(140, 40))
+        self.button_next_tab_config_to_timeline.setMaximumSize(QSize(150, 16777215))
+        self.button_next_tab_config_to_timeline.setCheckable(False)
+
+        self.gridLayout_3.addWidget(self.button_next_tab_config_to_timeline, 19, 9, 1, 1)
+
+        self.label_37 = QLabel(self.tab_environment)
+        self.label_37.setObjectName(u"label_37")
+        self.label_37.setMinimumSize(QSize(142, 42))
+
+        self.gridLayout_3.addWidget(self.label_37, 3, 5, 1, 1)
+
+        self.textinput_phonons_sd_qd_rho = QLineEdit(self.tab_environment)
+        self.textinput_phonons_sd_qd_rho.setObjectName(u"textinput_phonons_sd_qd_rho")
+        self.textinput_phonons_sd_qd_rho.setEnabled(False)
+        self.textinput_phonons_sd_qd_rho.setMinimumSize(QSize(140, 40))
+        self.textinput_phonons_sd_qd_rho.setFont(font)
+        self.textinput_phonons_sd_qd_rho.setFrame(True)
+        self.textinput_phonons_sd_qd_rho.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_3.addWidget(self.textinput_phonons_sd_qd_rho, 17, 1, 1, 1)
+
+        self.label_26 = QLabel(self.tab_environment)
+        self.label_26.setObjectName(u"label_26")
+        self.label_26.setMinimumSize(QSize(142, 42))
+
+        self.gridLayout_3.addWidget(self.label_26, 3, 7, 1, 1)
+
+        self.label_title_phonons_4 = QLabel(self.tab_environment)
+        self.label_title_phonons_4.setObjectName(u"label_title_phonons_4")
+        self.label_title_phonons_4.setMaximumSize(QSize(16777215, 40))
+        self.label_title_phonons_4.setFrameShape(QFrame.NoFrame)
+        self.label_title_phonons_4.setFrameShadow(QFrame.Plain)
+
+        self.gridLayout_3.addWidget(self.label_title_phonons_4, 14, 0, 1, 4)
+
+        self.textinput_phonons_sd_alpha = QLineEdit(self.tab_environment)
+        self.textinput_phonons_sd_alpha.setObjectName(u"textinput_phonons_sd_alpha")
+        self.textinput_phonons_sd_alpha.setMinimumSize(QSize(140, 40))
+        self.textinput_phonons_sd_alpha.setFont(font)
+        self.textinput_phonons_sd_alpha.setFrame(True)
+        self.textinput_phonons_sd_alpha.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_3.addWidget(self.textinput_phonons_sd_alpha, 3, 8, 1, 1)
+
+        self.label_36 = QLabel(self.tab_environment)
+        self.label_36.setObjectName(u"label_36")
+        self.label_36.setMinimumSize(QSize(142, 42))
+
+        self.gridLayout_3.addWidget(self.label_36, 18, 2, 1, 1)
+
+        self.textinput_phonons_sd_wcutoff = QLineEdit(self.tab_environment)
+        self.textinput_phonons_sd_wcutoff.setObjectName(u"textinput_phonons_sd_wcutoff")
+        self.textinput_phonons_sd_wcutoff.setMinimumSize(QSize(140, 40))
+        self.textinput_phonons_sd_wcutoff.setFont(font)
+        self.textinput_phonons_sd_wcutoff.setFrame(True)
+        self.textinput_phonons_sd_wcutoff.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_3.addWidget(self.textinput_phonons_sd_wcutoff, 4, 6, 1, 1)
+
+        self.input_phonons_use_qd = QCheckBox(self.tab_environment)
+        self.input_phonons_use_qd.setObjectName(u"input_phonons_use_qd")
+        self.input_phonons_use_qd.setMinimumSize(QSize(150, 40))
+        self.input_phonons_use_qd.setFont(font)
+
+        self.gridLayout_3.addWidget(self.input_phonons_use_qd, 15, 1, 1, 3)
+
+        self.label_title_phonons = QLabel(self.tab_environment)
+        self.label_title_phonons.setObjectName(u"label_title_phonons")
+        self.label_title_phonons.setMaximumSize(QSize(16777215, 40))
+        self.label_title_phonons.setFrameShape(QFrame.NoFrame)
+        self.label_title_phonons.setFrameShadow(QFrame.Plain)
+
+        self.gridLayout_3.addWidget(self.label_title_phonons, 2, 2, 1, 2)
+
+        self.label_23 = QLabel(self.tab_environment)
+        self.label_23.setObjectName(u"label_23")
+        self.label_23.setMinimumSize(QSize(142, 42))
+
+        self.gridLayout_3.addWidget(self.label_23, 5, 2, 1, 1)
+
+        self.label_28 = QLabel(self.tab_environment)
+        self.label_28.setObjectName(u"label_28")
+        self.label_28.setMinimumSize(QSize(142, 42))
+
+        self.gridLayout_3.addWidget(self.label_28, 5, 5, 1, 1)
+
+        self.textinput_rates_cavity_loss = QLineEdit(self.tab_environment)
+        self.textinput_rates_cavity_loss.setObjectName(u"textinput_rates_cavity_loss")
+        self.textinput_rates_cavity_loss.setMinimumSize(QSize(140, 40))
+        self.textinput_rates_cavity_loss.setFont(font)
+        self.textinput_rates_cavity_loss.setFrame(True)
+        self.textinput_rates_cavity_loss.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_3.addWidget(self.textinput_rates_cavity_loss, 4, 1, 1, 1)
+
+        self.textinput_phonons_sd_qd_cs = QLineEdit(self.tab_environment)
+        self.textinput_phonons_sd_qd_cs.setObjectName(u"textinput_phonons_sd_qd_cs")
+        self.textinput_phonons_sd_qd_cs.setEnabled(False)
+        self.textinput_phonons_sd_qd_cs.setMinimumSize(QSize(140, 40))
+        self.textinput_phonons_sd_qd_cs.setFont(font)
+        self.textinput_phonons_sd_qd_cs.setFrame(True)
+        self.textinput_phonons_sd_qd_cs.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_3.addWidget(self.textinput_phonons_sd_qd_cs, 17, 3, 1, 1)
 
         self.textinput_phonons_sd_wdelta = QLineEdit(self.tab_environment)
         self.textinput_phonons_sd_wdelta.setObjectName(u"textinput_phonons_sd_wdelta")
@@ -566,85 +591,30 @@ class Ui_MainWindow(object):
 
         self.gridLayout_3.addWidget(self.textinput_phonons_sd_wdelta, 5, 6, 1, 1)
 
-        self.label_title_phonons_2 = QLabel(self.tab_environment)
-        self.label_title_phonons_2.setObjectName(u"label_title_phonons_2")
-        self.label_title_phonons_2.setMaximumSize(QSize(16777215, 40))
-        self.label_title_phonons_2.setFrameShape(QFrame.NoFrame)
-        self.label_title_phonons_2.setFrameShadow(QFrame.Plain)
+        self.button_reset_phonon_qd = QPushButton(self.tab_environment)
+        self.button_reset_phonon_qd.setObjectName(u"button_reset_phonon_qd")
+        self.button_reset_phonon_qd.setMinimumSize(QSize(140, 40))
 
-        self.gridLayout_3.addWidget(self.label_title_phonons_2, 2, 5, 1, 2)
+        self.gridLayout_3.addWidget(self.button_reset_phonon_qd, 19, 8, 1, 1)
 
-        self.label_19 = QLabel(self.tab_environment)
-        self.label_19.setObjectName(u"label_19")
-        self.label_19.setMinimumSize(QSize(142, 42))
+        self.textinput_phonons_sd_qd_aeah_ratio = QLineEdit(self.tab_environment)
+        self.textinput_phonons_sd_qd_aeah_ratio.setObjectName(u"textinput_phonons_sd_qd_aeah_ratio")
+        self.textinput_phonons_sd_qd_aeah_ratio.setEnabled(False)
+        self.textinput_phonons_sd_qd_aeah_ratio.setMinimumSize(QSize(140, 40))
+        self.textinput_phonons_sd_qd_aeah_ratio.setFont(font)
+        self.textinput_phonons_sd_qd_aeah_ratio.setFrame(True)
+        self.textinput_phonons_sd_qd_aeah_ratio.setAlignment(Qt.AlignCenter)
 
-        self.gridLayout_3.addWidget(self.label_19, 4, 0, 1, 1)
+        self.gridLayout_3.addWidget(self.textinput_phonons_sd_qd_aeah_ratio, 18, 1, 1, 1)
 
-        self.label_26 = QLabel(self.tab_environment)
-        self.label_26.setObjectName(u"label_26")
-        self.label_26.setMinimumSize(QSize(142, 42))
+        self.textinput_rates_cavity_coupling = QLineEdit(self.tab_environment)
+        self.textinput_rates_cavity_coupling.setObjectName(u"textinput_rates_cavity_coupling")
+        self.textinput_rates_cavity_coupling.setMinimumSize(QSize(140, 40))
+        self.textinput_rates_cavity_coupling.setFont(font)
+        self.textinput_rates_cavity_coupling.setFrame(True)
+        self.textinput_rates_cavity_coupling.setAlignment(Qt.AlignCenter)
 
-        self.gridLayout_3.addWidget(self.label_26, 3, 7, 1, 1)
-
-        self.input_phonons_adjust_renormalization = QCheckBox(self.tab_environment)
-        self.input_phonons_adjust_renormalization.setObjectName(u"input_phonons_adjust_renormalization")
-        self.input_phonons_adjust_renormalization.setMinimumSize(QSize(150, 40))
-        self.input_phonons_adjust_renormalization.setFont(font1)
-        self.input_phonons_adjust_renormalization.setChecked(True)
-
-        self.gridLayout_3.addWidget(self.input_phonons_adjust_renormalization, 5, 9, 1, 1)
-
-        self.input_phonons_adjust_radiativeloss = QCheckBox(self.tab_environment)
-        self.input_phonons_adjust_radiativeloss.setObjectName(u"input_phonons_adjust_radiativeloss")
-        self.input_phonons_adjust_radiativeloss.setMinimumSize(QSize(150, 40))
-        self.input_phonons_adjust_radiativeloss.setFont(font1)
-        self.input_phonons_adjust_radiativeloss.setChecked(True)
-
-        self.gridLayout_3.addWidget(self.input_phonons_adjust_radiativeloss, 3, 9, 1, 1)
-
-        self.textinput_phonons_sd_qd_rho = QLineEdit(self.tab_environment)
-        self.textinput_phonons_sd_qd_rho.setObjectName(u"textinput_phonons_sd_qd_rho")
-        self.textinput_phonons_sd_qd_rho.setEnabled(False)
-        self.textinput_phonons_sd_qd_rho.setMinimumSize(QSize(140, 40))
-        self.textinput_phonons_sd_qd_rho.setFont(font)
-        self.textinput_phonons_sd_qd_rho.setFrame(True)
-        self.textinput_phonons_sd_qd_rho.setAlignment(Qt.AlignCenter)
-
-        self.gridLayout_3.addWidget(self.textinput_phonons_sd_qd_rho, 18, 1, 1, 1)
-
-        self.textinput_phonons_sd_tcutoff = QLineEdit(self.tab_environment)
-        self.textinput_phonons_sd_tcutoff.setObjectName(u"textinput_phonons_sd_tcutoff")
-        self.textinput_phonons_sd_tcutoff.setMinimumSize(QSize(140, 40))
-        self.textinput_phonons_sd_tcutoff.setFont(font)
-        self.textinput_phonons_sd_tcutoff.setFrame(True)
-        self.textinput_phonons_sd_tcutoff.setAlignment(Qt.AlignCenter)
-
-        self.gridLayout_3.addWidget(self.textinput_phonons_sd_tcutoff, 6, 6, 1, 1)
-
-        self.textinput_phonons_iterator_stepsize = QLineEdit(self.tab_environment)
-        self.textinput_phonons_iterator_stepsize.setObjectName(u"textinput_phonons_iterator_stepsize")
-        self.textinput_phonons_iterator_stepsize.setMinimumSize(QSize(140, 40))
-        self.textinput_phonons_iterator_stepsize.setFont(font)
-        self.textinput_phonons_iterator_stepsize.setFrame(True)
-        self.textinput_phonons_iterator_stepsize.setAlignment(Qt.AlignCenter)
-
-        self.gridLayout_3.addWidget(self.textinput_phonons_iterator_stepsize, 3, 6, 1, 1)
-
-        self.button_reset_rates = QPushButton(self.tab_environment)
-        self.button_reset_rates.setObjectName(u"button_reset_rates")
-        self.button_reset_rates.setMinimumSize(QSize(140, 40))
-
-        self.gridLayout_3.addWidget(self.button_reset_rates, 9, 0, 1, 2)
-
-        self.label_plot_spectral_density = PlotWidget(self.tab_environment)
-        self.label_plot_spectral_density.setObjectName(u"label_plot_spectral_density")
-
-        self.gridLayout_3.addWidget(self.label_plot_spectral_density, 16, 5, 4, 5)
-
-        self.label_39 = QLabel(self.tab_environment)
-        self.label_39.setObjectName(u"label_39")
-
-        self.gridLayout_3.addWidget(self.label_39, 15, 5, 1, 5)
+        self.gridLayout_3.addWidget(self.textinput_rates_cavity_coupling, 3, 1, 1, 1)
 
         self.tabWidget.addTab(self.tab_environment, "")
         self.tab_timeline = QWidget()
@@ -1061,7 +1031,6 @@ class Ui_MainWindow(object):
         self.textinput_indist_modes.setObjectName(u"textinput_indist_modes")
         self.textinput_indist_modes.setMinimumSize(QSize(140, 40))
         self.textinput_indist_modes.setFont(font)
-        self.textinput_indist_modes.setStyleSheet(u"border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;")
         self.textinput_indist_modes.setFrame(True)
         self.textinput_indist_modes.setAlignment(Qt.AlignCenter)
 
@@ -1077,8 +1046,7 @@ class Ui_MainWindow(object):
 
         self.label_52 = QLabel(self.tab_indist)
         self.label_52.setObjectName(u"label_52")
-        self.label_52.setMinimumSize(QSize(141, 42))
-        self.label_52.setStyleSheet(u"border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px")
+        self.label_52.setMinimumSize(QSize(142, 42))
 
         self.gridLayout_7.addWidget(self.label_52, 1, 1, 1, 1)
 
@@ -1103,49 +1071,43 @@ class Ui_MainWindow(object):
         self.gridLayout.setObjectName(u"gridLayout")
         self.label_114 = QLabel(self.tab_concurrence)
         self.label_114.setObjectName(u"label_114")
-        self.label_114.setMinimumSize(QSize(141, 42))
+        self.label_114.setMinimumSize(QSize(142, 42))
         self.label_114.setMaximumSize(QSize(200, 16777215))
-        self.label_114.setStyleSheet(u"border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px")
 
         self.gridLayout.addWidget(self.label_114, 11, 0, 1, 1)
 
         self.label_115 = QLabel(self.tab_concurrence)
         self.label_115.setObjectName(u"label_115")
-        self.label_115.setMinimumSize(QSize(141, 42))
+        self.label_115.setMinimumSize(QSize(142, 42))
         self.label_115.setMaximumSize(QSize(200, 16777215))
-        self.label_115.setStyleSheet(u"border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px")
 
         self.gridLayout.addWidget(self.label_115, 12, 0, 1, 1)
 
         self.label_55 = QLabel(self.tab_concurrence)
         self.label_55.setObjectName(u"label_55")
-        self.label_55.setMinimumSize(QSize(141, 42))
+        self.label_55.setMinimumSize(QSize(142, 42))
         self.label_55.setMaximumSize(QSize(200, 16777215))
-        self.label_55.setStyleSheet(u"border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px")
 
         self.gridLayout.addWidget(self.label_55, 9, 0, 1, 1)
 
         self.label_54 = QLabel(self.tab_concurrence)
         self.label_54.setObjectName(u"label_54")
-        self.label_54.setMinimumSize(QSize(141, 42))
+        self.label_54.setMinimumSize(QSize(142, 42))
         self.label_54.setMaximumSize(QSize(200, 16777215))
-        self.label_54.setStyleSheet(u"border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px")
 
         self.gridLayout.addWidget(self.label_54, 4, 0, 1, 1)
 
         self.label_113 = QLabel(self.tab_concurrence)
         self.label_113.setObjectName(u"label_113")
-        self.label_113.setMinimumSize(QSize(141, 42))
+        self.label_113.setMinimumSize(QSize(142, 42))
         self.label_113.setMaximumSize(QSize(200, 16777215))
-        self.label_113.setStyleSheet(u"border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px")
 
         self.gridLayout.addWidget(self.label_113, 10, 0, 1, 1)
 
         self.label_53 = QLabel(self.tab_concurrence)
         self.label_53.setObjectName(u"label_53")
-        self.label_53.setMinimumSize(QSize(141, 42))
+        self.label_53.setMinimumSize(QSize(142, 42))
         self.label_53.setMaximumSize(QSize(200, 16777215))
-        self.label_53.setStyleSheet(u"border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px")
 
         self.gridLayout.addWidget(self.label_53, 3, 0, 1, 1)
 
@@ -1176,7 +1138,6 @@ class Ui_MainWindow(object):
         self.textinput_concurrence_first.setObjectName(u"textinput_concurrence_first")
         self.textinput_concurrence_first.setMinimumSize(QSize(140, 40))
         self.textinput_concurrence_first.setFont(font)
-        self.textinput_concurrence_first.setStyleSheet(u"border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;")
         self.textinput_concurrence_first.setFrame(True)
         self.textinput_concurrence_first.setAlignment(Qt.AlignCenter)
 
@@ -1186,7 +1147,6 @@ class Ui_MainWindow(object):
         self.textinput_concurrence_second.setObjectName(u"textinput_concurrence_second")
         self.textinput_concurrence_second.setMinimumSize(QSize(140, 40))
         self.textinput_concurrence_second.setFont(font)
-        self.textinput_concurrence_second.setStyleSheet(u"border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;")
         self.textinput_concurrence_second.setFrame(True)
         self.textinput_concurrence_second.setAlignment(Qt.AlignCenter)
 
@@ -1210,7 +1170,6 @@ class Ui_MainWindow(object):
         self.input_concurrence_add_spectra.setObjectName(u"input_concurrence_add_spectra")
         self.input_concurrence_add_spectra.setMinimumSize(QSize(150, 40))
         self.input_concurrence_add_spectra.setFont(font)
-        self.input_concurrence_add_spectra.setStyleSheet(u"border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;")
         self.input_concurrence_add_spectra.setChecked(False)
 
         self.gridLayout.addWidget(self.input_concurrence_add_spectra, 9, 1, 1, 2)
@@ -1220,7 +1179,6 @@ class Ui_MainWindow(object):
         self.textinput_concurrence_spec_freq.setEnabled(False)
         self.textinput_concurrence_spec_freq.setMinimumSize(QSize(140, 40))
         self.textinput_concurrence_spec_freq.setFont(font)
-        self.textinput_concurrence_spec_freq.setStyleSheet(u"border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;")
         self.textinput_concurrence_spec_freq.setFrame(True)
         self.textinput_concurrence_spec_freq.setAlignment(Qt.AlignCenter)
 
@@ -1231,7 +1189,6 @@ class Ui_MainWindow(object):
         self.textinput_concurrence_spec_range.setEnabled(False)
         self.textinput_concurrence_spec_range.setMinimumSize(QSize(140, 40))
         self.textinput_concurrence_spec_range.setFont(font)
-        self.textinput_concurrence_spec_range.setStyleSheet(u"border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;")
         self.textinput_concurrence_spec_range.setFrame(True)
         self.textinput_concurrence_spec_range.setAlignment(Qt.AlignCenter)
 
@@ -1242,7 +1199,6 @@ class Ui_MainWindow(object):
         self.textinput_concurrence_spec_res.setEnabled(False)
         self.textinput_concurrence_spec_res.setMinimumSize(QSize(140, 40))
         self.textinput_concurrence_spec_res.setFont(font)
-        self.textinput_concurrence_spec_res.setStyleSheet(u"border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;")
         self.textinput_concurrence_spec_res.setFrame(True)
         self.textinput_concurrence_spec_res.setAlignment(Qt.AlignCenter)
 
@@ -1475,7 +1431,6 @@ class Ui_MainWindow(object):
         self.textinput_detector_t0.setObjectName(u"textinput_detector_t0")
         self.textinput_detector_t0.setMinimumSize(QSize(140, 40))
         self.textinput_detector_t0.setFont(font)
-        self.textinput_detector_t0.setStyleSheet(u"border-radius: 0px;")
         self.textinput_detector_t0.setFrame(True)
         self.textinput_detector_t0.setAlignment(Qt.AlignCenter)
 
@@ -1483,9 +1438,8 @@ class Ui_MainWindow(object):
 
         self.label_128 = QLabel(self.tab_detector)
         self.label_128.setObjectName(u"label_128")
-        self.label_128.setMinimumSize(QSize(141, 42))
+        self.label_128.setMinimumSize(QSize(142, 42))
         self.label_128.setMaximumSize(QSize(16777215, 40))
-        self.label_128.setStyleSheet(u"border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px")
 
         self.gridLayout_9.addWidget(self.label_128, 2, 0, 1, 1)
 
@@ -1493,7 +1447,6 @@ class Ui_MainWindow(object):
         self.textinput_detector_tpower.setObjectName(u"textinput_detector_tpower")
         self.textinput_detector_tpower.setMinimumSize(QSize(140, 40))
         self.textinput_detector_tpower.setFont(font)
-        self.textinput_detector_tpower.setStyleSheet(u"border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;")
         self.textinput_detector_tpower.setFrame(True)
         self.textinput_detector_tpower.setAlignment(Qt.AlignCenter)
 
@@ -1539,9 +1492,8 @@ class Ui_MainWindow(object):
 
         self.label_117 = QLabel(self.tab_detector)
         self.label_117.setObjectName(u"label_117")
-        self.label_117.setMinimumSize(QSize(141, 42))
+        self.label_117.setMinimumSize(QSize(142, 42))
         self.label_117.setMaximumSize(QSize(16777215, 40))
-        self.label_117.setStyleSheet(u"border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px")
 
         self.gridLayout_9.addWidget(self.label_117, 1, 0, 1, 1)
 
@@ -1554,9 +1506,8 @@ class Ui_MainWindow(object):
 
         self.label_118 = QLabel(self.tab_detector)
         self.label_118.setObjectName(u"label_118")
-        self.label_118.setMinimumSize(QSize(141, 42))
+        self.label_118.setMinimumSize(QSize(142, 42))
         self.label_118.setMaximumSize(QSize(16777215, 40))
-        self.label_118.setStyleSheet(u"border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px")
 
         self.gridLayout_9.addWidget(self.label_118, 3, 0, 1, 1)
 
@@ -1564,7 +1515,6 @@ class Ui_MainWindow(object):
         self.textinput_detector_t1.setObjectName(u"textinput_detector_t1")
         self.textinput_detector_t1.setMinimumSize(QSize(140, 40))
         self.textinput_detector_t1.setFont(font)
-        self.textinput_detector_t1.setStyleSheet(u"border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;")
         self.textinput_detector_t1.setFrame(True)
         self.textinput_detector_t1.setAlignment(Qt.AlignCenter)
 
@@ -1574,7 +1524,6 @@ class Ui_MainWindow(object):
         self.textinput_detector_wcenter.setObjectName(u"textinput_detector_wcenter")
         self.textinput_detector_wcenter.setMinimumSize(QSize(140, 40))
         self.textinput_detector_wcenter.setFont(font)
-        self.textinput_detector_wcenter.setStyleSheet(u"border-radius: 0px;")
         self.textinput_detector_wcenter.setFrame(True)
         self.textinput_detector_wcenter.setAlignment(Qt.AlignCenter)
 
@@ -1584,7 +1533,6 @@ class Ui_MainWindow(object):
         self.textinput_detector_wrange.setObjectName(u"textinput_detector_wrange")
         self.textinput_detector_wrange.setMinimumSize(QSize(140, 40))
         self.textinput_detector_wrange.setFont(font)
-        self.textinput_detector_wrange.setStyleSheet(u"border-radius: 0px;")
         self.textinput_detector_wrange.setFrame(True)
         self.textinput_detector_wrange.setAlignment(Qt.AlignCenter)
 
@@ -1592,22 +1540,19 @@ class Ui_MainWindow(object):
 
         self.label_119 = QLabel(self.tab_detector)
         self.label_119.setObjectName(u"label_119")
-        self.label_119.setMinimumSize(QSize(141, 42))
-        self.label_119.setStyleSheet(u"border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px")
+        self.label_119.setMinimumSize(QSize(142, 42))
 
         self.gridLayout_9.addWidget(self.label_119, 8, 0, 1, 1)
 
         self.label_121 = QLabel(self.tab_detector)
         self.label_121.setObjectName(u"label_121")
-        self.label_121.setMinimumSize(QSize(141, 42))
-        self.label_121.setStyleSheet(u"border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px")
+        self.label_121.setMinimumSize(QSize(142, 42))
 
         self.gridLayout_9.addWidget(self.label_121, 7, 0, 1, 1)
 
         self.label_127 = QLabel(self.tab_detector)
         self.label_127.setObjectName(u"label_127")
-        self.label_127.setMinimumSize(QSize(141, 42))
-        self.label_127.setStyleSheet(u"border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px")
+        self.label_127.setMinimumSize(QSize(142, 42))
 
         self.gridLayout_9.addWidget(self.label_127, 9, 0, 1, 1)
 
@@ -1615,7 +1560,6 @@ class Ui_MainWindow(object):
         self.textinput_detector_wnum.setObjectName(u"textinput_detector_wnum")
         self.textinput_detector_wnum.setMinimumSize(QSize(140, 40))
         self.textinput_detector_wnum.setFont(font)
-        self.textinput_detector_wnum.setStyleSheet(u"border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;")
         self.textinput_detector_wnum.setFrame(True)
         self.textinput_detector_wnum.setAlignment(Qt.AlignCenter)
 
@@ -1623,8 +1567,7 @@ class Ui_MainWindow(object):
 
         self.label_120 = QLabel(self.tab_detector)
         self.label_120.setObjectName(u"label_120")
-        self.label_120.setMinimumSize(QSize(141, 42))
-        self.label_120.setStyleSheet(u"border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right-width: 0px")
+        self.label_120.setMinimumSize(QSize(142, 42))
 
         self.gridLayout_9.addWidget(self.label_120, 10, 0, 1, 1)
 
@@ -1632,7 +1575,6 @@ class Ui_MainWindow(object):
         self.textinput_detector_wpower.setObjectName(u"textinput_detector_wpower")
         self.textinput_detector_wpower.setMinimumSize(QSize(140, 40))
         self.textinput_detector_wpower.setFont(font)
-        self.textinput_detector_wpower.setStyleSheet(u"border-left-width: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;")
         self.textinput_detector_wpower.setFrame(True)
         self.textinput_detector_wpower.setAlignment(Qt.AlignCenter)
 
@@ -2043,25 +1985,20 @@ class Ui_MainWindow(object):
         self.line_5.setFrameShape(QFrame.VLine)
         self.line_5.setFrameShadow(QFrame.Sunken)
 
-        self.gridLayout_10.addWidget(self.line_5, 3, 6, 11, 1)
+        self.gridLayout_10.addWidget(self.line_5, 3, 6, 19, 1)
 
         self.tabWidget.addTab(self.tab_generate, "")
         self.tab_5 = QWidget()
         self.tab_5.setObjectName(u"tab_5")
         self.gridLayout_6 = QGridLayout(self.tab_5)
         self.gridLayout_6.setObjectName(u"gridLayout_6")
-        self.checkbox_activate_scan_parameter_1 = QCheckBox(self.tab_5)
-        self.checkbox_activate_scan_parameter_1.setObjectName(u"checkbox_activate_scan_parameter_1")
+        self.label_title_qdsystem_7 = QLabel(self.tab_5)
+        self.label_title_qdsystem_7.setObjectName(u"label_title_qdsystem_7")
+        self.label_title_qdsystem_7.setMaximumSize(QSize(16777215, 40))
+        self.label_title_qdsystem_7.setFrameShape(QFrame.NoFrame)
+        self.label_title_qdsystem_7.setFrameShadow(QFrame.Plain)
 
-        self.gridLayout_6.addWidget(self.checkbox_activate_scan_parameter_1, 1, 3, 1, 3)
-
-        self.label_title_qdsystem_12 = QLabel(self.tab_5)
-        self.label_title_qdsystem_12.setObjectName(u"label_title_qdsystem_12")
-        self.label_title_qdsystem_12.setMaximumSize(QSize(16777215, 40))
-        self.label_title_qdsystem_12.setFrameShape(QFrame.NoFrame)
-        self.label_title_qdsystem_12.setFrameShadow(QFrame.Plain)
-
-        self.gridLayout_6.addWidget(self.label_title_qdsystem_12, 4, 2, 1, 1)
+        self.gridLayout_6.addWidget(self.label_title_qdsystem_7, 0, 2, 1, 4)
 
         self.label_title_qdsystem_10 = QLabel(self.tab_5)
         self.label_title_qdsystem_10.setObjectName(u"label_title_qdsystem_10")
@@ -2071,171 +2008,20 @@ class Ui_MainWindow(object):
 
         self.gridLayout_6.addWidget(self.label_title_qdsystem_10, 9, 2, 1, 1)
 
-        self.label_title_qdsystem_5 = QLabel(self.tab_5)
-        self.label_title_qdsystem_5.setObjectName(u"label_title_qdsystem_5")
-        self.label_title_qdsystem_5.setMaximumSize(QSize(16777215, 40))
-        self.label_title_qdsystem_5.setFrameShape(QFrame.NoFrame)
-        self.label_title_qdsystem_5.setFrameShadow(QFrame.Plain)
+        self.button_sweeper_get_runstring = QPushButton(self.tab_5)
+        self.button_sweeper_get_runstring.setObjectName(u"button_sweeper_get_runstring")
 
-        self.gridLayout_6.addWidget(self.label_title_qdsystem_5, 3, 2, 1, 1)
+        self.gridLayout_6.addWidget(self.button_sweeper_get_runstring, 13, 0, 1, 2)
 
         self.textinput_scan_parameter_2_from = QLineEdit(self.tab_5)
         self.textinput_scan_parameter_2_from.setObjectName(u"textinput_scan_parameter_2_from")
 
         self.gridLayout_6.addWidget(self.textinput_scan_parameter_2_from, 8, 3, 1, 3)
 
-        self.label_title_qdsystem_8 = QLabel(self.tab_5)
-        self.label_title_qdsystem_8.setObjectName(u"label_title_qdsystem_8")
-        self.label_title_qdsystem_8.setMaximumSize(QSize(16777215, 40))
-        self.label_title_qdsystem_8.setFrameShape(QFrame.NoFrame)
-        self.label_title_qdsystem_8.setFrameShadow(QFrame.Plain)
-
-        self.gridLayout_6.addWidget(self.label_title_qdsystem_8, 7, 2, 1, 1)
-
-        self.textinput_scan_parameter_2_lambda = QLineEdit(self.tab_5)
-        self.textinput_scan_parameter_2_lambda.setObjectName(u"textinput_scan_parameter_2_lambda")
-
-        self.gridLayout_6.addWidget(self.textinput_scan_parameter_2_lambda, 11, 3, 1, 3)
-
-        self.textinput_scan_parameter_1_to = QLineEdit(self.tab_5)
-        self.textinput_scan_parameter_1_to.setObjectName(u"textinput_scan_parameter_1_to")
-
-        self.gridLayout_6.addWidget(self.textinput_scan_parameter_1_to, 3, 3, 1, 3)
-
-        self.label_title_qdsystem_2 = QLabel(self.tab_5)
-        self.label_title_qdsystem_2.setObjectName(u"label_title_qdsystem_2")
-        self.label_title_qdsystem_2.setMaximumSize(QSize(16777215, 40))
-        self.label_title_qdsystem_2.setFrameShape(QFrame.NoFrame)
-        self.label_title_qdsystem_2.setFrameShadow(QFrame.Plain)
-
-        self.gridLayout_6.addWidget(self.label_title_qdsystem_2, 1, 2, 1, 1)
-
-        self.textinput_scan_parameter_1_points = QLineEdit(self.tab_5)
-        self.textinput_scan_parameter_1_points.setObjectName(u"textinput_scan_parameter_1_points")
-
-        self.gridLayout_6.addWidget(self.textinput_scan_parameter_1_points, 4, 3, 1, 3)
-
-        self.label_title_qdsystem_13 = QLabel(self.tab_5)
-        self.label_title_qdsystem_13.setObjectName(u"label_title_qdsystem_13")
-        self.label_title_qdsystem_13.setMaximumSize(QSize(16777215, 40))
-        self.label_title_qdsystem_13.setFrameShape(QFrame.NoFrame)
-        self.label_title_qdsystem_13.setFrameShadow(QFrame.Plain)
-
-        self.gridLayout_6.addWidget(self.label_title_qdsystem_13, 10, 2, 1, 1)
-
-        self.label_title_qdsystem_3 = QLabel(self.tab_5)
-        self.label_title_qdsystem_3.setObjectName(u"label_title_qdsystem_3")
-        self.label_title_qdsystem_3.setMaximumSize(QSize(16777215, 40))
-        self.label_title_qdsystem_3.setFrameShape(QFrame.NoFrame)
-        self.label_title_qdsystem_3.setFrameShadow(QFrame.Plain)
-
-        self.gridLayout_6.addWidget(self.label_title_qdsystem_3, 0, 0, 1, 2)
-
-        self.textinput_scan_parameter_1_lambda = QLineEdit(self.tab_5)
-        self.textinput_scan_parameter_1_lambda.setObjectName(u"textinput_scan_parameter_1_lambda")
-
-        self.gridLayout_6.addWidget(self.textinput_scan_parameter_1_lambda, 5, 3, 1, 3)
-
-        self.label_title_qdsystem_7 = QLabel(self.tab_5)
-        self.label_title_qdsystem_7.setObjectName(u"label_title_qdsystem_7")
-        self.label_title_qdsystem_7.setMaximumSize(QSize(16777215, 40))
-        self.label_title_qdsystem_7.setFrameShape(QFrame.NoFrame)
-        self.label_title_qdsystem_7.setFrameShadow(QFrame.Plain)
-
-        self.gridLayout_6.addWidget(self.label_title_qdsystem_7, 0, 2, 1, 4)
-
-        self.textinput_scan_parameter_2_to = QLineEdit(self.tab_5)
-        self.textinput_scan_parameter_2_to.setObjectName(u"textinput_scan_parameter_2_to")
-
-        self.gridLayout_6.addWidget(self.textinput_scan_parameter_2_to, 9, 3, 1, 3)
-
         self.textinput_scan_parameter_1_from = QLineEdit(self.tab_5)
         self.textinput_scan_parameter_1_from.setObjectName(u"textinput_scan_parameter_1_from")
 
         self.gridLayout_6.addWidget(self.textinput_scan_parameter_1_from, 2, 3, 1, 3)
-
-        self.button_sweeper_plot = QPushButton(self.tab_5)
-        self.button_sweeper_plot.setObjectName(u"button_sweeper_plot")
-
-        self.gridLayout_6.addWidget(self.button_sweeper_plot, 17, 5, 1, 1)
-
-        self.label_title_qdsystem_11 = QLabel(self.tab_5)
-        self.label_title_qdsystem_11.setObjectName(u"label_title_qdsystem_11")
-        self.label_title_qdsystem_11.setMaximumSize(QSize(16777215, 40))
-        self.label_title_qdsystem_11.setFrameShape(QFrame.NoFrame)
-        self.label_title_qdsystem_11.setFrameShadow(QFrame.Plain)
-
-        self.gridLayout_6.addWidget(self.label_title_qdsystem_11, 11, 2, 1, 1)
-
-        self.label_title_qdsystem_6 = QLabel(self.tab_5)
-        self.label_title_qdsystem_6.setObjectName(u"label_title_qdsystem_6")
-        self.label_title_qdsystem_6.setMaximumSize(QSize(16777215, 40))
-        self.label_title_qdsystem_6.setFrameShape(QFrame.NoFrame)
-        self.label_title_qdsystem_6.setFrameShadow(QFrame.Plain)
-
-        self.gridLayout_6.addWidget(self.label_title_qdsystem_6, 5, 2, 1, 1)
-
-        self.line = QFrame(self.tab_5)
-        self.line.setObjectName(u"line")
-        self.line.setFrameShape(QFrame.HLine)
-        self.line.setFrameShadow(QFrame.Sunken)
-
-        self.gridLayout_6.addWidget(self.line, 6, 2, 1, 4)
-
-        self.checkbox_activate_scan_parameter_2 = QCheckBox(self.tab_5)
-        self.checkbox_activate_scan_parameter_2.setObjectName(u"checkbox_activate_scan_parameter_2")
-
-        self.gridLayout_6.addWidget(self.checkbox_activate_scan_parameter_2, 7, 3, 1, 3)
-
-        self.textinput_scan_parameter_2_points = QLineEdit(self.tab_5)
-        self.textinput_scan_parameter_2_points.setObjectName(u"textinput_scan_parameter_2_points")
-
-        self.gridLayout_6.addWidget(self.textinput_scan_parameter_2_points, 10, 3, 1, 3)
-
-        self.label_title_qdsystem_4 = QLabel(self.tab_5)
-        self.label_title_qdsystem_4.setObjectName(u"label_title_qdsystem_4")
-        self.label_title_qdsystem_4.setMaximumSize(QSize(16777215, 40))
-        self.label_title_qdsystem_4.setFrameShape(QFrame.NoFrame)
-        self.label_title_qdsystem_4.setFrameShadow(QFrame.Plain)
-
-        self.gridLayout_6.addWidget(self.label_title_qdsystem_4, 2, 2, 1, 1)
-
-        self.label_title_qdsystem_9 = QLabel(self.tab_5)
-        self.label_title_qdsystem_9.setObjectName(u"label_title_qdsystem_9")
-        self.label_title_qdsystem_9.setMaximumSize(QSize(16777215, 40))
-        self.label_title_qdsystem_9.setFrameShape(QFrame.NoFrame)
-        self.label_title_qdsystem_9.setFrameShadow(QFrame.Plain)
-
-        self.gridLayout_6.addWidget(self.label_title_qdsystem_9, 8, 2, 1, 1)
-
-        self.line_9 = QFrame(self.tab_5)
-        self.line_9.setObjectName(u"line_9")
-        self.line_9.setFrameShape(QFrame.HLine)
-        self.line_9.setFrameShadow(QFrame.Sunken)
-
-        self.gridLayout_6.addWidget(self.line_9, 12, 2, 1, 4)
-
-        self.plot_sweep_parameter_first = PlotWidget(self.tab_5)
-        self.plot_sweep_parameter_first.setObjectName(u"plot_sweep_parameter_first")
-        self.plot_sweep_parameter_first.setMinimumSize(QSize(0, 150))
-
-        self.gridLayout_6.addWidget(self.plot_sweep_parameter_first, 13, 2, 4, 2)
-
-        self.plot_sweep_parameter_second = PlotWidget(self.tab_5)
-        self.plot_sweep_parameter_second.setObjectName(u"plot_sweep_parameter_second")
-        self.plot_sweep_parameter_second.setMinimumSize(QSize(0, 150))
-
-        self.gridLayout_6.addWidget(self.plot_sweep_parameter_second, 13, 4, 4, 2)
-
-        self.button_sweeper_get_runstring = QPushButton(self.tab_5)
-        self.button_sweeper_get_runstring.setObjectName(u"button_sweeper_get_runstring")
-
-        self.gridLayout_6.addWidget(self.button_sweeper_get_runstring, 13, 0, 1, 2)
-
-        self.label_3 = QLabel(self.tab_5)
-        self.label_3.setObjectName(u"label_3")
-
-        self.gridLayout_6.addWidget(self.label_3, 14, 0, 4, 2)
 
         self.text_output_program_qdlc_command_sweep = QTextBrowser(self.tab_5)
         self.text_output_program_qdlc_command_sweep.setObjectName(u"text_output_program_qdlc_command_sweep")
@@ -2245,6 +2031,145 @@ class Ui_MainWindow(object):
 
         self.gridLayout_6.addWidget(self.text_output_program_qdlc_command_sweep, 1, 0, 6, 2)
 
+        self.label_title_qdsystem_12 = QLabel(self.tab_5)
+        self.label_title_qdsystem_12.setObjectName(u"label_title_qdsystem_12")
+        self.label_title_qdsystem_12.setMaximumSize(QSize(16777215, 40))
+        self.label_title_qdsystem_12.setFrameShape(QFrame.NoFrame)
+        self.label_title_qdsystem_12.setFrameShadow(QFrame.Plain)
+
+        self.gridLayout_6.addWidget(self.label_title_qdsystem_12, 4, 2, 1, 1)
+
+        self.label_title_qdsystem_6 = QLabel(self.tab_5)
+        self.label_title_qdsystem_6.setObjectName(u"label_title_qdsystem_6")
+        self.label_title_qdsystem_6.setMaximumSize(QSize(16777215, 40))
+        self.label_title_qdsystem_6.setFrameShape(QFrame.NoFrame)
+        self.label_title_qdsystem_6.setFrameShadow(QFrame.Plain)
+
+        self.gridLayout_6.addWidget(self.label_title_qdsystem_6, 5, 2, 1, 1)
+
+        self.label_title_qdsystem_8 = QLabel(self.tab_5)
+        self.label_title_qdsystem_8.setObjectName(u"label_title_qdsystem_8")
+        self.label_title_qdsystem_8.setMaximumSize(QSize(16777215, 40))
+        self.label_title_qdsystem_8.setFrameShape(QFrame.NoFrame)
+        self.label_title_qdsystem_8.setFrameShadow(QFrame.Plain)
+
+        self.gridLayout_6.addWidget(self.label_title_qdsystem_8, 7, 2, 1, 1)
+
+        self.label_title_qdsystem_5 = QLabel(self.tab_5)
+        self.label_title_qdsystem_5.setObjectName(u"label_title_qdsystem_5")
+        self.label_title_qdsystem_5.setMaximumSize(QSize(16777215, 40))
+        self.label_title_qdsystem_5.setFrameShape(QFrame.NoFrame)
+        self.label_title_qdsystem_5.setFrameShadow(QFrame.Plain)
+
+        self.gridLayout_6.addWidget(self.label_title_qdsystem_5, 3, 2, 1, 1)
+
+        self.label_title_qdsystem_4 = QLabel(self.tab_5)
+        self.label_title_qdsystem_4.setObjectName(u"label_title_qdsystem_4")
+        self.label_title_qdsystem_4.setMaximumSize(QSize(16777215, 40))
+        self.label_title_qdsystem_4.setFrameShape(QFrame.NoFrame)
+        self.label_title_qdsystem_4.setFrameShadow(QFrame.Plain)
+
+        self.gridLayout_6.addWidget(self.label_title_qdsystem_4, 2, 2, 1, 1)
+
+        self.textinput_scan_parameter_1_points = QLineEdit(self.tab_5)
+        self.textinput_scan_parameter_1_points.setObjectName(u"textinput_scan_parameter_1_points")
+
+        self.gridLayout_6.addWidget(self.textinput_scan_parameter_1_points, 4, 3, 1, 3)
+
+        self.textinput_scan_parameter_2_points = QLineEdit(self.tab_5)
+        self.textinput_scan_parameter_2_points.setObjectName(u"textinput_scan_parameter_2_points")
+
+        self.gridLayout_6.addWidget(self.textinput_scan_parameter_2_points, 10, 3, 1, 3)
+
+        self.checkbox_activate_scan_parameter_2 = QCheckBox(self.tab_5)
+        self.checkbox_activate_scan_parameter_2.setObjectName(u"checkbox_activate_scan_parameter_2")
+
+        self.gridLayout_6.addWidget(self.checkbox_activate_scan_parameter_2, 7, 3, 1, 3)
+
+        self.textinput_scan_parameter_2_lambda = QLineEdit(self.tab_5)
+        self.textinput_scan_parameter_2_lambda.setObjectName(u"textinput_scan_parameter_2_lambda")
+
+        self.gridLayout_6.addWidget(self.textinput_scan_parameter_2_lambda, 11, 3, 1, 3)
+
+        self.label_title_qdsystem_13 = QLabel(self.tab_5)
+        self.label_title_qdsystem_13.setObjectName(u"label_title_qdsystem_13")
+        self.label_title_qdsystem_13.setMaximumSize(QSize(16777215, 40))
+        self.label_title_qdsystem_13.setFrameShape(QFrame.NoFrame)
+        self.label_title_qdsystem_13.setFrameShadow(QFrame.Plain)
+
+        self.gridLayout_6.addWidget(self.label_title_qdsystem_13, 10, 2, 1, 1)
+
+        self.label_3 = QLabel(self.tab_5)
+        self.label_3.setObjectName(u"label_3")
+
+        self.gridLayout_6.addWidget(self.label_3, 15, 0, 4, 2)
+
+        self.label_title_qdsystem_11 = QLabel(self.tab_5)
+        self.label_title_qdsystem_11.setObjectName(u"label_title_qdsystem_11")
+        self.label_title_qdsystem_11.setMaximumSize(QSize(16777215, 40))
+        self.label_title_qdsystem_11.setFrameShape(QFrame.NoFrame)
+        self.label_title_qdsystem_11.setFrameShadow(QFrame.Plain)
+
+        self.gridLayout_6.addWidget(self.label_title_qdsystem_11, 11, 2, 1, 1)
+
+        self.textinput_scan_parameter_1_to = QLineEdit(self.tab_5)
+        self.textinput_scan_parameter_1_to.setObjectName(u"textinput_scan_parameter_1_to")
+
+        self.gridLayout_6.addWidget(self.textinput_scan_parameter_1_to, 3, 3, 1, 3)
+
+        self.label_title_qdsystem_3 = QLabel(self.tab_5)
+        self.label_title_qdsystem_3.setObjectName(u"label_title_qdsystem_3")
+        self.label_title_qdsystem_3.setMaximumSize(QSize(16777215, 40))
+        self.label_title_qdsystem_3.setFrameShape(QFrame.NoFrame)
+        self.label_title_qdsystem_3.setFrameShadow(QFrame.Plain)
+
+        self.gridLayout_6.addWidget(self.label_title_qdsystem_3, 0, 0, 1, 2)
+
+        self.textinput_scan_parameter_2_to = QLineEdit(self.tab_5)
+        self.textinput_scan_parameter_2_to.setObjectName(u"textinput_scan_parameter_2_to")
+
+        self.gridLayout_6.addWidget(self.textinput_scan_parameter_2_to, 9, 3, 1, 3)
+
+        self.checkbox_activate_scan_parameter_1 = QCheckBox(self.tab_5)
+        self.checkbox_activate_scan_parameter_1.setObjectName(u"checkbox_activate_scan_parameter_1")
+
+        self.gridLayout_6.addWidget(self.checkbox_activate_scan_parameter_1, 1, 3, 1, 3)
+
+        self.textinput_scan_parameter_1_lambda = QLineEdit(self.tab_5)
+        self.textinput_scan_parameter_1_lambda.setObjectName(u"textinput_scan_parameter_1_lambda")
+
+        self.gridLayout_6.addWidget(self.textinput_scan_parameter_1_lambda, 5, 3, 1, 3)
+
+        self.line = QFrame(self.tab_5)
+        self.line.setObjectName(u"line")
+        self.line.setFrameShape(QFrame.HLine)
+        self.line.setFrameShadow(QFrame.Sunken)
+
+        self.gridLayout_6.addWidget(self.line, 6, 2, 1, 4)
+
+        self.line_9 = QFrame(self.tab_5)
+        self.line_9.setObjectName(u"line_9")
+        self.line_9.setFrameShape(QFrame.HLine)
+        self.line_9.setFrameShadow(QFrame.Sunken)
+
+        self.gridLayout_6.addWidget(self.line_9, 12, 2, 1, 4)
+
+        self.label_title_qdsystem_2 = QLabel(self.tab_5)
+        self.label_title_qdsystem_2.setObjectName(u"label_title_qdsystem_2")
+        self.label_title_qdsystem_2.setMaximumSize(QSize(16777215, 40))
+        self.label_title_qdsystem_2.setFrameShape(QFrame.NoFrame)
+        self.label_title_qdsystem_2.setFrameShadow(QFrame.Plain)
+
+        self.gridLayout_6.addWidget(self.label_title_qdsystem_2, 1, 2, 1, 1)
+
+        self.label_title_qdsystem_9 = QLabel(self.tab_5)
+        self.label_title_qdsystem_9.setObjectName(u"label_title_qdsystem_9")
+        self.label_title_qdsystem_9.setMaximumSize(QSize(16777215, 40))
+        self.label_title_qdsystem_9.setFrameShape(QFrame.NoFrame)
+        self.label_title_qdsystem_9.setFrameShadow(QFrame.Plain)
+
+        self.gridLayout_6.addWidget(self.label_title_qdsystem_9, 8, 2, 1, 1)
+
         self.text_output_program_qdlc_command_sweep_display = QTextBrowser(self.tab_5)
         self.text_output_program_qdlc_command_sweep_display.setObjectName(u"text_output_program_qdlc_command_sweep_display")
         self.text_output_program_qdlc_command_sweep_display.setMinimumSize(QSize(599, 0))
@@ -2253,6 +2178,25 @@ class Ui_MainWindow(object):
         self.text_output_program_qdlc_command_sweep_display.setReadOnly(True)
 
         self.gridLayout_6.addWidget(self.text_output_program_qdlc_command_sweep_display, 7, 0, 6, 2)
+
+        self.button_sweeper_plot = QPushButton(self.tab_5)
+        self.button_sweeper_plot.setObjectName(u"button_sweeper_plot")
+        self.button_sweeper_plot.setStyleSheet(u"QPushButton {background-color: qlineargradient( x1:0 y1:0, x2:0 y2:1, stop:0.9 #f4771e, stop:0.91 #4f2609); color: #ffffff;}\n"
+"QPushButton::hover {background-color: qlineargradient( x1:0 y1:0, x2:0 y2:1, stop:0.9 #f7954f, stop:0.91 #4f2609); color: #ffffff;}")
+
+        self.gridLayout_6.addWidget(self.button_sweeper_plot, 14, 0, 1, 2)
+
+        self.plot_sweep_parameter_first = PlotWidget(self.tab_5)
+        self.plot_sweep_parameter_first.setObjectName(u"plot_sweep_parameter_first")
+        self.plot_sweep_parameter_first.setMinimumSize(QSize(0, 150))
+
+        self.gridLayout_6.addWidget(self.plot_sweep_parameter_first, 13, 2, 6, 2)
+
+        self.plot_sweep_parameter_second = PlotWidget(self.tab_5)
+        self.plot_sweep_parameter_second.setObjectName(u"plot_sweep_parameter_second")
+        self.plot_sweep_parameter_second.setMinimumSize(QSize(0, 150))
+
+        self.gridLayout_6.addWidget(self.plot_sweep_parameter_second, 13, 4, 6, 2)
 
         self.tabWidget.addTab(self.tab_5, "")
         self.tab_7 = QWidget()
@@ -2280,15 +2224,15 @@ class Ui_MainWindow(object):
 
         self.gridLayout_12.addWidget(self.graphicsView, 1, 1, 1, 1)
 
-        self.pushButton = QPushButton(self.tab_7)
-        self.pushButton.setObjectName(u"pushButton")
+        self.button_plot_everything = QPushButton(self.tab_7)
+        self.button_plot_everything.setObjectName(u"button_plot_everything")
 
-        self.gridLayout_12.addWidget(self.pushButton, 0, 0, 1, 2)
+        self.gridLayout_12.addWidget(self.button_plot_everything, 0, 0, 1, 2)
 
-        self.pushButton_3 = QPushButton(self.tab_7)
-        self.pushButton_3.setObjectName(u"pushButton_3")
+        self.button_open_destination_folder = QPushButton(self.tab_7)
+        self.button_open_destination_folder.setObjectName(u"button_open_destination_folder")
 
-        self.gridLayout_12.addWidget(self.pushButton_3, 2, 0, 1, 2)
+        self.gridLayout_12.addWidget(self.button_open_destination_folder, 2, 0, 1, 2)
 
         self.tabWidget.addTab(self.tab_7, "")
         self.tab_8 = QWidget()
@@ -2390,8 +2334,7 @@ class Ui_MainWindow(object):
         QWidget.setTabOrder(self.textinput_detector_t1, self.textinput_detector_tpower)
         QWidget.setTabOrder(self.textinput_detector_tpower, self.input_timeline_enable_phonons_at_spectra)
         QWidget.setTabOrder(self.input_timeline_enable_phonons_at_spectra, self.button_add_detector_time)
-        QWidget.setTabOrder(self.button_add_detector_time, self.button_reset_phonons_2)
-        QWidget.setTabOrder(self.button_reset_phonons_2, self.button_next_tab_detector_to_generate)
+        QWidget.setTabOrder(self.button_add_detector_time, self.button_next_tab_detector_to_generate)
         QWidget.setTabOrder(self.button_next_tab_detector_to_generate, self.input_add_output_greenf)
         QWidget.setTabOrder(self.input_add_output_greenf, self.input_add_output_phononj)
         QWidget.setTabOrder(self.input_add_output_phononj, self.input_add_output_phononcoeffs)
@@ -2406,21 +2349,17 @@ class Ui_MainWindow(object):
         QWidget.setTabOrder(self.text_output_list_of_indists, self.button_timeline_force_calculate)
         QWidget.setTabOrder(self.button_timeline_force_calculate, self.button_timeline_force_calculate_spectra)
         QWidget.setTabOrder(self.button_timeline_force_calculate_spectra, self.text_output_list_of_detector_spec)
-        QWidget.setTabOrder(self.text_output_list_of_detector_spec, self.button_reset_phonon_sd)
-        QWidget.setTabOrder(self.button_reset_phonon_sd, self.input_timeline_enable_phonons)
-        QWidget.setTabOrder(self.input_timeline_enable_phonons, self.button_reset_rates)
-        QWidget.setTabOrder(self.button_reset_rates, self.button_remove_spectrum_from_output)
+        QWidget.setTabOrder(self.text_output_list_of_detector_spec, self.input_timeline_enable_phonons)
+        QWidget.setTabOrder(self.input_timeline_enable_phonons, self.button_remove_spectrum_from_output)
         QWidget.setTabOrder(self.button_remove_spectrum_from_output, self.text_output_list_of_detector_time)
         QWidget.setTabOrder(self.text_output_list_of_detector_time, self.textinput_concurrence_spec_range)
         QWidget.setTabOrder(self.textinput_concurrence_spec_range, self.text_output_program_qdlc_command)
         QWidget.setTabOrder(self.text_output_program_qdlc_command, self.textinput_concurrence_spec_freq)
         QWidget.setTabOrder(self.textinput_concurrence_spec_freq, self.text_output_program_main)
-        QWidget.setTabOrder(self.text_output_program_main, self.button_reset_phonons)
-        QWidget.setTabOrder(self.button_reset_phonons, self.input_concurrence_add_spectra)
+        QWidget.setTabOrder(self.text_output_program_main, self.input_concurrence_add_spectra)
         QWidget.setTabOrder(self.input_concurrence_add_spectra, self.textinput_concurrence_spec_res)
         QWidget.setTabOrder(self.textinput_concurrence_spec_res, self.text_output_list_of_concurrences)
-        QWidget.setTabOrder(self.text_output_list_of_concurrences, self.button_reset_phonons_3)
-        QWidget.setTabOrder(self.button_reset_phonons_3, self.button_reset_phonon_qd)
+        QWidget.setTabOrder(self.text_output_list_of_concurrences, self.button_reset_phonon_qd)
         QWidget.setTabOrder(self.button_reset_phonon_qd, self.list_components)
         QWidget.setTabOrder(self.list_components, self.button_remove_concurrence_from_output)
 
@@ -2460,71 +2399,12 @@ class Ui_MainWindow(object):
         self.label_output_system.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><br/></p></body></html>", None))
         self.button_add_electronic_shift.setText(QCoreApplication.translate("MainWindow", u"Chirp", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_system), QCoreApplication.translate("MainWindow", u"System", None))
-        self.textinput_rates_radiative_decay.setText(QCoreApplication.translate("MainWindow", u"0", None))
-        self.textinput_phonons_sd_alpha.setText(QCoreApplication.translate("MainWindow", u"0.03E-24", None))
-        self.button_reset_phonons_3.setText(QCoreApplication.translate("MainWindow", u"Reset", None))
-        self.textinput_phonons_sd_ohmamp.setText(QCoreApplication.translate("MainWindow", u"3", None))
-        self.label_35.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:700;\">E-H Ratio</span></p></body></html>", None))
-        self.textinput_phonons_temperature.setText(QCoreApplication.translate("MainWindow", u"No Phonons", None))
-        self.label_25.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:700;\">Quantum Dot</span></p></body></html>", None))
-        self.label_title_rates.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:14pt; font-weight:700;\">Rates</span></p></body></html>", None))
-        self.label_37.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:700;\">Integral Stepsize</span></p></body></html>", None))
-        self.label_title_phonons.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:14pt; font-weight:700;\">Environment (Phonons)</span></p></body></html>", None))
-        self.label_27.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:700;\">Spectral Cutoff</span></p></body></html>", None))
-#if QT_CONFIG(statustip)
-        self.textinput_phonons_sd_qd_cs.setStatusTip(QCoreApplication.translate("MainWindow", u"Unit is m/s", None))
-#endif // QT_CONFIG(statustip)
-        self.textinput_phonons_sd_qd_cs.setText(QCoreApplication.translate("MainWindow", u"5110", None))
-#if QT_CONFIG(statustip)
-        self.input_phonons_adjust_pure_dephasing.setStatusTip(QCoreApplication.translate("MainWindow", u"Adjusts the pure dephasing rate using the formula pure_dephasing = 1mueV/K * temperature. This effect is quite strong and should probably not be used.", None))
-#endif // QT_CONFIG(statustip)
-        self.input_phonons_adjust_pure_dephasing.setText(QCoreApplication.translate("MainWindow", u"Pure Dephasing", None))
-        self.button_next_tab_config_to_timeline.setText(QCoreApplication.translate("MainWindow", u"Next", None))
-        self.input_phonons_use_qd.setText(QCoreApplication.translate("MainWindow", u"Use QD Parameters Instead of PME Settings", None))
-        self.label_20.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:700;\">Radiative Loss</span></p></body></html>", None))
-        self.label_23.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:700;\">Approximation</span></p></body></html>", None))
-        self.label_28.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:700;\">Spectral Delta</span></p></body></html>", None))
-        self.label_34.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:700;\">Speed of Sound</span></p></body></html>", None))
-        self.label_36.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:700;\">QD Size</span></p></body></html>", None))
         self.textinput_phonons_sd_qd_de.setText(QCoreApplication.translate("MainWindow", u"7eV", None))
-#if QT_CONFIG(statustip)
-        self.textinput_phonons_sd_qd_size.setStatusTip(QCoreApplication.translate("MainWindow", u"Typical Values lie around 3nm to 6nm", None))
-#endif // QT_CONFIG(statustip)
-        self.textinput_phonons_sd_qd_size.setText(QCoreApplication.translate("MainWindow", u"3nm", None))
-        self.textinput_rates_cavity_loss.setText(QCoreApplication.translate("MainWindow", u"0", None))
-        self.textinput_phonons_sd_wcutoff.setText(QCoreApplication.translate("MainWindow", u"1meV", None))
-        self.label_22.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:700;\">Temperature</span></p></body></html>", None))
-        self.button_reset_phonon_qd.setText(QCoreApplication.translate("MainWindow", u"Reset", None))
-        self.button_reset_phonons_2.setText(QCoreApplication.translate("MainWindow", u"Reset", None))
-        self.label_title_phonons_4.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:14pt; font-weight:700;\">QD Settings</span></p></body></html>", None))
-        self.label_21.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:700;\">Pure Dephasing</span></p></body></html>", None))
         self.label_32.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:700;\">Hole Energy</span></p></body></html>", None))
-        self.button_reset_phonons.setText(QCoreApplication.translate("MainWindow", u"Reset", None))
-        self.label_18.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:700;\">Cavity Coupling</span></p></body></html>", None))
-        self.label_31.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:700;\">Electron Energy</span></p></body></html>", None))
-        self.label_29.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:700;\">Time Cutoff</span></p></body></html>", None))
-        self.button_reset_phonon_sd.setText(QCoreApplication.translate("MainWindow", u"Reset", None))
-        self.label_33.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:700;\">Material Density</span></p></body></html>", None))
-        self.label_30.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:700;\">Ohm</span></p></body></html>", None))
-        self.input_phonons_approximation.setItemText(0, QCoreApplication.translate("MainWindow", u"Full", None))
-        self.input_phonons_approximation.setItemText(1, QCoreApplication.translate("MainWindow", u"Matrixexponential", None))
-        self.input_phonons_approximation.setItemText(2, QCoreApplication.translate("MainWindow", u"Omit Transformation", None))
-        self.input_phonons_approximation.setItemText(3, QCoreApplication.translate("MainWindow", u"Analytical Rates", None))
-        self.input_phonons_approximation.setItemText(4, QCoreApplication.translate("MainWindow", u"Hybrid", None))
-
-#if QT_CONFIG(statustip)
-        self.textinput_phonons_sd_qd_aeah_ratio.setStatusTip(QCoreApplication.translate("MainWindow", u"a_e/a_h ratio", None))
-#endif // QT_CONFIG(statustip)
-        self.textinput_phonons_sd_qd_aeah_ratio.setText(QCoreApplication.translate("MainWindow", u"1.15", None))
-        self.textinput_rates_cavity_coupling.setText(QCoreApplication.translate("MainWindow", u"0", None))
         self.label_title_adjust_rates.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:700;\">Adjust Rates</span></p></body></html>", None))
-        self.textinput_phonons_sd_qd_dh.setText(QCoreApplication.translate("MainWindow", u"-3.5eV", None))
-        self.label_title_phonons_3.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:14pt; font-weight:700;\">PME Settings</span></p></body></html>", None))
-        self.textinput_rates_pure_dephasing.setText(QCoreApplication.translate("MainWindow", u"0", None))
-        self.textinput_phonons_sd_wdelta.setText(QCoreApplication.translate("MainWindow", u"0.01meV", None))
-        self.label_title_phonons_2.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:14pt; font-weight:700;\">Phonon Integral</span></p></body></html>", None))
         self.label_19.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:700;\">Cavity Loss</span></p></body></html>", None))
-        self.label_26.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:700;\">Phonon Coupling</span></p></body></html>", None))
+        self.label_22.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:700;\">Temperature</span></p></body></html>", None))
+        self.label_39.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:700;\">Spectral Density Plot</span></p></body></html>", None))
 #if QT_CONFIG(tooltip)
         self.input_phonons_adjust_renormalization.setToolTip(QCoreApplication.translate("MainWindow", u"Enables the renomalization of the polaron shifted energies and rates, e.g. using the <B> and <B>^2 scalings", None))
 #endif // QT_CONFIG(tooltip)
@@ -2532,18 +2412,72 @@ class Ui_MainWindow(object):
         self.input_phonons_adjust_renormalization.setStatusTip(QCoreApplication.translate("MainWindow", u"Enables the renomalization of the polaron shifted energies and rates, e.g. using the <B> and <B>^2 scalings", None))
 #endif // QT_CONFIG(statustip)
         self.input_phonons_adjust_renormalization.setText(QCoreApplication.translate("MainWindow", u"Renormalization", None))
+        self.textinput_phonons_sd_tcutoff.setText(QCoreApplication.translate("MainWindow", u"4ps", None))
+        self.label_29.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:700;\">Time Cutoff</span></p></body></html>", None))
+        self.label_20.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:700;\">Radiative Loss</span></p></body></html>", None))
+        self.textinput_rates_pure_dephasing.setText(QCoreApplication.translate("MainWindow", u"0", None))
+        self.label_34.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:700;\">Speed of Sound</span></p></body></html>", None))
+        self.textinput_phonons_iterator_stepsize.setText(QCoreApplication.translate("MainWindow", u"auto", None))
+        self.label_31.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:700;\">Electron Energy</span></p></body></html>", None))
+        self.label_35.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:700;\">E-H Ratio</span></p></body></html>", None))
+        self.label_title_rates.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:14pt; font-weight:700;\">Rates</span></p></body></html>", None))
+        self.label_18.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:700;\">Cavity Coupling</span></p></body></html>", None))
+        self.label_21.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:700;\">Pure Dephasing</span></p></body></html>", None))
+        self.label_title_phonons_3.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:14pt; font-weight:700;\">PME Settings</span></p></body></html>", None))
 #if QT_CONFIG(statustip)
         self.input_phonons_adjust_radiativeloss.setStatusTip(QCoreApplication.translate("MainWindow", u"Adjusts the radiative decay loss using the formula gamma_rad = gamma_rad*<B>", None))
 #endif // QT_CONFIG(statustip)
         self.input_phonons_adjust_radiativeloss.setText(QCoreApplication.translate("MainWindow", u"Radiative Loss", None))
+        self.label_27.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:700;\">Spectral Cutoff</span></p></body></html>", None))
+        self.textinput_phonons_temperature.setText(QCoreApplication.translate("MainWindow", u"No Phonons", None))
+        self.textinput_phonons_sd_ohmamp.setText(QCoreApplication.translate("MainWindow", u"3", None))
+        self.input_phonons_approximation.setItemText(0, QCoreApplication.translate("MainWindow", u"Full", None))
+        self.input_phonons_approximation.setItemText(1, QCoreApplication.translate("MainWindow", u"Matrixexponential", None))
+        self.input_phonons_approximation.setItemText(2, QCoreApplication.translate("MainWindow", u"Omit Transformation", None))
+        self.input_phonons_approximation.setItemText(3, QCoreApplication.translate("MainWindow", u"Analytical Rates", None))
+        self.input_phonons_approximation.setItemText(4, QCoreApplication.translate("MainWindow", u"Hybrid", None))
+
+        self.label_33.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:700;\">Material Density</span></p></body></html>", None))
+        self.label_title_phonons_2.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:14pt; font-weight:700;\">Phonon Integral</span></p></body></html>", None))
+        self.textinput_phonons_sd_qd_dh.setText(QCoreApplication.translate("MainWindow", u"-3.5eV", None))
+        self.label_25.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:700;\">Quantum Dot</span></p></body></html>", None))
+#if QT_CONFIG(statustip)
+        self.input_phonons_adjust_pure_dephasing.setStatusTip(QCoreApplication.translate("MainWindow", u"Adjusts the pure dephasing rate using the formula pure_dephasing = 1mueV/K * temperature. This effect is quite strong and should probably not be used.", None))
+#endif // QT_CONFIG(statustip)
+        self.input_phonons_adjust_pure_dephasing.setText(QCoreApplication.translate("MainWindow", u"Pure Dephasing", None))
+        self.label_30.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:700;\">Ohm</span></p></body></html>", None))
+        self.textinput_rates_radiative_decay.setText(QCoreApplication.translate("MainWindow", u"0", None))
+#if QT_CONFIG(statustip)
+        self.textinput_phonons_sd_qd_size.setStatusTip(QCoreApplication.translate("MainWindow", u"Typical Values lie around 3nm to 6nm", None))
+#endif // QT_CONFIG(statustip)
+        self.textinput_phonons_sd_qd_size.setText(QCoreApplication.translate("MainWindow", u"3nm", None))
+        self.button_next_tab_config_to_timeline.setText(QCoreApplication.translate("MainWindow", u"Next", None))
+        self.label_37.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:700;\">Integral Stepsize</span></p></body></html>", None))
 #if QT_CONFIG(statustip)
         self.textinput_phonons_sd_qd_rho.setStatusTip(QCoreApplication.translate("MainWindow", u"Unit is kg/m^3", None))
 #endif // QT_CONFIG(statustip)
         self.textinput_phonons_sd_qd_rho.setText(QCoreApplication.translate("MainWindow", u"5370", None))
-        self.textinput_phonons_sd_tcutoff.setText(QCoreApplication.translate("MainWindow", u"4ps", None))
-        self.textinput_phonons_iterator_stepsize.setText(QCoreApplication.translate("MainWindow", u"auto", None))
-        self.button_reset_rates.setText(QCoreApplication.translate("MainWindow", u"Reset", None))
-        self.label_39.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:700;\">Spectral Density Plot</span></p></body></html>", None))
+        self.label_26.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:700;\">Phonon Coupling</span></p></body></html>", None))
+        self.label_title_phonons_4.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:14pt; font-weight:700;\">QD Settings</span></p></body></html>", None))
+        self.textinput_phonons_sd_alpha.setText(QCoreApplication.translate("MainWindow", u"0.03E-24", None))
+        self.label_36.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:700;\">QD Size</span></p></body></html>", None))
+        self.textinput_phonons_sd_wcutoff.setText(QCoreApplication.translate("MainWindow", u"1meV", None))
+        self.input_phonons_use_qd.setText(QCoreApplication.translate("MainWindow", u"Use QD Parameters Instead of PME Settings", None))
+        self.label_title_phonons.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:14pt; font-weight:700;\">Environment (Phonons)</span></p></body></html>", None))
+        self.label_23.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:700;\">Approximation</span></p></body></html>", None))
+        self.label_28.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:700;\">Spectral Delta</span></p></body></html>", None))
+        self.textinput_rates_cavity_loss.setText(QCoreApplication.translate("MainWindow", u"0", None))
+#if QT_CONFIG(statustip)
+        self.textinput_phonons_sd_qd_cs.setStatusTip(QCoreApplication.translate("MainWindow", u"Unit is m/s", None))
+#endif // QT_CONFIG(statustip)
+        self.textinput_phonons_sd_qd_cs.setText(QCoreApplication.translate("MainWindow", u"5110", None))
+        self.textinput_phonons_sd_wdelta.setText(QCoreApplication.translate("MainWindow", u"0.01meV", None))
+        self.button_reset_phonon_qd.setText(QCoreApplication.translate("MainWindow", u"Reset", None))
+#if QT_CONFIG(statustip)
+        self.textinput_phonons_sd_qd_aeah_ratio.setStatusTip(QCoreApplication.translate("MainWindow", u"a_e/a_h ratio", None))
+#endif // QT_CONFIG(statustip)
+        self.textinput_phonons_sd_qd_aeah_ratio.setText(QCoreApplication.translate("MainWindow", u"1.15", None))
+        self.textinput_rates_cavity_coupling.setText(QCoreApplication.translate("MainWindow", u"0", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_environment), QCoreApplication.translate("MainWindow", u"Environment", None))
         self.input_interpolator_t.setItemText(0, QCoreApplication.translate("MainWindow", u"None", None))
         self.input_interpolator_t.setItemText(1, QCoreApplication.translate("MainWindow", u"Linear", None))
@@ -2667,26 +2601,11 @@ class Ui_MainWindow(object):
         self.textinput_concurrence_second.setText("")
         self.textinput_concurrence_second.setPlaceholderText(QCoreApplication.translate("MainWindow", u"A=C+C=D", None))
         self.label_title_set_concurrences_2.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:14pt; font-weight:700;\">Spectral Properties</span></p></body></html>", None))
-#if QT_CONFIG(tooltip)
-        self.input_concurrence_add_spectra.setToolTip(QCoreApplication.translate("MainWindow", u"Enables the renomalization of the polaron shifted energies and rates, e.g. using the <B> and <B>^2 scalings", None))
-#endif // QT_CONFIG(tooltip)
-#if QT_CONFIG(statustip)
-        self.input_concurrence_add_spectra.setStatusTip(QCoreApplication.translate("MainWindow", u"Enables the renomalization of the polaron shifted energies and rates, e.g. using the <B> and <B>^2 scalings", None))
-#endif // QT_CONFIG(statustip)
         self.input_concurrence_add_spectra.setText(QCoreApplication.translate("MainWindow", u"All", None))
-#if QT_CONFIG(statustip)
-        self.textinput_concurrence_spec_freq.setStatusTip(QCoreApplication.translate("MainWindow", u"Calculate the spectrum for all of the used G2 functions. Check the Box to edit these values", None))
-#endif // QT_CONFIG(statustip)
         self.textinput_concurrence_spec_freq.setText("")
         self.textinput_concurrence_spec_freq.setPlaceholderText(QCoreApplication.translate("MainWindow", u"0", None))
-#if QT_CONFIG(statustip)
-        self.textinput_concurrence_spec_range.setStatusTip(QCoreApplication.translate("MainWindow", u"Calculate the spectrum for all of the used G2 functions. Check the Box to edit these values", None))
-#endif // QT_CONFIG(statustip)
         self.textinput_concurrence_spec_range.setText("")
         self.textinput_concurrence_spec_range.setPlaceholderText(QCoreApplication.translate("MainWindow", u"0", None))
-#if QT_CONFIG(statustip)
-        self.textinput_concurrence_spec_res.setStatusTip(QCoreApplication.translate("MainWindow", u"Calculate the spectrum for all of the used G2 functions. Check the Box to edit these values", None))
-#endif // QT_CONFIG(statustip)
         self.textinput_concurrence_spec_res.setText("")
         self.textinput_concurrence_spec_res.setPlaceholderText(QCoreApplication.translate("MainWindow", u"0", None))
         self.button_next_tab_sconc_to_stats.setText(QCoreApplication.translate("MainWindow", u"Next", None))
@@ -2849,24 +2768,26 @@ class Ui_MainWindow(object):
 #endif // QT_CONFIG(statustip)
         self.input_escape_output_command.setText(QCoreApplication.translate("MainWindow", u"Escape Output", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_generate), QCoreApplication.translate("MainWindow", u"Generate and Run", None))
-        self.checkbox_activate_scan_parameter_1.setText(QCoreApplication.translate("MainWindow", u"Activate", None))
-        self.label_title_qdsystem_12.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:14pt;\"># Points</span></p></body></html>", None))
-        self.label_title_qdsystem_10.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:14pt;\">To</span></p></body></html>", None))
-        self.label_title_qdsystem_5.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:14pt;\">To</span></p></body></html>", None))
-        self.label_title_qdsystem_8.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:14pt;\">Parameter x2</span></p></body></html>", None))
-        self.textinput_scan_parameter_2_lambda.setText(QCoreApplication.translate("MainWindow", u"x2", None))
-        self.label_title_qdsystem_2.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:14pt;\">Parameter x1</span></p></body></html>", None))
-        self.label_title_qdsystem_13.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:14pt;\"># Points</span></p></body></html>", None))
-        self.label_title_qdsystem_3.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:14pt;\">QDLC Runstring</span></p></body></html>", None))
-        self.textinput_scan_parameter_1_lambda.setText(QCoreApplication.translate("MainWindow", u"x1", None))
         self.label_title_qdsystem_7.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:14pt;\">Parameter Scanner</span></p></body></html>", None))
-        self.button_sweeper_plot.setText(QCoreApplication.translate("MainWindow", u"Plot", None))
-        self.label_title_qdsystem_11.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:14pt;\">P2(x2,...) =</span></p></body></html>", None))
-        self.label_title_qdsystem_6.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:14pt;\">P1(x1,...) =</span></p></body></html>", None))
-        self.checkbox_activate_scan_parameter_2.setText(QCoreApplication.translate("MainWindow", u"Activate", None))
-        self.label_title_qdsystem_4.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:14pt;\">From</span></p></body></html>", None))
-        self.label_title_qdsystem_9.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:14pt;\">From</span></p></body></html>", None))
+        self.label_title_qdsystem_10.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:14pt;\">To</span></p></body></html>", None))
         self.button_sweeper_get_runstring.setText(QCoreApplication.translate("MainWindow", u"Get Current Runstring", None))
+        self.text_output_program_qdlc_command_sweep.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
+        self.text_output_program_qdlc_command_sweep.setPlaceholderText(QCoreApplication.translate("MainWindow", u"./QDLC.exe ...", None))
+        self.label_title_qdsystem_12.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:14pt;\"># Points</span></p></body></html>", None))
+        self.label_title_qdsystem_6.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:14pt;\">P1(x1,...) =</span></p></body></html>", None))
+        self.label_title_qdsystem_8.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:14pt;\">Parameter x2</span></p></body></html>", None))
+        self.label_title_qdsystem_5.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:14pt;\">To</span></p></body></html>", None))
+        self.label_title_qdsystem_4.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:14pt;\">From</span></p></body></html>", None))
+        self.checkbox_activate_scan_parameter_2.setText(QCoreApplication.translate("MainWindow", u"Activate", None))
+        self.textinput_scan_parameter_2_lambda.setText(QCoreApplication.translate("MainWindow", u"x2", None))
+        self.label_title_qdsystem_13.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:14pt;\"># Points</span></p></body></html>", None))
         self.label_3.setText(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -2880,26 +2801,25 @@ class Ui_MainWindow(object):
 "<p style=\" margin-top:0px;"
                         " margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">- Choose parameter range from-to</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">- Choose number of points</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">- Optional: Chose f(x)</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Use the &quot;Generate Settingfile&quot; Button in the &quot;Generate and Run&quot; Tab to generate the settingfile</p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Additional Parameters available (lower case = SI, upper "
-                        "case = number):</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">-- Optional: Chose f(x)</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">- Use the &quot;Generate Variables&quot; Button to generate and plot the Parameters</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">- Use the &quot;Generate Settingfile&quot; Button in the &quot;Generate and Run&quot; Tab to generate the settingfile</p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-inden"
+                        "t:0; text-indent:0px;\"><br /></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Additional Parameters available (lower case = SI, upper case = number):</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">- g and G for Cavity-Coupling</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">- k and K for Cavity Losses</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">- y and Y for Radiative Decay</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">- d and D for Pure Dephasing</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">- T for Temperature</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">- np.function for all Numpy Functions</p></body></html>", None))
-        self.text_output_program_qdlc_command_sweep.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"hr { height: 1px; border-width: 0; }\n"
-"li.unchecked::marker { content: \"\\2610\"; }\n"
-"li.checked::marker { content: \"\\2612\"; }\n"
-"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
-        self.text_output_program_qdlc_command_sweep.setPlaceholderText(QCoreApplication.translate("MainWindow", u"./QDLC.exe ...", None))
+"<p "
+                        "style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">- np.function for all Numpy Functions</p></body></html>", None))
+        self.label_title_qdsystem_11.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:14pt;\">P2(x2,...) =</span></p></body></html>", None))
+        self.label_title_qdsystem_3.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:14pt;\">QDLC Runstring</span></p></body></html>", None))
+        self.checkbox_activate_scan_parameter_1.setText(QCoreApplication.translate("MainWindow", u"Activate", None))
+        self.textinput_scan_parameter_1_lambda.setText(QCoreApplication.translate("MainWindow", u"x1", None))
+        self.label_title_qdsystem_2.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:14pt;\">Parameter x1</span></p></body></html>", None))
+        self.label_title_qdsystem_9.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:14pt;\">From</span></p></body></html>", None))
         self.text_output_program_qdlc_command_sweep_display.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -2909,17 +2829,18 @@ class Ui_MainWindow(object):
 "</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
         self.text_output_program_qdlc_command_sweep_display.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Settingfile Output", None))
+        self.button_sweeper_plot.setText(QCoreApplication.translate("MainWindow", u"Generate Variables", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_5), QCoreApplication.translate("MainWindow", u"Sweep and Scan", None))
         self.label_4.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\">Plot stuff</p><p align=\"center\">matrix plot, evaluation (enpoints, then plot, etc.)</p><p align=\"center\">liste der dateien. markieren -&gt; plot single in extra matplotlib interactive fenster. open destination folder</p></body></html>", None))
-        self.pushButton.setText(QCoreApplication.translate("MainWindow", u"Plot Everything", None))
-        self.pushButton_3.setText(QCoreApplication.translate("MainWindow", u"Open Destination Folder", None))
+        self.button_plot_everything.setText(QCoreApplication.translate("MainWindow", u"Plot Everything", None))
+        self.button_open_destination_folder.setText(QCoreApplication.translate("MainWindow", u"Open Destination Folder", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_7), QCoreApplication.translate("MainWindow", u"Plotting", None))
         self.label_8.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\">Parameter optimization.</p><p align=\"center\">print runscript, let user change parameters to {0}, {1}, etc. then set parameter limits</p></body></html>", None))
         self.label.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_8), QCoreApplication.translate("MainWindow", u"Optimization", None))
         self.menuMenu.setTitle(QCoreApplication.translate("MainWindow", u"File", None))
         self.menuFunctions.setTitle(QCoreApplication.translate("MainWindow", u"Functions", None))
-        self.menuDeveloper_Tools.setTitle(QCoreApplication.translate("MainWindow", u"Developer Tools", None))
-        self.menuEdit.setTitle(QCoreApplication.translate("MainWindow", u"Edit", None))
+        self.menuDeveloper_Tools.setTitle(QCoreApplication.translate("MainWindow", u"Debug Tools", None))
+        self.menuEdit.setTitle(QCoreApplication.translate("MainWindow", u"Tools", None))
     # retranslateUi
 

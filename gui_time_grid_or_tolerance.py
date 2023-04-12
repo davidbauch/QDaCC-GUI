@@ -4,10 +4,11 @@ import numpy as np
 from unit_seperator import get_uv_scaled
 
 class DialogAddGridOrTolerance(QDialog, Ui_AddGridTolerance):
-    def __init__(self, *args, main_window=None, name = "Grid", **kwargs):
+    def __init__(self, *args, main_window=None, name = "Grid", style_sheet = "", **kwargs):
         super(DialogAddGridOrTolerance, self).__init__(*args, **kwargs)
         self.setupUi(self)
         self.retranslateUi(self)
+        self.setStyleSheet(style_sheet)
         self.label_2.setText(self.label_2.text().replace("Title",f"Configure {name}"))
         # Load Existing Grid or Tolerances on creation:
         if f"Config{name}" in main_window.system_components:

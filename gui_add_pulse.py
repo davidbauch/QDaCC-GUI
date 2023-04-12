@@ -4,10 +4,11 @@ import numpy as np
 from unit_seperator import get_uv_scaled
 
 class DialogAddPulse(QDialog, Ui_AddPulse):
-    def __init__(self, *args, main_window=None, load_existing = None, **kwargs):
+    def __init__(self, *args, main_window=None, load_existing = None, style_sheet = "", **kwargs):
         super(DialogAddPulse, self).__init__(*args, **kwargs)
         self.setupUi(self)
         self.retranslateUi(self)
+        self.setStyleSheet(style_sheet)
         def finished(replace=False):
             name = self.textinput_name.text()
             transitions = tuple(self.textinput_transitions.text().split(","))

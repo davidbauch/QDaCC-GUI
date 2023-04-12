@@ -4,11 +4,12 @@ import numpy as np
 from unit_seperator import get_uv_scaled
 
 class DialogAddChirp(QDialog, Ui_AddChirp):
-    def __init__(self, *args, main_window=None, load_existing = None, **kwargs):
+    def __init__(self, *args, main_window=None, load_existing = None, style_sheet = "", **kwargs):
         super(DialogAddChirp, self).__init__(*args, **kwargs)
         self.setupUi(self)
         self.retranslateUi(self)
         self.vector = []
+        self.setStyleSheet(style_sheet)
         def finished(replace=False):
             name = self.textinput_name.text()
             states = tuple(self.textinput_states.text().split(","))

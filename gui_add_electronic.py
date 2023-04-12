@@ -2,10 +2,11 @@ from ui_add_electronic import Ui_AddElectronic
 from PySide6.QtWidgets import QDialog
 
 class DialogAddElectronic(QDialog, Ui_AddElectronic):
-    def __init__(self, *args, main_window=None, load_existing = None, **kwargs):
+    def __init__(self, *args, main_window=None, load_existing = None, style_sheet = "", **kwargs):
         super(DialogAddElectronic, self).__init__(*args, **kwargs)
         self.setupUi(self)
         self.retranslateUi(self)
+        self.setStyleSheet(style_sheet)
         def add(replace = False):
             name = self.textinput_name.text()
             energy = self.textinput_energy.text()

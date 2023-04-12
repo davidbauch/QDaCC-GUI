@@ -1,9 +1,10 @@
 import sys, os
 from PySide6.QtWidgets import QWidget,QMainWindow, QApplication,QLabel, QLineEdit,QTextEdit, QGridLayout, QTextBrowser, QTabWidget, QBoxLayout, QPushButton, QDialog, QFormLayout, QMessageBox, QFileDialog, QInputDialog
-from PySide6.QtGui import QIcon, QAction, QPainter, QColor, QPixmap,QFont, QPen, QPainterPath, QStandardItemModel, QStandardItem, QGuiApplication
-from PySide6.QtCore import Qt,QRect,QPropertyAnimation,QThread,Signal,QObject
+from PySide6.QtGui import QIcon, QAction, QPainter, QColor, QPixmap,QFont, QPen, QPainterPath, QStandardItemModel, QStandardItem, QGuiApplication, QDesktopServices
+from PySide6.QtCore import Qt,QRect,QPropertyAnimation,QThread,Signal,QObject, QUrl
 
 import sys, os
+from hoverbutton import HoverButton
 from ui_main_window import Ui_MainWindow
 from unit_seperator import get_unit, get_unit_scaling, get_unit_value,get_uv_scaled
 from gui_add_electronic import DialogAddElectronic
@@ -16,7 +17,7 @@ from gui_time_grid_or_tolerance import DialogAddGridOrTolerance
 import numpy as np
 from parse_ansi import replace_ansi_escape_sequences
 from collections import defaultdict
-from subprocess import Popen, PIPE, call
+from subprocess import Popen, PIPE
 from multiprocessing import Process
 import re
 
@@ -38,6 +39,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         "Neutral" : "#000000"}
         self.resources = {
             "Icon" : os.path.join(self.filepath,"resources/test.png"),
+            "Logo" : os.path.join(self.filepath,"resources/logo.png"),
+            "Tree" : os.path.join(self.filepath,"resources/add_random.png"),
+            "Arrow_Down_Save" : os.path.join(self.filepath,"resources/arrow_down_save.png"),
+            "Arrow_Up_Load" : os.path.join(self.filepath,"resources/arrow_up_load.png"),
+            "Rings" : os.path.join(self.filepath,"resources/rings.png"),
+            "Gear" : os.path.join(self.filepath,"resources/gear.png"),
+            "OnOff" : os.path.join(self.filepath,"resources/onoff.png"),
+            "marrow_right" : os.path.join(self.filepath,"resources/marrow_right.png"),
+            "marrow_left" : os.path.join(self.filepath,"resources/marrow_left.png"),
         }
         self.plot_system_details = False
         # System Components that contribute to the execution string
@@ -59,19 +69,33 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         for i in [10,11]:
             self.tabWidget.setTabIcon(i, QIcon(self.resources["Icon"]))
 
+        # Set Name
+        self.current_qdlc_file_name = "untitled.qdlc"
+        self.refreshWindowTitle()
+        # Set .svg logo
+        self.setWindowIcon(QIcon(self.resources["Logo"]))
+
         self.show()
         self.connect_config_to_fields()
         self.set_components_from_fields()
         
         path = os.path.dirname(os.path.realpath(__file__))
-        self.load_from_qdlc_file(os.path.join(path,"biexction_display.qdlc"))
+        #self.load_from_qdlc_file(os.path.join(path,"biexction_display.qdlc"))
+        self.set_components_from_fields()
         self.update_component_list()
         self.drawSystem()
+
+    def refreshWindowTitle(self, name = None):
+        if name is not None:
+            self.current_qdlc_file_name = name
+        self.setWindowTitle(f"QDLC - {self.current_qdlc_file_name}")
 
     def save_to_qdlc_file(self, filepath = "settings.qdlc"):
         from pickle import dump, HIGHEST_PROTOCOL
         print(f"Saving to {filepath}")
         self.set_components_from_fields()
+        name = os.path.basename(filepath)
+        self.refreshWindowTitle( name)
         with open(filepath, "wb") as f:
             print(f"Current Dict: {dict(self.system_components)}")
             dump(dict(self.system_components), f, protocol=HIGHEST_PROTOCOL)
@@ -79,6 +103,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def load_from_qdlc_file(self, filepath = "settings.qdlc"):
         from pickle import load
         print(f"Loading from {filepath}")
+        name = os.path.basename(filepath)
+        self.refreshWindowTitle(name)
         with open(filepath, "rb") as f:
             loaded = load(f)
             self.system_components.update(loaded)
@@ -90,10 +116,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         for button in [self.button_next_tab_system_to_config, self.button_next_tab_config_to_timeline, self.button_next_tab_timeline_to_spectrum, self.button_next_tab_spectrum_to_indist, self.button_next_tab_indist_to_conc, self.button_next_tab_sconc_to_stats, self.button_next_tab_stats_to_detector, self.button_next_tab_detector_to_generate]:
             button.clicked.connect( lambda: self.tabWidget.setCurrentIndex( self.tabWidget.currentIndex() + 1 ) )
         # Add Stuff Dialog
-        self.button_add_electronic_state.clicked.connect(lambda: DialogAddElectronic(main_window=self))
-        self.button_add_cavity.clicked.connect(lambda: DialogAddCavity(main_window=self))
-        self.button_add_optical_pulse.clicked.connect(lambda: DialogAddPulse(main_window=self))
-        self.button_add_electronic_shift.clicked.connect(lambda: DialogAddChirp(main_window=self))
+        self.button_add_electronic_state.clicked.connect(lambda: DialogAddElectronic(main_window=self, style_sheet=self.styleSheet()))
+        self.button_add_cavity.clicked.connect(lambda: DialogAddCavity(main_window=self, style_sheet=self.styleSheet()))
+        self.button_add_optical_pulse.clicked.connect(lambda: DialogAddPulse(main_window=self, style_sheet=self.styleSheet()))
+        self.button_add_electronic_shift.clicked.connect(lambda: DialogAddChirp(main_window=self, style_sheet=self.styleSheet()))
         # Modify Stuff
         self.button_modify_clear.clicked.connect(self.clearSystem)
         
@@ -120,19 +146,20 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 return
             name, category = current.split(" - ")
             if category == "EnergyLevels":
-                DialogAddElectronic(main_window=self, load_existing=name)
+                DialogAddElectronic(main_window=self, load_existing=name, style_sheet=self.styleSheet())
             elif category == "CavityLevels":
-                DialogAddCavity(main_window=self, load_existing=name)
+                DialogAddCavity(main_window=self, load_existing=name, style_sheet=self.styleSheet())
             elif category == "Pulse":
-                DialogAddPulse(main_window=self, load_existing=name)
+                DialogAddPulse(main_window=self, load_existing=name, style_sheet=self.styleSheet())
             elif category == "Chirp":
-                DialogAddChirp(main_window=self, load_existing=name)
+                DialogAddChirp(main_window=self, load_existing=name, style_sheet=self.styleSheet())
         self.button_modify_edit.clicked.connect(edit_input)
 
         # Config Inputs
-        self.button_time_config_tol.clicked.connect(lambda: DialogAddGridOrTolerance(main_window=self,name="Tolerances"))
-        self.button_time_config_grid.clicked.connect(lambda: DialogAddGridOrTolerance(main_window=self,name="Grid"))
+        self.button_time_config_tol.clicked.connect(lambda: DialogAddGridOrTolerance(main_window=self,name="Tolerances", style_sheet=self.styleSheet()))
+        self.button_time_config_grid.clicked.connect(lambda: DialogAddGridOrTolerance(main_window=self,name="Grid", style_sheet=self.styleSheet()))
 
+        self.button_open_destination_folder.clicked.connect(lambda: QDesktopServices.openUrl(QUrl.fromLocalFile(self.textinput_file_destination.text())))
 
         # Loading / Saving
         def export_command():
@@ -191,7 +218,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.button_set_setting_file_path.clicked.connect(set_settingfile_path)
         
         def save_to_setting_file(filepath, project_name):
-
             class SettingfileWorker(QObject):
                 finished = Signal()
                 progress = Signal(float)
@@ -205,9 +231,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                         self.text.emit(f"# {project_name}")
                         if self.parent.checkbox_activate_scan_parameter_1.isChecked():
                             runstring = self.parent.text_output_program_qdlc_command_sweep.toPlainText()
-                            for i,(p1,p2) in enumerate(zip(self.parent.scan_sweep_values_1.flatten(),self.parent.scan_sweep_values_2.flatten())):
+                            for i,(p1,p2,x1,x2) in enumerate(zip(self.parent.scan_sweep_values_1.flatten(),self.parent.scan_sweep_values_2.flatten(),self.parent.mgx.flatten(),self.parent.mgy.flatten())):
                                 if self.parent.checkbox_activate_scan_parameter_2.isChecked():
-                                    runstr = self.parent.qdlc_start_command_to_real(runstring.replace("[QDLC]", f"QDLC --lfc {p1},{p2}").replace("[FILEPATH]",""))
+                                    runstr = self.parent.qdlc_start_command_to_real(runstring.replace("[QDLC]", f"QDLC --lfc {x1},{x2}").replace("[FILEPATH]",""))
                                     f.write(f"{runstr.format(p1,p2)}\n")
                                     self.text.emit(f"{runstr.format(p1,p2)}")
                                 else:
@@ -237,7 +263,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.worker.finished.connect(self.worker.deleteLater)
             self.thread.finished.connect(self.thread.deleteLater)
             self.thread.start()
-            
+        
         def save_settings_file():
             filepath = self.textinput_path_to_settingfile.text()
             if filepath == "":
@@ -569,6 +595,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         # Run
         def generate_command():
+            # Check for initial state
+            if not len(self.textinput_initial_state.text()):
+                pick_from_list_of_available_states()
             self.set_components_from_fields()
             command = self.qdlc_generate_start_command()
             self.text_output_program_qdlc_command.setText(command)
@@ -654,35 +683,38 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.progressBar.setValue(0)
 
         self.button_run_program.clicked.connect(run_command)
+        # Set button icon
         self.button_run_kill.clicked.connect(kill_command)
 
         # Sweeper
         self.button_sweeper_get_runstring.clicked.connect(lambda: self.text_output_program_qdlc_command_sweep.setText(self.text_output_program_qdlc_command.toPlainText()))
 
         actions_to_add = [  
-            ["Print Component Dict", lambda: print(self.system_components), self.menuDeveloper_Tools],
-            ["Set Components from Fields", self.set_components_from_fields, self.menuDeveloper_Tools],
-            ["Set Fields from Components", self.set_fields_from_components, self.menuDeveloper_Tools],
-            ["Connect Fields", self.connect_config_to_fields, self.menuDeveloper_Tools],
-            ["Plot Predicted Spectra", spectrum_predict_plot, self.menuFunctions],
-            ["Plot Phonon Functions", plot_phonon_spectral_function, self.menuFunctions],
-            ["Add N TLS", dialog_add_N_levels, self.menuEdit],
-            ["Print All Transitions", print_all_transitions, self.menuFunctions],
-            ["Copy List of Transitions", clipboard_copy_transition_list, self.menuFunctions],
-            ["Copy Sum of Transitions", clipboard_copy_sum_of_transition_list, self.menuFunctions],
-            ["Export QDLC Command", export_command, self.menuMenu],
-            ["Import QDLC Command", import_command, self.menuMenu],
-            ["Redraw System", self.drawSystem, self.menuFunctions],
-            ["Clear System", self.clearSystem, self.menuFunctions],
-            ["Generate QDLC Command", generate_command, self.menuFunctions],
-            ["Set initial State", pick_from_list_of_available_states, self.menuFunctions],
-            ["Set File Destination", set_file_path, self.menuMenu],
-            ["Set QDLC Filepath", set_qdlc_filepath, self.menuMenu],
-            ["Run QDLC", run_command, self.menuMenu],
+            ["Print Component Dict", lambda: print(self.system_components), self.menuDeveloper_Tools, None],
+            ["Set Components from Fields", self.set_components_from_fields, self.menuDeveloper_Tools, None],
+            ["Set Fields from Components", self.set_fields_from_components, self.menuDeveloper_Tools, None],
+            ["Connect Fields", self.connect_config_to_fields, self.menuDeveloper_Tools, None],
+            ["Plot Predicted Spectra", spectrum_predict_plot, self.menuFunctions, None],
+            ["Plot Phonon Functions", plot_phonon_spectral_function, self.menuFunctions, None],
+            ["Add N TLS", dialog_add_N_levels, self.menuEdit, self.resources["Tree"]],
+            ["Print All Transitions", print_all_transitions, self.menuDeveloper_Tools, None],
+            ["Copy List of Transitions", clipboard_copy_transition_list, self.menuEdit, self.resources["marrow_right"]],
+            ["Copy Sum of Transitions", clipboard_copy_sum_of_transition_list, self.menuEdit, self.resources["marrow_right"]],
+            ["Export QDLC Command", export_command, self.menuMenu, self.resources["Arrow_Down_Save"]],
+            ["Import QDLC Command", import_command, self.menuMenu, self.resources["Arrow_Up_Load"]],
+            ["Redraw System", self.drawSystem, self.menuDeveloper_Tools, None],
+            ["Clear System", self.clearSystem, self.menuDeveloper_Tools, None],
+            ["Generate QDLC Command", generate_command, self.menuDeveloper_Tools, None],
+            ["Set initial State", pick_from_list_of_available_states, self.menuDeveloper_Tools, None],
+            ["Set File Destination", set_file_path, self.menuDeveloper_Tools, None],
+            ["Set QDLC Filepath", set_qdlc_filepath, self.menuDeveloper_Tools, None],
+            ["Run QDLC", run_command, self.menuMenu, self.resources["Gear"]],
         ]
-        for name, connect, where in actions_to_add:
+        for name, connect, where, icon in actions_to_add:
             action = QAction(name, self)
             action.triggered.connect(connect)
+            if icon:
+                action.setIcon(QIcon(icon))
             where.addAction(action)
 
         # Connect Sweeper
@@ -935,9 +967,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         lambda_str_1 = self.textinput_scan_parameter_1_lambda.text()
         lambda_str_2 = self.textinput_scan_parameter_2_lambda.text()
         print(f"Executing scan with x1 in [{np.min(x1)},{np.max(x1)}] and x2 in [{np.min(x2)},{np.max(x2)}] using P1(x1,x2) = {lambda_str_1} and P2(x1,x2) = {lambda_str_2}")
-        mgx,mgy = np.meshgrid(x1,x2)
-        eval_dict = {"x1" : mgx, 
-                     "x2" : mgy, 
+        self.mgx,self.mgy = np.meshgrid(x1,x2)
+        eval_dict = {"x1" : self.mgx, 
+                     "x2" : self.mgy,
+                     "P1" : self.scan_sweep_values_1,
                      "np": np, 
                      "g" : get_uv_scaled(self.textinput_rates_cavity_coupling.text()),
                      "G" : get_unit_value(self.textinput_rates_cavity_coupling.text()),
@@ -1149,6 +1182,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         commands = [component_parser(component,escaped,self.system_components,escape_symbol=escape_symbol,callback=self.sendHintMessage) for component in self.system_components.keys()]
 
         final_command = f"[QDLC] {' '.join(commands)} [FILEPATH]"
+        while "  " in final_command:
+            final_command = final_command.replace("  "," ")
         return final_command
         #self.output_start_command.setText(final_command)
 
