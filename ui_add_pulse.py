@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'add_pulsehvNbvZ.ui'
+## Form generated from reading UI file 'add_pulseqTJYUS.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.4.2
+## Created by: Qt User Interface Compiler version 6.5.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -64,12 +64,6 @@ class Ui_AddPulse(object):
         self.plot_pulse.setMinimumSize(QSize(600, 0))
 
         self.gridLayout.addWidget(self.plot_pulse, 1, 3, 7, 2)
-
-        self.label_11 = QLabel(AddPulse)
-        self.label_11.setObjectName(u"label_11")
-        self.label_11.setMinimumSize(QSize(150, 40))
-
-        self.gridLayout.addWidget(self.label_11, 2, 0, 1, 1)
 
         self.textinput_transitions = QLineEdit(AddPulse)
         self.textinput_transitions.setObjectName(u"textinput_transitions")
@@ -198,7 +192,12 @@ class Ui_AddPulse(object):
 
         self.gridLayout.addWidget(self.button_confirm_replace, 9, 1, 1, 1)
 
-        self.label_11.raise_()
+        self.button_coupled_to = QPushButton(AddPulse)
+        self.button_coupled_to.setObjectName(u"button_coupled_to")
+        self.button_coupled_to.setMinimumSize(QSize(150, 40))
+
+        self.gridLayout.addWidget(self.button_coupled_to, 2, 0, 1, 1)
+
         self.label_2.raise_()
         self.textinput_name.raise_()
         self.label_9.raise_()
@@ -221,6 +220,19 @@ class Ui_AddPulse(object):
         self.button_reset.raise_()
         self.button_confirm.raise_()
         self.button_confirm_replace.raise_()
+        self.button_coupled_to.raise_()
+        QWidget.setTabOrder(self.textinput_name, self.textinput_transitions)
+        QWidget.setTabOrder(self.textinput_transitions, self.textinput_amp)
+        QWidget.setTabOrder(self.textinput_amp, self.textinput_energy)
+        QWidget.setTabOrder(self.textinput_energy, self.textinput_center)
+        QWidget.setTabOrder(self.textinput_center, self.textinput_width)
+        QWidget.setTabOrder(self.textinput_width, self.textinput_type)
+        QWidget.setTabOrder(self.textinput_type, self.button_confirm)
+        QWidget.setTabOrder(self.button_confirm, self.button_load)
+        QWidget.setTabOrder(self.button_load, self.input_use_timeconfig)
+        QWidget.setTabOrder(self.input_use_timeconfig, self.button_plot)
+        QWidget.setTabOrder(self.button_plot, self.button_reset)
+        QWidget.setTabOrder(self.button_reset, self.button_confirm_replace)
 
         self.retranslateUi(AddPulse)
 
@@ -234,7 +246,6 @@ class Ui_AddPulse(object):
         self.textinput_name.setText("")
         self.textinput_name.setPlaceholderText(QCoreApplication.translate("AddPulse", u"Name", None))
         self.button_load.setText(QCoreApplication.translate("AddPulse", u"Load", None))
-        self.label_11.setText(QCoreApplication.translate("AddPulse", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:700;\">Coupled To</span></p></body></html>", None))
         self.textinput_transitions.setText("")
         self.textinput_transitions.setPlaceholderText(QCoreApplication.translate("AddPulse", u"List of Transitions", None))
         self.label_12.setText(QCoreApplication.translate("AddPulse", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:700;\">Amplitude</span></p></body></html>", None))
@@ -251,14 +262,15 @@ class Ui_AddPulse(object):
         self.textinput_width.setPlaceholderText(QCoreApplication.translate("AddPulse", u"0", None))
         self.label_15.setText(QCoreApplication.translate("AddPulse", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:700;\">Type</span></p></body></html>", None))
 #if QT_CONFIG(statustip)
-        self.textinput_type.setStatusTip(QCoreApplication.translate("AddPulse", u"Can be either of: gauss, sine", None))
+        self.textinput_type.setStatusTip(QCoreApplication.translate("AddPulse", u"Can be either of: gauss, cw", None))
 #endif // QT_CONFIG(statustip)
-        self.textinput_type.setPlaceholderText(QCoreApplication.translate("AddPulse", u"gauss or sine", None))
+        self.textinput_type.setPlaceholderText(QCoreApplication.translate("AddPulse", u"gauss or cw", None))
         self.label.setText(QCoreApplication.translate("AddPulse", u"<html><head/><body><p align=\"center\"><span style=\" font-weight:700;\">The type can include any of cw, gauss, super(amp_freq), exponent(val), chirped(val), cutoff(val), chained via the + operator. This will be changed later. Pulse will also be plotted.</span></p></body></html>", None))
         self.button_confirm.setText(QCoreApplication.translate("AddPulse", u"Save", None))
         self.input_use_timeconfig.setText(QCoreApplication.translate("AddPulse", u"Use Timeconfig", None))
         self.button_plot.setText(QCoreApplication.translate("AddPulse", u"Plot", None))
         self.button_reset.setText(QCoreApplication.translate("AddPulse", u"Reset", None))
         self.button_confirm_replace.setText(QCoreApplication.translate("AddPulse", u"Overwrite Original", None))
+        self.button_coupled_to.setText(QCoreApplication.translate("AddPulse", u"Coupled To", None))
     # retranslateUi
 

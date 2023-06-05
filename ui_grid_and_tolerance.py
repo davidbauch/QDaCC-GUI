@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'grid_and_tolerancemtsFZs.ui'
+## Form generated from reading UI file 'grid_and_toleranceqVjUfb.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.4.2
 ##
@@ -96,6 +96,11 @@ class Ui_AddGridTolerance(object):
         self.plot_points.raise_()
         self.input_use_timeconfig.raise_()
         self.textinput_value.raise_()
+        QWidget.setTabOrder(self.textinput_time, self.textinput_value)
+        QWidget.setTabOrder(self.textinput_value, self.button_confirm)
+        QWidget.setTabOrder(self.button_confirm, self.button_reset)
+        QWidget.setTabOrder(self.button_reset, self.button_plot)
+        QWidget.setTabOrder(self.button_plot, self.input_use_timeconfig)
 
         self.retranslateUi(AddGridTolerance)
 

@@ -4,7 +4,7 @@ def _parse_electronic_system(components: dict, escape_symbol: str = "'", callbac
     ret = ""
     for level in sorted(components["EnergyLevels"].values(), key = lambda a: get_uv_scaled(a["Energy"])):
         n,e,d,c,p,to = level["Name"], level["Energy"], level["DephasingScaling"], level["DecayScaling"], level["PhononScaling"], ",".join(level["CoupledTo"]) if level["CoupledTo"] != (None,) and len(level["CoupledTo"]) > 0 else "-"
-        ret += f"{n}:{e}:{to}:{d}:{c}:{p};"
+        ret += f"{n}:{e}:{to}:{c}:{d}:{p};"
     return f"--SE {escape_symbol}{ret[:-1]}{escape_symbol}"
 
 def _parse_cavity_system(components: dict, escape_symbol: str = "", callback = None) -> str:
@@ -39,7 +39,9 @@ def _parse_config_time(components: dict, escape_symbol: str = "", callback = Non
     t = components["ConfigTime"]
     if t["Start"] == "0" and t["End"] == "auto" and t["Step"] == "auto":
         return ""
-    return f"--time {t['Start']} {t['End']} {t['Step']}"
+    rtend = t["End"] if t["End"] != "auto" else -1
+    rtstep = t["Step"] if t["Step"] != "auto" else -1
+    return f"--time {t['Start']} {rtend} {rtstep}"
 
 def _parse_config_tolerances(components: dict, escape_symbol: str = "", callback = None) -> str:
     ret = ""
@@ -63,6 +65,8 @@ def _parse_config_grid(components: dict, escape_symbol: str = "", callback = Non
             ret = f"--grid {';'.join( [ f'{tt}:{vv}' for tt,vv in zip(t,v) ] )}"
         else:
             gridres = components['ConfigGrid']['Resolution']
+            if gridres == "auto":
+                gridres = "-1"
             if len(gridres) > 0:
                 ret = f"--gridres {gridres}"
     if len(ret) > 0:
@@ -86,9 +90,10 @@ def _parse_config_solver(components: dict, escape_symbol: str = "", callback = N
             tstep = float(cutoff) / float(nc)
             ret += f"--phononorder 5 --NC {nc} --tstepPath {tstep}{unit}"
     # Interpolator
-    if s['Interpolator'] != "None":
+    if s['Interpolator'] != 0:
         ret += " -interpolate"
-    ret += f" --interpolateOrder {escape_symbol}{s['Interpolator']},{s['InterpolatorGrid']}{escape_symbol}"
+    orders_tau = {0: 0, 1: 2}
+    ret += f" --interpolateOrder {escape_symbol}{s['Interpolator']-1},{orders_tau[s['InterpolatorGrid']]}{escape_symbol}"
     return ret
 
 def _parse_config_system(components: dict, escape_symbol: str = "", callback = None) -> str:
@@ -118,7 +123,7 @@ def _parse_config_spectra(components: dict, escape_symbol: str = "", callback = 
         return ""
     ret = f"--GS {escape_symbol}"
     for spectrum in p.values():
-        ret += f"{','.join(spectrum['Modes'])}:{spectrum['Center']}:{spectrum['Range']}:{spectrum['Res']}:{spectrum['Order']}:{spectrum['Norm']};"
+        ret += f"{','.join(spectrum['Modes'])}:{spectrum['Center']}:{spectrum['Range']}:{spectrum['Res']}:{spectrum['Order']+1}:{spectrum['Norm']};"
     ret = ret[:-1] + escape_symbol
     return ret
 
@@ -180,7 +185,7 @@ def _parse_g1g2_func(components: dict, escape_symbol: str = "", callback = None)
         return ""
     ret = f"--GF {escape_symbol}"
     for setting in p.values():
-        ret += f"{setting['Mode']}:{setting['Order']}:{setting['Method']};"
+        ret += f"{setting['Mode']}:{setting['Order']+1}:{['time','matrix','both'][int(setting['Method'])]};"
     return ret[:-1] + escape_symbol
 
 def _parse_wigner_function(components: dict, escape_symbol: str = "", callback = None) -> str:
@@ -237,4 +242,4 @@ def component_parser(component: str, escaped: bool, components: dict, escape_sym
 if __name__ == "__main__":
     print("Available Components:")
     print(_component_parser.keys())
-    print(f"This file ({__file__}) is part of the QDLC GUI and should be imported, not executed.")
+    print(f"This file ({__file__}) is part of the QDaCC GUI and should be imported, not executed.")

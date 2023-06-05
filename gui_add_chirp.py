@@ -2,6 +2,7 @@ from ui_add_chirp import Ui_AddChirp
 from PySide6.QtWidgets import QDialog
 import numpy as np
 from unit_seperator import get_uv_scaled
+from dialogs import getCheckedItems
 
 class DialogAddChirp(QDialog, Ui_AddChirp):
     def __init__(self, *args, main_window=None, load_existing = None, style_sheet = "", **kwargs):
@@ -66,6 +67,18 @@ class DialogAddChirp(QDialog, Ui_AddChirp):
             #self.plot_chirp.canvas.axes.legend(('cosinus', 'sinus'),loc='upper right')
             #self.plot_chirp.canvas.axes.set_title('Cosinus - Sinus Signals')
             self.plot_chirp.canvas.draw()
+        def pick_states():
+            states = main_window.generate_list_of_available_electronic_states() + main_window.generate_list_of_available_cavity_states()
+            checked_items, ok = getCheckedItems(states, parent=self)
+            if not ok:
+                return
+            current_states = self.textinput_states.text().split(",")
+            new_states = ",".join(checked_items+current_states)
+            # Prune final ","
+            if new_states.endswith(","):
+                new_states = new_states[:-1]
+            self.textinput_states.setText(new_states)
+        self.button_coupled_to.clicked.connect(pick_states)
         self.button_plot.clicked.connect(plot)
         self.button_confirm.clicked.connect(finished)
         self.button_confirm_replace.clicked.connect(lambda: finished(replace=True))
@@ -80,4 +93,4 @@ class DialogAddChirp(QDialog, Ui_AddChirp):
         self.exec()
         
 if __name__ == "__main__":
-    print(f"This file ({__file__}) is part of the QDLC GUI and should be imported, not executed.")
+    print(f"This file ({__file__}) is part of the QDaCC GUI and should be imported, not executed.")

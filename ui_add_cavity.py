@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'add_cavitygpdfWu.ui'
+## Form generated from reading UI file 'add_cavityduijPt.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.4.2
+## Created by: Qt User Interface Compiler version 6.5.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -72,12 +72,6 @@ class Ui_AddCavity(object):
         self.textinput_energy.setAlignment(Qt.AlignCenter)
 
         self.gridLayout.addWidget(self.textinput_energy, 2, 1, 1, 2)
-
-        self.label_11 = QLabel(AddCavity)
-        self.label_11.setObjectName(u"label_11")
-        self.label_11.setMinimumSize(QSize(150, 40))
-
-        self.gridLayout.addWidget(self.label_11, 3, 0, 1, 1)
 
         self.textinput_transitions = QLineEdit(AddCavity)
         self.textinput_transitions.setObjectName(u"textinput_transitions")
@@ -157,7 +151,12 @@ class Ui_AddCavity(object):
 
         self.gridLayout.addWidget(self.button_confirm_replace, 7, 1, 1, 1)
 
-        self.label_11.raise_()
+        self.button_coupled_to = QPushButton(AddCavity)
+        self.button_coupled_to.setObjectName(u"button_coupled_to")
+        self.button_coupled_to.setMinimumSize(QSize(150, 40))
+
+        self.gridLayout.addWidget(self.button_coupled_to, 3, 0, 1, 1)
+
         self.label_2.raise_()
         self.textinput_name.raise_()
         self.label_9.raise_()
@@ -175,6 +174,17 @@ class Ui_AddCavity(object):
         self.button_setone.raise_()
         self.button_load.raise_()
         self.button_confirm_replace.raise_()
+        self.button_coupled_to.raise_()
+        QWidget.setTabOrder(self.textinput_name, self.textinput_energy)
+        QWidget.setTabOrder(self.textinput_energy, self.textinput_transitions)
+        QWidget.setTabOrder(self.textinput_transitions, self.textinput_transition_scalings)
+        QWidget.setTabOrder(self.textinput_transition_scalings, self.textinput_decay)
+        QWidget.setTabOrder(self.textinput_decay, self.textinput_photonnumber)
+        QWidget.setTabOrder(self.textinput_photonnumber, self.button_confirm)
+        QWidget.setTabOrder(self.button_confirm, self.button_load)
+        QWidget.setTabOrder(self.button_load, self.button_setone)
+        QWidget.setTabOrder(self.button_setone, self.button_confirm_replace)
+        QWidget.setTabOrder(self.button_confirm_replace, self.button_reset)
 
         self.retranslateUi(AddCavity)
 
@@ -191,7 +201,6 @@ class Ui_AddCavity(object):
         self.label_10.setText(QCoreApplication.translate("AddCavity", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:700;\">Energy</span></p></body></html>", None))
         self.textinput_energy.setText("")
         self.textinput_energy.setPlaceholderText(QCoreApplication.translate("AddCavity", u"0", None))
-        self.label_11.setText(QCoreApplication.translate("AddCavity", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:700;\">Coupled To</span></p></body></html>", None))
         self.textinput_transitions.setText("")
         self.textinput_transitions.setPlaceholderText(QCoreApplication.translate("AddCavity", u"List of Transitions", None))
         self.label_12.setText(QCoreApplication.translate("AddCavity", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:700;\">Scaling</span></p></body></html>", None))
@@ -207,5 +216,6 @@ class Ui_AddCavity(object):
         self.button_confirm.setText(QCoreApplication.translate("AddCavity", u"Save", None))
         self.button_reset.setText(QCoreApplication.translate("AddCavity", u"Reset", None))
         self.button_confirm_replace.setText(QCoreApplication.translate("AddCavity", u"Overwrite Original", None))
+        self.button_coupled_to.setText(QCoreApplication.translate("AddCavity", u"Coupled To", None))
     # retranslateUi
 

@@ -96,19 +96,6 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="label_11">
-     <property name="minimumSize">
-      <size>
-       <width>150</width>
-       <height>40</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Coupled To&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-    </widget>
-   </item>
    <item row="2" column="1" colspan="2">
     <widget class="QLineEdit" name="textinput_transitions">
      <property name="minimumSize">
@@ -323,7 +310,7 @@
       </font>
      </property>
      <property name="statusTip">
-      <string>Can be either of: gauss, sine</string>
+      <string>Can be either of: gauss, cw</string>
      </property>
      <property name="frame">
       <bool>true</bool>
@@ -332,7 +319,7 @@
       <set>Qt::AlignCenter</set>
      </property>
      <property name="placeholderText">
-      <string>gauss or sine</string>
+      <string>gauss or cw</string>
      </property>
     </widget>
    </item>
@@ -430,8 +417,20 @@
      </property>
     </widget>
    </item>
+   <item row="2" column="0">
+    <widget class="QPushButton" name="button_coupled_to">
+     <property name="minimumSize">
+      <size>
+       <width>150</width>
+       <height>40</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Coupled To</string>
+     </property>
+    </widget>
+   </item>
   </layout>
-  <zorder>label_11</zorder>
   <zorder>label_2</zorder>
   <zorder>textinput_name</zorder>
   <zorder>label_9</zorder>
@@ -454,6 +453,7 @@
   <zorder>button_reset</zorder>
   <zorder>button_confirm</zorder>
   <zorder>button_confirm_replace</zorder>
+  <zorder>button_coupled_to</zorder>
  </widget>
  <customwidgets>
   <customwidget>
@@ -463,6 +463,21 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>textinput_name</tabstop>
+  <tabstop>textinput_transitions</tabstop>
+  <tabstop>textinput_amp</tabstop>
+  <tabstop>textinput_energy</tabstop>
+  <tabstop>textinput_center</tabstop>
+  <tabstop>textinput_width</tabstop>
+  <tabstop>textinput_type</tabstop>
+  <tabstop>button_confirm</tabstop>
+  <tabstop>button_load</tabstop>
+  <tabstop>input_use_timeconfig</tabstop>
+  <tabstop>button_plot</tabstop>
+  <tabstop>button_reset</tabstop>
+  <tabstop>button_confirm_replace</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

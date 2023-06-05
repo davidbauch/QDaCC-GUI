@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'add_electronicmZfhkU.ui'
+## Form generated from reading UI file 'add_electronicZHfkXc.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.4.2
+## Created by: Qt User Interface Compiler version 6.5.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -26,12 +26,6 @@ class Ui_AddElectronic(object):
         AddElectronic.resize(648, 412)
         self.gridLayout = QGridLayout(AddElectronic)
         self.gridLayout.setObjectName(u"gridLayout")
-        self.label_11 = QLabel(AddElectronic)
-        self.label_11.setObjectName(u"label_11")
-        self.label_11.setMinimumSize(QSize(150, 40))
-
-        self.gridLayout.addWidget(self.label_11, 3, 0, 1, 2)
-
         self.textinput_decay = QLineEdit(AddElectronic)
         self.textinput_decay.setObjectName(u"textinput_decay")
         self.textinput_decay.setMinimumSize(QSize(150, 40))
@@ -117,15 +111,6 @@ class Ui_AddElectronic(object):
 
         self.gridLayout.addWidget(self.button_reset, 8, 4, 1, 1)
 
-        self.textinput_transitions = QLineEdit(AddElectronic)
-        self.textinput_transitions.setObjectName(u"textinput_transitions")
-        self.textinput_transitions.setMinimumSize(QSize(150, 40))
-        self.textinput_transitions.setFont(font)
-        self.textinput_transitions.setFrame(True)
-        self.textinput_transitions.setAlignment(Qt.AlignCenter)
-
-        self.gridLayout.addWidget(self.textinput_transitions, 3, 2, 1, 3)
-
         self.textinput_name = QLineEdit(AddElectronic)
         self.textinput_name.setObjectName(u"textinput_name")
         self.textinput_name.setMinimumSize(QSize(150, 40))
@@ -150,13 +135,27 @@ class Ui_AddElectronic(object):
 
         self.gridLayout.addWidget(self.button_load, 1, 4, 1, 1)
 
+        self.textinput_transitions = QLineEdit(AddElectronic)
+        self.textinput_transitions.setObjectName(u"textinput_transitions")
+        self.textinput_transitions.setMinimumSize(QSize(150, 40))
+        self.textinput_transitions.setFont(font)
+        self.textinput_transitions.setFrame(True)
+        self.textinput_transitions.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout.addWidget(self.textinput_transitions, 3, 2, 1, 3)
+
+        self.button_coupled_to = QPushButton(AddElectronic)
+        self.button_coupled_to.setObjectName(u"button_coupled_to")
+        self.button_coupled_to.setMinimumSize(QSize(150, 40))
+
+        self.gridLayout.addWidget(self.button_coupled_to, 3, 0, 1, 1)
+
         self.label_12.raise_()
         self.title.raise_()
         self.textinput_name.raise_()
         self.label_9.raise_()
         self.textinput_energy.raise_()
         self.label_10.raise_()
-        self.label_11.raise_()
         self.textinput_transitions.raise_()
         self.textinput_decay.raise_()
         self.button_setone.raise_()
@@ -167,6 +166,18 @@ class Ui_AddElectronic(object):
         self.textinput_dephasing.raise_()
         self.textinput_phonons.raise_()
         self.button_load.raise_()
+        self.button_coupled_to.raise_()
+        QWidget.setTabOrder(self.textinput_name, self.textinput_energy)
+        QWidget.setTabOrder(self.textinput_energy, self.textinput_transitions)
+        QWidget.setTabOrder(self.textinput_transitions, self.button_confirm_replace)
+        QWidget.setTabOrder(self.button_confirm_replace, self.textinput_decay)
+        QWidget.setTabOrder(self.textinput_decay, self.textinput_dephasing)
+        QWidget.setTabOrder(self.textinput_dephasing, self.textinput_phonons)
+        QWidget.setTabOrder(self.textinput_phonons, self.button_confirm)
+        QWidget.setTabOrder(self.button_confirm, self.button_load)
+        QWidget.setTabOrder(self.button_load, self.button_setzero)
+        QWidget.setTabOrder(self.button_setzero, self.button_setone)
+        QWidget.setTabOrder(self.button_setone, self.button_reset)
 
         self.retranslateUi(AddElectronic)
 
@@ -175,7 +186,6 @@ class Ui_AddElectronic(object):
 
     def retranslateUi(self, AddElectronic):
         AddElectronic.setWindowTitle(QCoreApplication.translate("AddElectronic", u"Dialog", None))
-        self.label_11.setText(QCoreApplication.translate("AddElectronic", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:700;\">Coupled To</span></p></body></html>", None))
         self.textinput_decay.setText("")
         self.textinput_decay.setPlaceholderText(QCoreApplication.translate("AddElectronic", u"Decay", None))
         self.title.setText(QCoreApplication.translate("AddElectronic", u"<html><head/><body><p align=\"center\"><span style=\" font-size:14pt; font-weight:700;\">Add Electronic State</span></p></body></html>", None))
@@ -191,8 +201,6 @@ class Ui_AddElectronic(object):
         self.textinput_phonons.setPlaceholderText(QCoreApplication.translate("AddElectronic", u"Phonons", None))
         self.button_setone.setText(QCoreApplication.translate("AddElectronic", u"Set One", None))
         self.button_reset.setText(QCoreApplication.translate("AddElectronic", u"Reset", None))
-        self.textinput_transitions.setText("")
-        self.textinput_transitions.setPlaceholderText(QCoreApplication.translate("AddElectronic", u"List of Transitions", None))
         self.textinput_name.setText("")
         self.textinput_name.setPlaceholderText(QCoreApplication.translate("AddElectronic", u"Name", None))
         self.textinput_energy.setText("")
@@ -201,5 +209,8 @@ class Ui_AddElectronic(object):
         self.button_load.setToolTip(QCoreApplication.translate("AddElectronic", u"Load an existing Level and overwrite it's properties.", None))
 #endif // QT_CONFIG(tooltip)
         self.button_load.setText(QCoreApplication.translate("AddElectronic", u"Load", None))
+        self.textinput_transitions.setText("")
+        self.textinput_transitions.setPlaceholderText(QCoreApplication.translate("AddElectronic", u"List of Transitions", None))
+        self.button_coupled_to.setText(QCoreApplication.translate("AddElectronic", u"Coupled To", None))
     # retranslateUi
 

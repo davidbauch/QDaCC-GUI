@@ -34,5 +34,14 @@ def get_uv_scaled(value: str):
     v,_,s = seperate_unit(value)
     return float(v)*float(s)
 
+def is_unit_convertible(value: str):
+    try:
+        s = get_uv_scaled(value)
+        float(s)
+        return True
+    except ValueError:
+        print(f"Input {value} is not unit convertible.")
+        return False
+
 if __name__ == "__main__":
-    print(f"This file ({__file__}) is part of the QDLC GUI and should be imported, not executed.")
+    print(f"This file ({__file__}) is part of the QDaCC GUI and should be imported, not executed.")

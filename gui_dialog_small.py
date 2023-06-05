@@ -34,4 +34,4 @@ class InputDialogSmall(QDialog, Ui_InputDialog):
         self.exec()
         
 if __name__ == "__main__":
-    print(f"This file ({__file__}) is part of the QDLC GUI and should be imported, not executed.")
+    print(f"This file ({__file__}) is part of the QDaCC GUI and should be imported, not executed.")

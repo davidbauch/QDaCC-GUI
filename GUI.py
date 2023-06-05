@@ -1,25 +1,28 @@
 import sys, os
-from PySide6.QtWidgets import QWidget,QMainWindow, QApplication,QLabel, QLineEdit,QTextEdit, QGridLayout, QTextBrowser, QTabWidget, QBoxLayout, QPushButton, QDialog, QFormLayout, QMessageBox, QFileDialog, QInputDialog
-from PySide6.QtGui import QIcon, QAction, QPainter, QColor, QPixmap,QFont, QPen, QPainterPath, QStandardItemModel, QStandardItem, QGuiApplication, QDesktopServices
-from PySide6.QtCore import Qt,QRect,QPropertyAnimation,QThread,Signal,QObject, QUrl
+from PySide6.QtWidgets import QWidget,QMainWindow, QApplication,QLabel, QLineEdit,QTextEdit, QGridLayout, QTextBrowser, QTabWidget, QBoxLayout, QPushButton, QDialog, QFormLayout, QMessageBox, QFileDialog, QInputDialog, QToolTip, QMenu, QCheckBox, QProgressBar
+from PySide6.QtGui import QIcon, QAction, QPainter, QColor, QPixmap,QFont, QPen, QPainterPath, QStandardItemModel, QStandardItem, QGuiApplication, QDesktopServices, QTextCursor, QMovie
+from PySide6.QtCore import Qt,QRect,QPropertyAnimation,QThread,Signal,QObject, QUrl, QTimer, QSize
 
 import sys, os
-from hoverbutton import HoverButton
+#from hoverbutton import HoverButton
 from ui_main_window import Ui_MainWindow
 from unit_seperator import get_unit, get_unit_scaling, get_unit_value,get_uv_scaled
 from gui_add_electronic import DialogAddElectronic
 from gui_add_cavity import DialogAddCavity
 from gui_add_pulse import DialogAddPulse
 from gui_add_chirp import DialogAddChirp
+from gui_add_fitness_function import DialogAddFitness
 from gui_parse_components import component_parser
-from gui_dialog_small import InputDialogSmall
 from gui_time_grid_or_tolerance import DialogAddGridOrTolerance
 import numpy as np
 from parse_ansi import replace_ansi_escape_sequences
 from collections import defaultdict
 from subprocess import Popen, PIPE
-from multiprocessing import Process
-import re
+import markdown
+from time import time
+from gui_filter_components import component_filter
+from dialogs import getGeneralItems
+from worker import QDaCCMainWoker, QDaCCSettingGenerator, QDaCCOptimizer
 
 # todo: alles in funktionen umwälzen die über kontextmenü callbar sind
 # save/loading.
@@ -30,25 +33,45 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.retranslateUi(self)
         self.filepath = os.path.dirname(os.path.realpath(__file__))
+
+        # Set Stylesheet from file
+        with open(os.path.join(self.filepath,"style.qss"),"r") as f:
+            self.setStyleSheet(f.read())
+            
         # Config
         self.colors = {"Background" : "#DDDDDD", 
         "State" : "#88282A3A",
         "StateName" : "#FFFFFF",
         "Transition" : "#88282A3A",
         "Cavity" : ("#aaf4501e", "#aaf4501e"),
-        "Neutral" : "#000000"}
+        "Neutral" : "#000000",
+        "Red" : "#FF0000",
+        }
         self.resources = {
             "Icon" : os.path.join(self.filepath,"resources/test.png"),
             "Logo" : os.path.join(self.filepath,"resources/logo.png"),
             "Tree" : os.path.join(self.filepath,"resources/add_random.png"),
             "Arrow_Down_Save" : os.path.join(self.filepath,"resources/arrow_down_save.png"),
             "Arrow_Up_Load" : os.path.join(self.filepath,"resources/arrow_up_load.png"),
+            "Save" : os.path.join(self.filepath,"resources/save.png"),
             "Rings" : os.path.join(self.filepath,"resources/rings.png"),
             "Gear" : os.path.join(self.filepath,"resources/gear.png"),
             "OnOff" : os.path.join(self.filepath,"resources/onoff.png"),
             "marrow_right" : os.path.join(self.filepath,"resources/marrow_right.png"),
             "marrow_left" : os.path.join(self.filepath,"resources/marrow_left.png"),
+            "graph1" : os.path.join(self.filepath,"resources/graph1.png"),
+            "graph2" : os.path.join(self.filepath,"resources/graph2.png"),
+            "loading" : os.path.join(self.filepath,"resources/loading_6.gif"),
         }
+
+        self.loading_animation = QMovie(self.resources["loading"])
+        self.thread_timer = defaultdict(self.generateQAnimationTimer)
+        self.loading_animation_fps = 1000/360
+        self.button_run_program.setIconSize(QSize(120,28))
+        self.button_plot_everything.setIconSize(QSize(120,28))
+        self.button_sweeper_plot.setIconSize(QSize(120,28))
+        self.button_optimizer_optimize.setIconSize(QSize(120,28))
+
         self.plot_system_details = False
         # System Components that contribute to the execution string
         self.system_components = defaultdict(lambda: {})
@@ -65,12 +88,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # Add functionality to buttons
         self.connect_functionality()
 
-        # Unfinished Tabs
-        for i in [10,11]:
-            self.tabWidget.setTabIcon(i, QIcon(self.resources["Icon"]))
-
         # Set Name
-        self.current_qdlc_file_name = "untitled.qdlc"
+        self.current_qdacc_file_path = "untitled.qdacc"
         self.refreshWindowTitle()
         # Set .svg logo
         self.setWindowIcon(QIcon(self.resources["Logo"]))
@@ -80,34 +99,44 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.set_components_from_fields()
         
         path = os.path.dirname(os.path.realpath(__file__))
-        #self.load_from_qdlc_file(os.path.join(path,"biexction_display.qdlc"))
         self.set_components_from_fields()
         self.update_component_list()
         self.drawSystem()
 
-    def refreshWindowTitle(self, name = None):
-        if name is not None:
-            self.current_qdlc_file_name = name
-        self.setWindowTitle(f"QDLC - {self.current_qdlc_file_name}")
+    def generateQAnimationTimer(self):
+        timer = QTimer(self)
+        timer.timeout.connect(lambda: self.loading_animation.jumpToNextFrame())
+        timer.start()
+        return timer
 
-    def save_to_qdlc_file(self, filepath = "settings.qdlc"):
+    def refreshWindowTitle(self, name = None):
+        print(f"Refreshing Window Title to {name}")
+        if name is not None:
+            self.current_qdacc_file_path = name
+        #if not isinstance(name, str):
+        #    self.sendErrorMessage("Invalid Filepath", "The filepath is not a string.")
+        display_name = os.path.basename(self.current_qdacc_file_path)
+        self.setWindowTitle(f"QDaCC - {display_name}")
+
+    def save_to_qdacc_file(self, filepath = "settings.qdacc"):
         from pickle import dump, HIGHEST_PROTOCOL
         print(f"Saving to {filepath}")
         self.set_components_from_fields()
-        name = os.path.basename(filepath)
-        self.refreshWindowTitle( name)
+        self.refreshWindowTitle(filepath)
         with open(filepath, "wb") as f:
             print(f"Current Dict: {dict(self.system_components)}")
             dump(dict(self.system_components), f, protocol=HIGHEST_PROTOCOL)
 
-    def load_from_qdlc_file(self, filepath = "settings.qdlc"):
+    def load_from_qdacc_file(self, filepath = "settings.qdacc", key: str | None = None):
         from pickle import load
         print(f"Loading from {filepath}")
-        name = os.path.basename(filepath)
-        self.refreshWindowTitle(name)
         with open(filepath, "rb") as f:
             loaded = load(f)
-            self.system_components.update(loaded)
+            if key:
+                self.system_components[key] = loaded[key] 
+            else:
+                self.refreshWindowTitle(filepath)
+                self.system_components.update(loaded)
             print(f"Current Dict: {dict(self.system_components)}")
         self.set_fields_from_components()
 
@@ -123,6 +152,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # Modify Stuff
         self.button_modify_clear.clicked.connect(self.clearSystem)
         
+        # Set how to as the markdown readme file
+        html = markdown.markdown(open(os.path.join(self.filepath,"../README.md")).read(),extensions=['markdown.extensions.fenced_code']) #.replace('<img src="','<img src="../')
+        rep = os.path.join(self.filepath,"../")
+        html = html.replace('<img src="',f'<img style="max-width:100%" src="{rep}')
+        html = html.replace(".svg",".png")
+        html = html.replace('px"','"')
+        self.output_howto.setHtml(html)
+
         def modify():
             self.plot_system_details = self.input_draw_details.isChecked()
             self.drawSystem()
@@ -154,36 +191,80 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             elif category == "Chirp":
                 DialogAddChirp(main_window=self, load_existing=name, style_sheet=self.styleSheet())
         self.button_modify_edit.clicked.connect(edit_input)
+        self.list_components.doubleClicked.connect(edit_input)
 
         # Config Inputs
         self.button_time_config_tol.clicked.connect(lambda: DialogAddGridOrTolerance(main_window=self,name="Tolerances", style_sheet=self.styleSheet()))
         self.button_time_config_grid.clicked.connect(lambda: DialogAddGridOrTolerance(main_window=self,name="Grid", style_sheet=self.styleSheet()))
 
         self.button_open_destination_folder.clicked.connect(lambda: QDesktopServices.openUrl(QUrl.fromLocalFile(self.textinput_file_destination.text())))
+        
+        # Empty Target Folder
+        def empty_target_folder():
+            dest = self.textinput_file_destination.text()
+            files = [f for f in os.listdir(dest) if f.endswith(".txt") or f.endswith(".png") or f.endswith(".log") or f.endswith(".pdf")]
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Information)
+            msg.setText("Clear Destination Folder?")
+            msg.setInformativeText(f"Are you sure you want to clear the contents of '{dest}'? Only .txt, .pdf, .png and .log files are deleted. There are {len(files)} files to delete.")
+            msg.setWindowTitle("Clear Destination Folder?")
+            msg.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+            msg.setDefaultButton(QMessageBox.Cancel)
+            msg.setStyleSheet(self.styleSheet())
+            retval = msg.exec()
+            if retval == QMessageBox.Ok:
+                for file in files:
+                    path = os.path.join(dest,file)
+                    print(f"Deleting {path}")
+                    os.remove(path)
+                
+        self.button_empty_destination_folder.clicked.connect(empty_target_folder)
 
         # Loading / Saving
-        def export_command():
-            dlg = QFileDialog()
-            dlg.setFileMode(QFileDialog.AnyFile)
-            dlg.setAcceptMode(QFileDialog.AcceptSave)
-            dlg.setNameFilters(["*.qdlc", "*.log"])
+        def export_command(name = None):
+            if name is None:
+                dlg = QFileDialog()
+                dlg.setFileMode(QFileDialog.AnyFile)
+                dlg.setAcceptMode(QFileDialog.AcceptSave)
+                dlg.setNameFilters(["*.qdacc", "*.log"])
+                if dlg.exec():
+                    filename = dlg.selectedFiles()[0]
+                else:
+                    self.sendErrorMessage("No File Selected", "No file has been selected. Please use 'Export QDaCC Command' to save a new file.")
+                    return
+            else:
+                filename = name
+            print(f"Exporting to {filename}")
+            self.save_to_qdacc_file(filepath = filename)
 
-            if dlg.exec():
-                filenames = dlg.selectedFiles()
-                print(filenames)
-                print(f"Exporting to {filenames[0]}")
-                self.save_to_qdlc_file(filepath = filenames[0])
-
-        def import_command():
+        def import_command(key: str | None = None):
             dlg = QFileDialog()
             dlg.setFileMode(QFileDialog.AnyFile)
             dlg.setAcceptMode(QFileDialog.AcceptOpen)
-            dlg.setNameFilters(["*.qdlc", "*.log"])
+            dlg.setNameFilters(["*.qdacc", "*.log"])
             if dlg.exec():
                 filenames = dlg.selectedFiles()
-                self.load_from_qdlc_file(filepath = filenames[0])
+                self.load_from_qdacc_file(filepath = filenames[0], key=key )
                 self.drawSystem()
                 self.update_component_list()
+        
+        def export_save_existing():
+            filename = self.current_qdacc_file_path
+            if filename is None:
+                self.sendErrorMessage("No File Loaded", "No file has been loaded. Please use 'Export QDaCC Command' to save a new file.")
+                return
+            # Get "OK" Dialog
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Information)
+            msg.setText("Overwrite Existing File?")
+            msg.setInformativeText(f"Are you sure you want to overwrite the existing file '{filename}'?")
+            msg.setWindowTitle("Overwrite File?")
+            msg.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+            msg.setDefaultButton(QMessageBox.Cancel)
+            msg.setStyleSheet(self.styleSheet())
+            retval = msg.exec()
+            if retval == QMessageBox.Ok:
+                export_command(name = filename)
 
         # File Path
         def set_file_path():
@@ -194,7 +275,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 if not filename.endswith("/"):
                     filename += "/"
                 self.textinput_file_destination.setText(filename)
-        def set_qdlc_filepath():
+        def set_qdacc_filepath():
             dlg = QFileDialog()
             dlg.setFileMode(QFileDialog.AnyFile)
             dlg.setAcceptMode(QFileDialog.AcceptOpen)
@@ -202,9 +283,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             if dlg.exec():
                 filenames = dlg.selectedFiles()
                 #path = os.path.relpath(filenames[0], os.getcwd())
-                self.textinput_file_qdlc.setText(filenames[0])
+                self.textinput_file_qdacc.setText(filenames[0])
         self.input_destination.clicked.connect(set_file_path) 
-        self.input_path_to_qdlc.clicked.connect(set_qdlc_filepath) 
+        self.input_path_to_qdacc.clicked.connect(set_qdacc_filepath) 
         
         # Save Settings
         def set_settingfile_path():
@@ -218,77 +299,47 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.button_set_setting_file_path.clicked.connect(set_settingfile_path)
         
         def save_to_setting_file(filepath, project_name):
-            class SettingfileWorker(QObject):
-                finished = Signal()
-                progress = Signal(float)
-                text = Signal(str)
-                def __init__(self, parent = None):
-                    super().__init__()
-                    self.parent = parent
-                def run(self):
-                    with open(filepath, "w") as f:
-                        f.write(f"# {project_name}\n")
-                        self.text.emit(f"# {project_name}")
-                        if self.parent.checkbox_activate_scan_parameter_1.isChecked():
-                            runstring = self.parent.text_output_program_qdlc_command_sweep.toPlainText()
-                            for i,(p1,p2,x1,x2) in enumerate(zip(self.parent.scan_sweep_values_1.flatten(),self.parent.scan_sweep_values_2.flatten(),self.parent.mgx.flatten(),self.parent.mgy.flatten())):
-                                if self.parent.checkbox_activate_scan_parameter_2.isChecked():
-                                    runstr = self.parent.qdlc_start_command_to_real(runstring.replace("[QDLC]", f"QDLC --lfc {x1},{x2}").replace("[FILEPATH]",""))
-                                    f.write(f"{runstr.format(p1,p2)}\n")
-                                    self.text.emit(f"{runstr.format(p1,p2)}")
-                                else:
-                                    runstr = self.parent.qdlc_start_command_to_real(runstring.replace("[QDLC]", f"QDLC --lfc {p1}").replace("[FILEPATH]",""))
-                                    f.write(f"{runstr.format(p1)}\n")
-                                    self.text.emit(f"{runstr.format(p1)}")
-                                self.progress.emit(100*(i+1)/(self.parent.scan_sweep_values_1.shape[0]*self.parent.scan_sweep_values_1.shape[1]))
-                        else:
-                            runstring = self.parent.text_output_program_qdlc_command.toPlainText()
-                            runstr = self.parent.qdlc_start_command_to_real(runstring.replace("[QDLC]", "QDLC").replace("[FILEPATH]",""))
-                            f.write(f"{runstr}\n")
-                            self.text.emit(runstr)
-                    self.text.emit("Done!")
-                    self.finished.emit()
-            self.thread = QThread()
-            self.worker = SettingfileWorker(self)
-            def update_text(new_line):
-                self.text_output_program_qdlc_command_sweep_display.append(new_line)
-                self.text_output_program_main.append(new_line)
-            def update_pb(percent):
-                self.progressBar.setValue(percent)
-            self.worker.progress.connect(update_pb)
-            self.worker.text.connect(update_text)
-            self.worker.moveToThread(self.thread)
-            self.thread.started.connect(self.worker.run)
-            self.worker.finished.connect(self.thread.quit)
-            self.worker.finished.connect(self.worker.deleteLater)
-            self.thread.finished.connect(self.thread.deleteLater)
-            self.thread.start()
+            one = self.checkbox_activate_scan_parameter_1.isChecked()
+            dual = self.checkbox_activate_scan_parameter_2.isChecked()
+            runstring = self.text_output_program_qdacc_command_sweep.toPlainText()
+            
+            qdacc_path_str = self.textinput_file_qdacc.text()
+            qdacc_path = qdacc_path_str.split("/")
+            qdacc_executable = qdacc_path[-1]
+            cwd = qdacc_path_str.replace(qdacc_executable, "")
+            self.settings_thread = QDaCCSettingGenerator(parent=self, mgx = self.mgx, mgy = self.mgy, values = self.scan_sweep_values, file = filepath, name = project_name, converter = self.commandToCLAList, runstring = runstring, one = one, two = dual)
+    
+            self.settings_thread.pipeUpdatesTo(lambda text: self.updateTextBrowser(self.text_output_program_main, text), lambda text: self.updateProgressBar(self.progressBar,text)) 
+            self.settings_thread.pipeUpdatesTo(lambda text: self.updateTextBrowser(self.text_output_program_qdacc_command_sweep_display, text), None) 
+            self.settings_thread.connectStarted(lambda: self.enableRunningButtonAnimation(self.button_sweeper_plot, [self.button_run_program, self.button_plot_everything]))
+            self.settings_thread.connectFinished(lambda: self.disableRunningButtonAnimation(self.button_sweeper_plot, "Generate Settingfile", [self.button_run_program, self.button_plot_everything]))
+
+            self.settings_thread.start()
         
         def save_settings_file():
             filepath = self.textinput_path_to_settingfile.text()
             if filepath == "":
                 return
-            project_name, ok = QInputDialog.getText(self, "Save Settings", "Project Name", QLineEdit.Normal, filepath.split("/")[-1].replace(".txt", ""))
+            project_name, ok = QInputDialog.getText(self, "Save Settings", "Project Name", QLineEdit.Normal, filepath.split("/")[-1].replace(".txt", "").replace("settings_",""))
             self.text_output_program_main.append(f"Saving Settingfile to {filepath}")
             if not ok or not len(project_name):
                 self.sendErrorMessage("No Name given")
                 return
             save_to_setting_file(filepath, project_name)
-        self.button_generate_setting_file.clicked.connect(save_settings_file)
+        self.save_settings_file = save_settings_file
 
-        def set_qdlc_runstr_to_settingfile():
-            runstr = f"[QDLC] --file [SETTINGFILE] [FILEPATH]"
-            self.text_output_program_qdlc_command.setPlainText(runstr)
-        self.button_change_rungstring_to_settingfile.clicked.connect(set_qdlc_runstr_to_settingfile)
+        def toggle_runstring_full_settingfile():
+            current_text = self.text_output_program_qdacc_command.toPlainText()
+            print(current_text)
+            if "--file" in current_text:
+                generate_command()
+            else:   
+                runstr = f"[QDaCC] --file [SETTINGFILE] [FILEPATH]"
+                self.text_output_program_qdacc_command.setPlainText(runstr)
+        self.button_change_rungstring_to_settingfile.clicked.connect(toggle_runstring_full_settingfile)
 
-        def generate_list_of_available_states():
-            available_states = []
-            for state in self.system_components["EnergyLevels"]:
-                new_state = f"{state}" + "".join([f":0{name}" for name in self.system_components["CavityLevels"]])
-                available_states.append(new_state)
-            return available_states
         def pick_from_list_of_available_states():
-            items = generate_list_of_available_states()
+            items = self.generate_list_of_available_total_states()
             print(items)
             item, ok = QInputDialog.getItem(self, "Select Input State", "Valid States", items, 0, False)
             if ok and item:
@@ -549,6 +600,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.label_plot_spectral_density.canvas.axes.legend(["Simple", "QD Params"])
             self.label_plot_spectral_density.canvas.draw()
         
+        # TODO: statt dem hier N TLS einfügen, dann aus den TLS die transitions berechnen, und daraus den Tensor.
         # Experimental: Add N coupled TLS
         def get_N_level_couplings(cl: str, prefix: str, energy):
             coupled_to = []
@@ -563,12 +615,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             states = ["0"*nTLS]
             current_deph = 0
             while len(states):
-                # random value between -sd and +sd
-                senergy = lambda: f"{current_deph * (energy + (np.random.rand() - 0.5) * sd)}{unit}"
+                if energy is not None:                    
+                    # random value between -sd and +sd
+                    senergy = lambda current_deph=current_deph: f"{current_deph * (energy + (np.random.rand() - 0.5) * sd)}{unit}"
+                else:
+                    en = QInputDialog.getDouble(self, 'Energy', f'Energy for State {current_deph} in eV', 1, 0, 1000, 10)[0]
+                    senergy = lambda current_deph=current_deph: f"{en}{unit}"
                 states = [get_N_level_couplings(state, prefix, senergy) for state in states]
                 states = [item for sebstates in states for item in sebstates]
                 states = list(set(states))
                 current_deph += 1
+                print(current_deph)
             len(states)
         def dialog_add_N_levels():
             nTLS, ok = QInputDialog.getInt(self, "Add N TLS", "Number of TLS", 2, 1, 30, 1)
@@ -579,19 +636,101 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             if ok and ok2 and ok3:
                 add_N_levels(nTLS, energy, stv*1E-6)
 
-        def get_all_transitions():
-            transitions = []
-            for state in self.system_components["EnergyLevels"].values():
-                for transition in state["CoupledTo"]:
-                    transitions.append(f"{state['Name']}={transition}")
-            return transitions
+        def abbreviate_names():
+            from string import ascii_uppercase as replace # This is the list of letters to use
+            replace_rules = {} # This will be a dict of {old_name: new_name}
+            super_index = 0 # This will ensure Letters A-Z, then A0, B0, ... A1, B1, ... is used.
+            # Build Replace Dict
+            for i,state in enumerate(self.system_components["EnergyLevels"].values()):
+                replace_rules[state["Name"]] = f"{replace[i%len(replace)]}{super_index-1 if super_index > 0 else ''}"
+                if i%len(replace) == 0 and i > 0:
+                    super_index += 1
+            # Replace All Transitions in Cavities, Pulses, Chirps and Levels
+            for level in self.system_components["EnergyLevels"].values():
+                level["Name"] = replace_rules[level["Name"]]
+                level["CoupledTo"] = tuple([replace_rules[ct] for ct in level["CoupledTo"]])
+            for cavity in self.system_components["CavityLevels"].values():
+                cavity["CoupledTo"] = tuple("=".join([replace_rules[a] for a in transition.split("=")]) if "=" in transition else transition for transition in cavity["CoupledTo"])
+            self.set_fields_from_components()
+            self.drawSystem()
+            self.update_component_list()
+
+
         def print_all_transitions():
-            print(",".join(get_all_transitions()))
+            print(",".join(self.generate_list_of_available_electronic_transitions()))
+        
 
         def clipboard_copy_transition_list():
-            self.clipboard.setText(",".join(get_all_transitions()))
+            self.clipboard.setText(",".join(self.generate_list_of_available_electronic_transitions()))
         def clipboard_copy_sum_of_transition_list():
-            self.clipboard.setText("+".join(get_all_transitions()))
+            self.clipboard.setText("+".join(self.generate_list_of_available_electronic_transitions()))
+
+        # Plot Task
+        # Mode can be "all", "bloch", "dm". The latter two will ask for additional parameters
+        def plot_everything(force_folder: bool = False):
+            path_to_destination, qdacc_executable, qdacc_path_str = self.getQDaCCPaths()
+            is_folder = "--file" in self.text_output_program_qdacc_command.toPlainText() or force_folder # self.checkbox_activate_scan_parameter_1.isChecked() or self.checkbox_activate_scan_parameter_2.isChecked()
+            plot_command = ["python3", "-m", "QDLC.eval_tools.get_files", "all", path_to_destination,"-folder" if is_folder else "", "--type=pdf,png(50)"]
+            mode = self.input_plot_mode.currentText()
+            # Check for additional inputs for bloch and dm
+            if mode == "Animated Blochsphere":
+                if not "Bloch" in self.system_components:
+                    self.system_components["Bloch"] = {"Re" : "", "Im" : "", "f" : "", "File" : "densitymatrix.txt", "Bitrate" : "5000", "Skip" : "0", "2f" : False, "FPS" : "60", "LW" : "1"}
+                items, ok = getGeneralItems([{"Title": "Re(p)", "Type": QLineEdit, "Text": self.system_components["Bloch"]["Re"]}, 
+                                             {"Title": "Im(p)", "Type": QLineEdit, "Text": self.system_components["Bloch"]["Im"]}, 
+                                             {"Title": "Population", "Type": QLineEdit, "Text": self.system_components["Bloch"]["f"]}, 
+                                             {"Title": "File", "Type": QLineEdit, "Text": self.system_components["Bloch"]["File"]}, 
+                                             {"Title": "Bitrate", "Type": QLineEdit, "Text": self.system_components["Bloch"]["Bitrate"]}, 
+                                             {"Title": "FPS", "Type": QLineEdit, "Text": self.system_components["Bloch"]["FPS"] if "FPS" in self.system_components["Bloch"] else "60"}, 
+                                             {"Title": "Line Width", "Type": QLineEdit, "Text": self.system_components["Bloch"]["LW"] if "LW" in self.system_components["Bloch"] else "1"}, 
+                                             {"Title": "Skip Iterations", "Type": QLineEdit, "Text": self.system_components["Bloch"]["Skip"]}, 
+                                             {"Text": "Use 2f-1", "Checked": False, "Type": QCheckBox},
+                                             ], self)
+                if ok:
+                    re,im,f,ffile,bitrate,fps,lw,skip,twof = items
+                    self.system_components["Bloch"] = {"Re" : re, "Im" : im, "f" : f, "File" : ffile, "Bitrate" : bitrate, "Skip" : skip, "2f" : twof, "FPS" : fps, "LW" : lw}
+                    plot_command = ["python3", "-m", "QDLC.plot_tools.plot_blochsphere_animated", "--file="+os.path.join(path_to_destination,ffile), f"--indices={re},{im},{f}".replace('|','^|').replace('>','^>').replace('<','^<'), "--bitrate="+bitrate, "--skip="+skip, "-no2f" if not twof else "", "--fps="+fps, "--lw="+lw]
+                    print(f"Plotting Blochsphere with {plot_command}")
+                else:
+                    return
+            elif mode == "Animated Density Matrix":
+                if not "AnimDM" in self.system_components:
+                    self.system_components["AnimDM"] = {"File" : "densitymatrix.txt", "Bitrate" : "5000", "Skip" : "0", "Indices" : ""}
+                items, ok = getGeneralItems([{"Title": "File", "Type": QLineEdit, "Text": self.system_components["AnimDM"]["File"]},
+                                                {"Title": "Bitrate", "Type": QLineEdit, "Text": self.system_components["AnimDM"]["Bitrate"]}, 
+                                                {"Title": "Skip Iterations", "Type": QLineEdit, "Text": self.system_components["AnimDM"]["Skip"]}, 
+                                                {"Title": "Indices", "Type": QLineEdit, "Text": self.system_components["AnimDM"]["Indices"]}, 
+                                                ], self)
+                if ok:
+                    ffile,bitrate,skip,indices = items
+                    self.system_components["AnimDM"] = {"File" : ffile, "Bitrate" : bitrate, "Skip" : skip, "Indices" : indices}
+                    plot_command = ["python3", "-m", "QDLC.plot_tools.plot_dm_animated", "--file="+os.path.join(path_to_destination,ffile), "--bitrate="+bitrate, "--skip="+skip, "--indices="+indices]
+                    print(f"Plotting Density Matrix with {plot_command}")
+                else:
+                    return
+            
+            cwd = qdacc_path_str.replace(qdacc_executable, "")
+            self.plot_thread = QDaCCMainWoker(parent=self, cwd=cwd, command=plot_command)
+            self.plot_thread.pipeUpdatesTo(lambda text: self.updateTextBrowser(self.text_output_program_main, text), lambda text: self.updateProgressBar(self.progressBar,text)) 
+            self.plot_thread.connectStarted(lambda: self.enableRunningButtonAnimation(self.button_plot_everything, [self.button_run_program]))
+            self.plot_thread.connectFinished(lambda: self.disableRunningButtonAnimation(self.button_plot_everything, "Plot", [self.button_run_program]))
+            if "QDLC.eval_tools.get_files" in plot_command:
+                def insert_plots():
+                    folders = [path_to_destination] if not is_folder else [os.path.join(path_to_destination, f, "img") for f in os.listdir(path_to_destination) if os.path.isdir(os.path.join(path_to_destination, f))]
+                    print(f"Plotting everything in {folders}")
+                    for folder in folders:
+                        for file in os.listdir(folder):
+                            complete_path = os.path.join(folder, file)
+                            if file.endswith(".png"):
+                                self.plot_thread.progress.emit(f"Plotting {complete_path}\n")
+                                print(f'<br><img  src="{complete_path}?' + str(time()) +'"></br>')
+                                self.plot_thread.progress.emit(f'<br><img  src="file:///{complete_path}?' + str(time()) +'"></br>')
+                                self.plot_thread.progress.emit(f'<br><a href="file:///{complete_path.replace(".png",".pdf")}">Open this file<\a></br>')
+                self.plot_thread.connectFinished(insert_plots)
+            self.plot_thread.start()
+            
+
+        self.button_plot_everything.clicked.connect(plot_everything)
 
         # Run
         def generate_command():
@@ -599,128 +738,251 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             if not len(self.textinput_initial_state.text()):
                 pick_from_list_of_available_states()
             self.set_components_from_fields()
-            command = self.qdlc_generate_start_command()
-            self.text_output_program_qdlc_command.setText(command)
-            self.clipboard.setText(self.qdlc_start_command_to_real(command))
+            command = self.generateCommandString()
+            self.text_output_program_qdacc_command.setText(command)
+            self.clipboard.setText(" ".join(self.commandToCLAList(command)))
         self.button_generate_run.clicked.connect(generate_command)
 
-        class QDLCWorker(QObject):
-            finished = Signal()
-            progress = Signal(str)
-            def __init__(self, command, cwd, dest, sf = None):
-                super().__init__()
-                self.command = command
-                self.cwd = cwd
-                self.dest = dest
-                self.process = None
-                self.running = False
-                self.appendix = [dest] if sf is None else ["--file", sf, dest]
-            def run(self):
-                print("Running QDLC")
-                self.running = True
-                print(self.command.split() + self.appendix)
-                self.process = Popen(self.command.split() + self.appendix, stdout=PIPE, universal_newlines = True, cwd=self.cwd, shell=True)
-                while True and self.running:
-                    output = self.process.stdout.readline()
-                    if output == '' and self.process.poll() is not None:
-                        break
-                    print(f"RAW: {repr(output)}")
-                    self.progress.emit(replace_ansi_escape_sequences(output.strip()))
-                    #print(output.strip())
-                    #self.pipe.setText(output.strip())
-                self.process.communicate()
-                self.finished.emit()
-        def run_command():
-            # Get Command
-            command = self.text_output_program_qdlc_command.toPlainText()
-            # Insert Destination and QDLC Path
-            command = self.qdlc_start_command_to_real(command)
-            # Strip QDLC Path and Destination Path
-            qdlc_path_str = self.textinput_file_qdlc.text()
-            destination = self.textinput_file_destination.text()
-            settingfilepath = self.textinput_path_to_settingfile.text()
-            qdlc_path = qdlc_path_str.split("/")
-            qdlc_executable = qdlc_path[-1]
-            print(f"QDLC Executable: {qdlc_executable}")
-            cwd = qdlc_path_str.replace(qdlc_executable, "")
-            command = command.replace(qdlc_path_str, qdlc_executable).replace("'"+destination+"'", "")
-            use_settingfile = "--file" in command
-            if use_settingfile:
-                command = command.replace("--file '"+settingfilepath+"'", "")
-                
-            print(f"QDLC Working Directory: {cwd}\nDestination: {destination}\nRunning command: {command}")
-            if not len(command):
-                return
-            self.thread = QThread()
-            self.worker = QDLCWorker(command, cwd, destination, settingfilepath if use_settingfile else None)
-            def update(new_line):
-                self.text_output_program_main.append(new_line)
-                if "%" in new_line:
-                    try:
-                        percent = int(new_line.split("%")[0].split()[-1])
-                        current_percent = self.progressBar.value()
-                        self.progressBar.setValue(max(percent,current_percent))
-                    except:
-                        pass
-                if "Done" in new_line:
-                    self.progressBar.setValue(0)
-            self.worker.progress.connect(update)
-            self.worker.moveToThread(self.thread)
-            self.thread.started.connect(self.worker.run)
-            self.worker.finished.connect(self.thread.quit)
-            self.worker.finished.connect(self.worker.deleteLater)
-            self.thread.finished.connect(self.thread.deleteLater)
-            self.thread.start()
+        def run_command(input_command: str | None = None, start_already: bool = True):
+            # Strip QDaCC Path and Destination Path
+            destination, qdacc_executable, qdacc_path_str = self.getQDaCCPaths()
+            print(f"QDaCC Executable: {qdacc_executable}")
+            print(f"QDaCC Working Directory: {destination}")
+            # Build command
+            if input_command is None:
+                input_command = self.text_output_program_qdacc_command.toPlainText()
+            # Insert Destination and QDaCC Path
+            #input_command = self.commandToCLAList(input_command)
+            #input_command = input_command.replace(qdacc_path_str, qdacc_executable).replace("'"+destination+"'", "")
+            #input_command = input_command.split() + [f"{destination}"]
+
+            self.thread = QDaCCMainWoker(parent=self, cwd=qdacc_path_str, command=input_command)
+            self.thread.pipeUpdatesTo(lambda text: self.updateTextBrowser(self.text_output_program_main, text), lambda text: self.updateProgressBar(self.progressBar,text)) 
+            self.thread.connectStarted(lambda: self.enableRunningButtonAnimation(self.button_run_program, [self.button_plot_everything]))
+            self.thread.connectFinished(lambda: self.disableRunningButtonAnimation(self.button_run_program, "Run", [self.button_plot_everything]))
+            if start_already:
+                self.thread.start()
+
+            return self.thread
         
         def kill_command():
-            self.text_output_program_main.append("Killed QDLC!")
-            self.worker.running = False
+            self.text_output_program_main.append("Killed QDaCC!")
             from signal import CTRL_C_EVENT 
-            self.worker.process.send_signal(CTRL_C_EVENT)
-            self.worker.process.kill()
+            self.thread.process.send_signal(CTRL_C_EVENT)
+            self.thread.process.kill()
             self.thread.quit()
             self.thread.wait()
             self.progressBar.setValue(0)
+            
 
-        self.button_run_program.clicked.connect(run_command)
+        self.button_run_program.clicked.connect(lambda: run_command(None))
+        self.button_run_program.clicked.connect(lambda: self.text_output_program_main.verticalScrollBar().setValue(self.text_output_program_main.verticalScrollBar().maximum()))
         # Set button icon
         self.button_run_kill.clicked.connect(kill_command)
 
-        # Sweeper
-        self.button_sweeper_get_runstring.clicked.connect(lambda: self.text_output_program_qdlc_command_sweep.setText(self.text_output_program_qdlc_command.toPlainText()))
+        # Optimizer
+        self.button_optimizer_get_runstring.clicked.connect(lambda: self.text_output_program_qdacc_command_sweep_2.setText(self.text_output_program_qdacc_command.toPlainText()))
+        def optimize():
+            try:
+                files = eval(f"[{self.textinput_optimizer_files.text()}]")
+                indices = eval(f"[{self.textinput_optimizer_file_indices.text()}]")
+                legend = eval(f"[{self.textinput_optimizer_legend.text()}]")
+                initial_parameters = eval(f"[{self.textinput_optimizer_initial_parameters.text()}]")
+                bounds = eval(f"[{self.textinput_optimizer_parameter_bounds.text()}]")
+                names = eval(f"[{self.textinput_optimizer_parameter_names.text()}]")
+                formatter = self.textinput_optimizer_formatfunction.text()
+                fitnessfunction = self.textinput_optimizer_fitnessfunction.text()
+                eps = float(self.textinput_optimizer_eps.text())
+                tolerance = float(self.textinput_optimizer_tol.text())
+                maxit = int(self.textinput_optimizer_maxit.text())
+            except Exception as e:
+                print("Error when parsing inputs. Make sure to use python syntax like [x], where x is your input.")
+                self.text_output_program_qdacc_command_sweep_display_2.append("Error when parsing inputs. Make sure to use python syntax like [x], where x is your input.")
+                print(e)
+                return
+            plot_lim = [0,1.1]
+            plot_lim_q = None
 
+            command = self.text_output_program_qdacc_command_sweep_2.toPlainText()
+            destination, _, qdacc_path_str = self.getQDaCCPaths()
+            self.optimizer_thread = QDaCCOptimizer(parent=self, cwd=qdacc_path_str, command=command, path=destination, files=files, indices=indices, initial_parameters=initial_parameters, bounds=bounds, eps=eps,
+                                    formatter=formatter, fitness=fitnessfunction, tol=tolerance, maxit=maxit, base_eval_dict=self.buildBaseEvaluationDict(), variables=self.system_components["OptimizerFitnessVariables"])
+            self.optimizer_thread.pipeUpdatesTo(lambda text: self.updateTextBrowser(self.text_output_program_main, text), lambda text: self.updateProgressBar(self.progressBar,text)) 
+            self.optimizer_thread.connectStarted(lambda: self.enableRunningButtonAnimation(self.button_run_program, [self.button_plot_everything]))
+            self.optimizer_thread.connectStarted(lambda: self.enableRunningButtonAnimation(self.button_optimizer_optimize, None))
+            self.optimizer_thread.connectFinished(lambda: self.disableRunningButtonAnimation(self.button_run_program, "Run", [self.button_plot_everything]))
+            self.optimizer_thread.connectFinished(lambda: self.disableRunningButtonAnimation(self.button_optimizer_optimize, "Optimize", None))
+            self.optimizer_thread.outputParametersTo(self.text_output_program_qdacc_command_sweep_display_2)
+
+            def plotstuffs():
+                #data = input_optimizer_files(self.textinput_file_destination.text(), ["electronic.txt"] ,[[0,1]])
+                current_data = self.optimizer_thread.data
+                current_quality = self.optimizer_thread.quality_data
+                current_params = self.optimizer_thread.parameter_data
+                self.current_optimizer_params = self.optimizer_thread.runstring
+                # Clear Axes
+                for axes in [self.label_plot_optimizer_1.canvas.axes, self.label_plot_optimizer_2.canvas.axes, self.label_plot_optimizer_3.canvas.axes]:
+                    axes.clear()
+
+                for i,dataset in enumerate(reversed(current_data)):
+                    for c,(x,y) in enumerate(dataset):
+                        self.label_plot_optimizer_1.canvas.axes.plot(x,y, linewidth=4.5 - 4*i/len(current_data), color="C"+str(c), alpha=1-0.8*i/len(current_data))
+                self.label_plot_optimizer_2.canvas.axes.plot(current_quality)
+                for parameter_set in current_params:
+                    self.label_plot_optimizer_3.canvas.axes.plot(parameter_set)
+                
+                # Limits
+                self.label_plot_optimizer_1.canvas.axes.set_ylim(plot_lim)
+                self.label_plot_optimizer_2.canvas.axes.set_ylim(plot_lim_q)
+
+                # Legends
+                self.label_plot_optimizer_1.canvas.axes.legend(legend)
+                self.label_plot_optimizer_2.canvas.axes.legend(["Fitness"])
+                self.label_plot_optimizer_3.canvas.axes.legend(names)
+
+                # Draw Canvas
+                for canvas in [self.label_plot_optimizer_1.canvas, self.label_plot_optimizer_2.canvas, self.label_plot_optimizer_3.canvas]:
+                    canvas.draw()
+            
+            self.optimizer_thread.plot_hint.connect(plotstuffs)
+            self.optimizer_thread.finished.connect(plotstuffs)
+            self.optimizer_thread.start()
+
+        self.button_optimizer_optimize.clicked.connect(optimize)
+
+        self.button_optimizer_runstring_to_main.clicked.connect(lambda: self.text_output_program_qdacc_command.setText(self.current_optimizer_params))
+        self.button_optimizer_runstring_to_main.clicked.connect(lambda: self.tabWidget.setCurrentIndex(9))
+        self.button_optimizer_fitness_function.clicked.connect(lambda: DialogAddFitness(main_window=self, style_sheet=self.styleSheet()))
+
+        # Menu
         actions_to_add = [  
-            ["Print Component Dict", lambda: print(self.system_components), self.menuDeveloper_Tools, None],
-            ["Set Components from Fields", self.set_components_from_fields, self.menuDeveloper_Tools, None],
-            ["Set Fields from Components", self.set_fields_from_components, self.menuDeveloper_Tools, None],
-            ["Connect Fields", self.connect_config_to_fields, self.menuDeveloper_Tools, None],
-            ["Plot Predicted Spectra", spectrum_predict_plot, self.menuFunctions, None],
-            ["Plot Phonon Functions", plot_phonon_spectral_function, self.menuFunctions, None],
-            ["Add N TLS", dialog_add_N_levels, self.menuEdit, self.resources["Tree"]],
-            ["Print All Transitions", print_all_transitions, self.menuDeveloper_Tools, None],
-            ["Copy List of Transitions", clipboard_copy_transition_list, self.menuEdit, self.resources["marrow_right"]],
-            ["Copy Sum of Transitions", clipboard_copy_sum_of_transition_list, self.menuEdit, self.resources["marrow_right"]],
-            ["Export QDLC Command", export_command, self.menuMenu, self.resources["Arrow_Down_Save"]],
-            ["Import QDLC Command", import_command, self.menuMenu, self.resources["Arrow_Up_Load"]],
-            ["Redraw System", self.drawSystem, self.menuDeveloper_Tools, None],
-            ["Clear System", self.clearSystem, self.menuDeveloper_Tools, None],
-            ["Generate QDLC Command", generate_command, self.menuDeveloper_Tools, None],
-            ["Set initial State", pick_from_list_of_available_states, self.menuDeveloper_Tools, None],
-            ["Set File Destination", set_file_path, self.menuDeveloper_Tools, None],
-            ["Set QDLC Filepath", set_qdlc_filepath, self.menuDeveloper_Tools, None],
-            ["Run QDLC", run_command, self.menuMenu, self.resources["Gear"]],
+            ["Print Component Dict", lambda: print(self.system_components), self.menuDeveloper_Tools, None, None],
+            ["Set Components from Fields", self.set_components_from_fields, self.menuDeveloper_Tools, None, None],
+            ["Set Fields from Components", self.set_fields_from_components, self.menuDeveloper_Tools, None, None],
+            ["Connect Fields", self.connect_config_to_fields, self.menuDeveloper_Tools, None, None],
+            ["Plot Predicted Spectra", spectrum_predict_plot, self.menuFunctions, self.resources["graph2"], None],
+            ["Plot Phonon Functions", plot_phonon_spectral_function, self.menuFunctions, self.resources["graph2"], None],
+            ["Add N TLS with statistical deviation", dialog_add_N_levels, self.menuEdit, self.resources["Tree"], None],
+            ["Print All Transitions", print_all_transitions, self.menuDeveloper_Tools, None, None],
+            ["Copy List of Transitions", clipboard_copy_transition_list, self.menuEdit, self.resources["marrow_right"], None],
+            ["Copy Sum of Transitions", clipboard_copy_sum_of_transition_list, self.menuEdit, self.resources["marrow_right"], None],
+            ["Abbreviate State Names", abbreviate_names, self.menuEdit, self.resources["marrow_right"], None],
+            ["Export", lambda: export_command(), self.menuMenu, self.resources["Arrow_Up_Load"], None],
+            ["Import", import_command, self.menuMenu, self.resources["Arrow_Down_Save"], None],
+            ["Import", None, self.menuMenu, self.resources["Arrow_Down_Save"], [
+                ["States", lambda: import_command("EnergyLevels"), "parent", None, None],
+                ["Cavities", lambda: import_command("CavityLevels"), "parent", None, None],
+                ["Pulses", lambda: import_command("Pulse"), "parent", None, None],
+                ["Shifts", lambda: import_command("Shift"), "parent", None, None],
+                ["Paths", lambda: import_command("RunConfig"), "parent", None, None],
+                ["Sweeper", lambda: import_command("Sweeper"), "parent", None, None],
+                ["System Config", lambda: import_command("ConfigSystem"), "parent", None, None],]],
+            ["Save Current", export_save_existing, self.menuMenu, self.resources["Save"], None],
+            ["Redraw System", self.drawSystem, self.menuDeveloper_Tools, None, None],
+            ["Clear System", self.clearSystem, self.menuDeveloper_Tools, None, None],
+            ["Generate QDaCC Command", generate_command, self.menuDeveloper_Tools, None, None],
+            ["Set initial State", pick_from_list_of_available_states, self.menuDeveloper_Tools, None, None],
+            ["Set File Destination", set_file_path, self.menuDeveloper_Tools, None, None],
+            ["Set QDaCC Filepath", set_qdacc_filepath, self.menuDeveloper_Tools, None, None],
+            ["Run QDaCC", lambda: run_command(None), self.menuMenu, self.resources["Gear"], None],
         ]
-        for name, connect, where, icon in actions_to_add:
+        def add_to_menu(name, connect, where, icon, children):
+            if children:
+                submenu = where.addMenu(name)
+                if icon:
+                    submenu.setIcon(QIcon(icon))
+                for child in children:
+                    child[2] = submenu
+                    add_to_menu(*child)
+                return
             action = QAction(name, self)
             action.triggered.connect(connect)
             if icon:
                 action.setIcon(QIcon(icon))
             where.addAction(action)
+        for name, connect, where, icon, children in actions_to_add:
+            add_to_menu(name, connect, where, icon, children)
+
+
+        self.slider_state_grouping.valueChanged.connect(self.drawSystem)
+        self.slider_state_separator.valueChanged.connect(self.drawSystem)
 
         # Connect Sweeper
         self.button_sweeper_plot.clicked.connect(self.generate_scan_or_sweep)
+        self.button_sweeper_get_runstring.clicked.connect(lambda: self.text_output_program_qdacc_command_sweep.setText(self.text_output_program_qdacc_command.toPlainText()))
 
-        self.button_generate_copy.clicked.connect(lambda: self.clipboard.setText(self.qdlc_start_command_to_real(self.text_output_program_qdlc_command.toPlainText())))
+        # Copy Button
+        self.button_generate_copy.clicked.connect(lambda: self.clipboard.setText(self.commandToCLAList(self.text_output_program_qdacc_command.toPlainText())))
+
+    def getQDaCCPaths(self):
+        qdacc_path_str = self.textinput_file_qdacc.text() or "./QDaCC.exe"
+        destination = self.textinput_file_destination.text()
+        qdacc_path = qdacc_path_str.split("/")
+        qdacc_executable = qdacc_path[-1]
+        return destination, qdacc_executable, f"{os.sep}".join(qdacc_path[:-1])
+
+    def enableRunningButtonAnimation(self, button: QPushButton, disable_along: list[QPushButton] | None = None):
+        current_text = button.text()
+        timer = self.thread_timer[current_text]
+        timer.setInterval(self.loading_animation_fps)
+        timer.timeout.connect(lambda: button.setIcon(QIcon(self.loading_animation.currentPixmap())))
+        timer.start()
+        button.setText("")
+        button.setDisabled(True)
+        if disable_along is not None:
+            for other_button in disable_along:
+                other_button.setDisabled(True)
+        return current_text
+
+    def disableRunningButtonAnimation(self, button: QPushButton, text: str, enable_along: list[QPushButton] | None = None):
+        self.thread_timer[text].stop()
+        button.setText(text)
+        button.setIcon(QIcon())
+        button.setDisabled(False)
+        if enable_along is not None:
+            for other_button in enable_along:
+                other_button.setDisabled(False)
+        self.progressBar.setValue(0)
+
+    def generate_list_of_available_electronic_transitions(self):
+            transitions = []
+            for state in self.system_components["EnergyLevels"].values():
+                for transition in state["CoupledTo"]:
+                    transitions.append(f"{state['Name']}={transition}")
+            return transitions
+    def generate_list_of_available_electronic_states(self):
+            return list(self.system_components["EnergyLevels"].keys())
+    def generate_list_of_available_cavity_states(self):
+            return list(self.system_components["CavityLevels"].keys())
+
+    def generate_list_of_available_total_states(self):
+            available_states = []
+            for state in self.system_components["EnergyLevels"]:
+                new_state = f"{state}" + "".join([f":0{name}" for name in self.system_components["CavityLevels"]])
+                available_states.append(new_state)
+            return available_states
+
+    def pushCursorToBack(self, field):
+        cursor = field.textCursor()
+        cursor.movePosition(QTextCursor.MoveOperation.End)
+        cursor.movePosition(QTextCursor.MoveOperation.Left)
+        field.setTextCursor(cursor)
+
+    def updateTextBrowser(self, browser: QTextBrowser, text: str):
+        self.pushCursorToBack(browser)
+        if "br>" in text:
+            browser.insertHtml(text)
+        else:
+            browser.append(text)
+
+    def updateProgressBar(self, pb: QProgressBar, value: int | str):
+        if isinstance(value, int):
+            pb.setValue(value)
+        else:
+            try:
+                pb.setValue(int(value.split("%")[0].split()[-1]))
+            except Exception as e:
+                pass
 
     def sendMessage(self, bar: str, title: str, message: str):
         msg = QMessageBox()
@@ -747,11 +1009,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.update_component_list()
         self.drawSystem()
 
-    def sort_energy_levels(self, group_threshold: float = 0.05) -> None:
+    def sort_energy_levels(self) -> None:
         levels = [a for a in self.system_components["EnergyLevels"].values()]
         if len(levels) < 2:
             return
         levels.sort(key=lambda l: get_uv_scaled(l["Energy"]))
+        group_threshold = (self.slider_state_grouping.value()*0.01)**6
         # Check grouping
         grouping_threshold = abs(get_uv_scaled(levels[0]["Energy"]) - get_uv_scaled(levels[-1]["Energy"])) * group_threshold
         self.system_energy_level_groups = list()
@@ -766,16 +1029,33 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     ###########################################################################################################
     ########################################### Adding System Components ######################################
     ###########################################################################################################
-    def add_component(self, category: str, struct: dict) -> None:
+    def add_component(self, category: str, struct: dict, replaced: str | None = None) -> None:
         name = struct["Name"]
         changed = "Added" if name not in self.system_components[category] else "Replaced"
+        if replaced:
+            # Get Ok Dialog for replacing
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Question)
+            msg.setText(f"Replace {replaced} with {name}?")
+            msg.setInformativeText(f"Are you sure you want to replace {replaced} with {name}?")
+            msg.setWindowTitle("Replace")
+            msg.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+            msg.setStyleSheet(self.styleSheet())
+            retval = msg.exec()
+            if retval == QMessageBox.Cancel:
+                return
+            # Replace Elements in CoupledTo in ElectronicLevels, CavityLevels, Pulse and Shift with new name
+            for cat in ["EnergyLevels", "CavityLevels", "Pulse", "Shift"]:
+                for level, lstruct in self.system_components[cat].items():
+                    if any([replaced in a for a in lstruct["CoupledTo"]]):
+                        self.system_components[cat][level]["CoupledTo"] = tuple([ct.replace(replaced,name) for ct in self.system_components[cat][level]["CoupledTo"]])
         self.system_components[category][name] = struct
 
         self.update_component_list()
         self.drawSystem()
         print(changed, self.system_components[category][name])
 
-    def update_component_list(self):
+    def update_component_list(self) -> None:
         model = self.list_components.model()
         model.clear()
         for cat in self.system_components:
@@ -827,11 +1107,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             item.setToolTip(name)
             model.appendRow(item)
 
-    def addEnergyLevel(self, p: dict ):
-        self.add_component( "EnergyLevels", p )
+    def addEnergyLevel(self, p: dict, replaced: str | None = None ):
+        self.add_component( "EnergyLevels", p , replaced)
         
-    def addCavity(self, p: dict):
-        self.add_component( "CavityLevels", p )
+    def addCavity(self, p: dict, replaced: str | None = None):
+        self.add_component( "CavityLevels", p , replaced)
 
     def addPulse(self, p: dict):
         # Confirm that Pulse sizes are the same:
@@ -846,132 +1126,153 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     # Parses All configs from always-on entries like time, solver, etc.
     def connect_config_to_fields(self):
+        error_message_wrong_energy_units = "Error when inputting Units.\nUnits supported by QDaCC:\n- Hz\n- eV\n- meV\n- mueV"
+        error_message_must_be_numerical = "Must be a numerical"
+        error_message_wrong_time_units = "Error when inputting Units.\nUnits supported by QDaCC:\n- s\n- ns\n- ps\n- fs"
         # Time
         self.system_components_fields["ConfigTime"] = {
-            "Start" : {"parse": self.textinput_time_startingtime.text, "set": self.textinput_time_startingtime.setText, "typeof" : str},
-            "End" : {"parse": self.textinput_time_endtime.text, "set": self.textinput_time_endtime.setText, "typeof" : str},
-            "Step" : {"parse": self.textinput_time_timestep.text, "set": self.textinput_time_timestep.setText, "typeof" : str}
+            "Start" : {"field": self.textinput_time_startingtime, "parse": self.textinput_time_startingtime.text, "set": self.textinput_time_startingtime.setText, "typeof" : str, "default": "0", "callback": error_message_wrong_time_units, "filters": ("NotEmpty", "IsUnitConvertible", "MustBeTime")},
+            "End" : {"field": self.textinput_time_endtime, "parse": self.textinput_time_endtime.text, "set": self.textinput_time_endtime.setText, "typeof" : str, "default": "auto", "callback": error_message_wrong_time_units, "filters": ("NotEmpty", "IsUnitConvertible", "MustBeTime")},
+            "Step" : {"field": self.textinput_time_timestep, "parse": self.textinput_time_timestep.text, "set": self.textinput_time_timestep.setText, "typeof" : str, "default": "auto", "callback": error_message_wrong_time_units, "filters": ("NotEmpty", "IsUnitConvertible", "MustBeTime")},
         }
         self.system_components_fields["ConfigGrid"] = {
-            "Resolution" : {"parse": self.textinput_time_gridresolution.text, "set": self.textinput_time_gridresolution.setText, "typeof" : str}
+            "Resolution" : {"field": self.textinput_time_gridresolution, "parse": self.textinput_time_gridresolution.text, "set": self.textinput_time_gridresolution.setText, "typeof" : str, "default": "auto", "callback": "Must be positive integer", "filters": ("NotEmpty", "PositiveInteger")},
         }
         self.system_components_fields["ConfigTolerances"] = {
-            "Resolution" : {"parse": self.textinput_time_tolerance.text, "set": self.textinput_time_tolerance.setText, "typeof" : str}
+            "Resolution" : {"field": self.textinput_time_tolerance, "parse": self.textinput_time_tolerance.text, "set": self.textinput_time_tolerance.setText, "typeof" : str, "default": "1E-6", "callback": "Must be positive float", "filters": ("NotEmpty", "PositiveFloat")},
         }
         self.system_components_fields["ConfigSolver"] = {
-            "Solver" : {"parse": self.input_rungekutta_order.currentIndex, "set": self.input_rungekutta_order.setCurrentIndex, "typeof" : int},
-            "Interpolator" : {"parse": self.input_interpolator_t.currentIndex, "set": self.input_interpolator_t.setCurrentIndex, "typeof" : int},
-            "InterpolatorGrid" : {"parse": self.input_interpolator_tau.currentIndex, "set": self.input_interpolator_tau.setCurrentIndex, "typeof" : int},
-            "NC" : {"parse": self.textinput_phonons_nc.text, "set": self.textinput_phonons_nc.setText, "typeof" : str},
+            "Solver" : {"field": self.input_rungekutta_order, "parse": self.input_rungekutta_order.currentIndex, "set": self.input_rungekutta_order.setCurrentIndex, "typeof" : int, "default": None, "callback": None, "filters": None},
+            "Interpolator" : {"field": self.input_interpolator_t, "parse": self.input_interpolator_t.currentIndex, "set": self.input_interpolator_t.setCurrentIndex, "typeof" : int, "default": None, "callback": None, "filters": None},
+            "InterpolatorGrid" : {"field": self.input_interpolator_tau, "parse": self.input_interpolator_tau.currentIndex, "set": self.input_interpolator_tau.setCurrentIndex, "typeof" : int, "default": None, "callback": None, "filters": None},
+            "NC" : {"field": self.textinput_phonons_nc, "parse": self.textinput_phonons_nc.text, "set": self.textinput_phonons_nc.setText, "typeof" : str, "default": "4", "callback": "Must be a positive Integer.\nIdeally, NC is greater than 3.", "filters": ("NotEmpty", "PositiveInteger")},
         }
         self.system_components_fields["ConfigSystem"] = {
-            "Coupling" : {"parse": self.textinput_rates_cavity_coupling.text, "set": self.textinput_rates_cavity_coupling.setText, "typeof" : str},
-            "CavityLosses" : {"parse": self.textinput_rates_cavity_loss.text, "set": self.textinput_rates_cavity_loss.setText, "typeof" : str},
-            "RadiativeLosses" : {"parse": self.textinput_rates_radiative_decay.text, "set": self.textinput_rates_radiative_decay.setText, "typeof" : str},
-            "DephasingLosses" : {"parse": self.textinput_rates_pure_dephasing.text, "set": self.textinput_rates_pure_dephasing.setText, "typeof" : str},
+            "Coupling" : {"field": self.textinput_rates_cavity_coupling, "parse": self.textinput_rates_cavity_coupling.text, "set": self.textinput_rates_cavity_coupling.setText, "typeof" : str, "default": "0", "callback": error_message_wrong_energy_units, "filters": ("NotEmpty", "IsUnitConvertible", "MustBeEnergy")},
+            "CavityLosses" : {"field": self.textinput_rates_cavity_loss, "parse": self.textinput_rates_cavity_loss.text, "set": self.textinput_rates_cavity_loss.setText, "typeof" : str, "default": "0", "callback": error_message_wrong_energy_units, "filters": ("NotEmpty", "IsUnitConvertible", "MustBeEnergy")},
+            "RadiativeLosses" : {"field": self.textinput_rates_radiative_decay, "parse": self.textinput_rates_radiative_decay.text, "set": self.textinput_rates_radiative_decay.setText, "typeof" : str, "default": "0", "callback": error_message_wrong_energy_units, "filters": ("NotEmpty", "IsUnitConvertible", "MustBeEnergy")},
+            "DephasingLosses" : {"field": self.textinput_rates_pure_dephasing, "parse": self.textinput_rates_pure_dephasing.text, "set": self.textinput_rates_pure_dephasing.setText, "typeof" : str, "default": "0", "callback": error_message_wrong_energy_units, "filters": ("NotEmpty", "IsUnitConvertible", "MustBeEnergy")},
         }
         self.system_components_fields["ConfigPhonons"] = {
-            "Temperature" : {"parse": self.textinput_phonons_temperature.text, "set": self.textinput_phonons_temperature.setText, "typeof" : str},
-            "IteratorStep" : {"parse": self.textinput_phonons_iterator_stepsize.text, "set": self.textinput_phonons_iterator_stepsize.setText, "typeof" : str},
-            "Approximation" : {"parse": self.input_phonons_approximation.currentIndex, "set": self.input_phonons_approximation.setCurrentIndex, "typeof" : int},
-            "ARRad" : {"parse": self.input_phonons_adjust_radiativeloss.isChecked, "set": self.input_phonons_adjust_radiativeloss.setChecked, "typeof" : bool},
-            "ARDep" : {"parse": self.input_phonons_adjust_pure_dephasing.isChecked, "set": self.input_phonons_adjust_pure_dephasing.setChecked, "typeof" : bool},
-            "Renormalization" : {"parse": self.input_phonons_adjust_renormalization.isChecked, "set": self.input_phonons_adjust_renormalization.setChecked, "typeof" : bool},
-            "Alpha" : {"parse": self.textinput_phonons_sd_alpha.text, "set": self.textinput_phonons_sd_alpha.setText, "typeof" : str},
-            "SpectralCutoff" : {"parse": self.textinput_phonons_sd_wcutoff.text, "set": self.textinput_phonons_sd_wcutoff.setText, "typeof" : str},
-            "SpectralDelta" : {"parse": self.textinput_phonons_sd_wdelta.text, "set": self.textinput_phonons_sd_wdelta.setText, "typeof" : str},
-            "TimeCutoff" : {"parse": self.textinput_phonons_sd_tcutoff.text, "set": self.textinput_phonons_sd_tcutoff.setText, "typeof" : str},
-            "Ohm" : {"parse": self.textinput_phonons_sd_ohmamp.text, "set": self.textinput_phonons_sd_ohmamp.setText, "typeof" : str},
-            "UseQD" : {"parse": self.input_phonons_use_qd.isChecked, "set": self.input_phonons_use_qd.setChecked, "typeof" : bool},
-            "QDde" : {"parse": self.textinput_phonons_sd_qd_de.text, "set": self.textinput_phonons_sd_qd_de.setText, "typeof" : str},
-            "QDdh" : {"parse": self.textinput_phonons_sd_qd_dh.text, "set": self.textinput_phonons_sd_qd_dh.setText, "typeof" : str},
-            "QDrho" : {"parse": self.textinput_phonons_sd_qd_rho.text, "set": self.textinput_phonons_sd_qd_rho.setText, "typeof" : str},
-            "QDcs" : {"parse": self.textinput_phonons_sd_qd_cs.text, "set": self.textinput_phonons_sd_qd_cs.setText, "typeof" : str},
-            "QDeh" : {"parse": self.textinput_phonons_sd_qd_aeah_ratio.text, "set": self.textinput_phonons_sd_qd_aeah_ratio.setText, "typeof" : str},
-            "QDs" : {"parse": self.textinput_phonons_sd_qd_size.text, "set": self.textinput_phonons_sd_qd_size.setText, "typeof" : str},
+            "Temperature" : {"field": self.textinput_phonons_temperature, "parse": self.textinput_phonons_temperature.text, "set": self.textinput_phonons_temperature.setText, "typeof" : str, "default": "No Phonons", "callback": "Must be a numerical >= 0", "filters": "IsFloat"},
+            "IteratorStep" : {"field": self.textinput_phonons_iterator_stepsize, "parse": self.textinput_phonons_iterator_stepsize.text, "set": self.textinput_phonons_iterator_stepsize.setText, "typeof" : str, "default": "auto", "callback": "Must be a numerical >= 0 or 'auto'", "filters": ("NotEmpty","PositiveUnitConvertible")},
+            "Approximation" : {"field": self.input_phonons_approximation, "parse": self.input_phonons_approximation.currentIndex, "set": self.input_phonons_approximation.setCurrentIndex, "typeof" : int, "default": None, "callback": None, "filters": None},
+            "ARRad" : {"field": self.input_phonons_adjust_radiativeloss, "parse": self.input_phonons_adjust_radiativeloss.isChecked, "set": self.input_phonons_adjust_radiativeloss.setChecked, "typeof" : bool, "default": None, "callback": None, "filters": None},
+            "ARDep" : {"field": self.input_phonons_adjust_pure_dephasing, "parse": self.input_phonons_adjust_pure_dephasing.isChecked, "set": self.input_phonons_adjust_pure_dephasing.setChecked, "typeof" : bool, "default": None, "callback": None, "filters": None},
+            "Renormalization" : {"field": self.input_phonons_adjust_renormalization, "parse": self.input_phonons_adjust_renormalization.isChecked, "set": self.input_phonons_adjust_renormalization.setChecked, "typeof" : bool, "default": None, "callback": None, "filters": None},
+            "Alpha" : {"field": self.textinput_phonons_sd_alpha, "parse": self.textinput_phonons_sd_alpha.text, "set": self.textinput_phonons_sd_alpha.setText, "typeof" : str, "default": "0.03E-24", "callback": "Must be a numerical", "filters": "PositiveFloat"},
+            "SpectralCutoff" : {"field": self.textinput_phonons_sd_wcutoff, "parse": self.textinput_phonons_sd_wcutoff.text, "set": self.textinput_phonons_sd_wcutoff.setText, "typeof" : str, "default": "1meV", "callback": error_message_wrong_energy_units, "filters": ("NotEmpty", "PositiveUnitConvertible","MustBeEnergy")},
+            "SpectralDelta" : {"field": self.textinput_phonons_sd_wdelta, "parse": self.textinput_phonons_sd_wdelta.text, "set": self.textinput_phonons_sd_wdelta.setText, "typeof" : str, "default": "0.01meV", "callback": error_message_wrong_energy_units, "filters": ("NotEmpty", "PositiveUnitConvertible","MustBeEnergy")},
+            "TimeCutoff" : {"field": self.textinput_phonons_sd_tcutoff, "parse": self.textinput_phonons_sd_tcutoff.text, "set": self.textinput_phonons_sd_tcutoff.setText, "typeof" : str, "default": "4ps", "callback": error_message_wrong_time_units, "filters": ("NotEmpty", "PositiveUnitConvertible", "MustBeTime")},
+            "Ohm" : {"field": self.textinput_phonons_sd_ohmamp, "parse": self.textinput_phonons_sd_ohmamp.text, "set": self.textinput_phonons_sd_ohmamp.setText, "typeof" : str, "default": "3", "callback": "Must be a positive float", "filters": "PositiveFloat"},
+            "UseQD" : {"field": self.input_phonons_use_qd, "parse": self.input_phonons_use_qd.isChecked, "set": self.input_phonons_use_qd.setChecked, "typeof" : bool, "default": None, "callback": None, "filters": None},
+            "QDde" : {"field": self.textinput_phonons_sd_qd_de, "parse": self.textinput_phonons_sd_qd_de.text, "set": self.textinput_phonons_sd_qd_de.setText, "typeof" : str, "default": "7eV", "callback": error_message_wrong_energy_units, "filters": ("NotEmpty", "PositiveUnitConvertible","MustBeEnergy")},
+            "QDdh" : {"field": self.textinput_phonons_sd_qd_dh, "parse": self.textinput_phonons_sd_qd_dh.text, "set": self.textinput_phonons_sd_qd_dh.setText, "typeof" : str, "default": "-3.5eV", "callback": error_message_wrong_energy_units, "filters": ("NotEmpty", "NegativeUnitConvertible","MustBeEnergy")},
+            "QDrho" : {"field": self.textinput_phonons_sd_qd_rho, "parse": self.textinput_phonons_sd_qd_rho.text, "set": self.textinput_phonons_sd_qd_rho.setText, "typeof" : str, "default": "5370", "callback": "Material Density in kg/m^3. Must be positive float.", "filters": ("NotEmpty","PositiveFloat")},
+            "QDcs" : {"field": self.textinput_phonons_sd_qd_cs, "parse": self.textinput_phonons_sd_qd_cs.text, "set": self.textinput_phonons_sd_qd_cs.setText, "typeof" : str, "default": "5110", "callback": "Speed of Sound in m/s. Must be positive float", "filters": ("NotEmpty","PositiveFloat")},
+            "QDeh" : {"field": self.textinput_phonons_sd_qd_aeah_ratio, "parse": self.textinput_phonons_sd_qd_aeah_ratio.text, "set": self.textinput_phonons_sd_qd_aeah_ratio.setText, "typeof" : str, "default": "1.15", "callback": "Must be positive float", "filters": ("NotEmpty","PositiveFloat")},
+            "QDs" : {"field": self.textinput_phonons_sd_qd_size, "parse": self.textinput_phonons_sd_qd_size.text, "set": self.textinput_phonons_sd_qd_size.setText, "typeof" : str, "default": "3", "callback": "Must be positive float", "filters": ("NotEmpty","PositiveFloat")},
+            "DTPI" : {"field": self.textinput_phonons_tsteppath, "parse": self.textinput_phonons_tsteppath.text, "set": self.textinput_phonons_tsteppath.setText, "typeof" : str, "default": "auto", "callback": error_message_wrong_time_units, "filters": ("NotEmpty", "PositiveUnitConvertible", "MustBeTime")},
         }
         self.system_components_fields["InitialState"] = {
-            "State" : {"parse" : self.textinput_initial_state.text, "set": self.textinput_initial_state.setText, "typeof" : str},
+            "State" : {"field": self.textinput_initial_state, "parse": self.textinput_initial_state.text, "set": self.textinput_initial_state.setText, "typeof" : str, "default": None, "callback": None, "filters": None},
         }
         self.system_components_fields["RunConfig"] = {
-            "PathQDLC" : {"parse" : self.textinput_file_qdlc.text, "set" : self.textinput_file_qdlc.setText, "typeof" : str},
-            "PathOutput" : {"parse" : self.textinput_file_destination.text, "set" : self.textinput_file_destination.setText, "typeof" : str},
-            "LoggingLevel" : {"parse" : self.input_logginglevel.currentIndex, "set" : self.input_logginglevel.setCurrentIndex, "typeof" : int},
-            "DMOutputMode" : {"parse" : self.input_dm_mode.currentIndex, "set" : self.input_dm_mode.setCurrentIndex, "typeof" : int},
-            "OutputFrame" : {"parse" : self.input_dm_frame.currentIndex, "set" : self.input_dm_frame.setCurrentIndex, "typeof" : int},
-            "CPUCores" : {"parse" : self.textinput_cpucores.text, "set" : self.textinput_cpucores.setText, "typeof" : str},
-            "Settingfile" : {"parse" : self.textinput_path_to_settingfile.text, "set" : self.textinput_path_to_settingfile.setText, "typeof" : str},
-            "QDLCRun" : {"parse" : self.text_output_program_qdlc_command.toPlainText, "set" : self.text_output_program_qdlc_command.setPlainText, "typeof" : str},
+            "Pathqdacc" : {"field": self.textinput_file_qdacc, "parse": self.textinput_file_qdacc.text, "set" : self.textinput_file_qdacc.setText, "typeof" : str, "default": None, "callback": None, "filters": None},
+            "PathOutput" : {"field": self.textinput_file_destination, "parse": self.textinput_file_destination.text, "set" : self.textinput_file_destination.setText, "typeof" : str, "default": None, "callback": None, "filters": None},
+            "LoggingLevel" : {"field": self.input_logginglevel, "parse": self.input_logginglevel.currentIndex, "set" : self.input_logginglevel.setCurrentIndex, "typeof" : int, "default": None, "callback": None, "filters": None},
+            "DMOutputMode" : {"field": self.input_dm_mode, "parse": self.input_dm_mode.currentIndex, "set" : self.input_dm_mode.setCurrentIndex, "typeof" : int, "default": None, "callback": None, "filters": None},
+            "OutputFrame" : {"field": self.input_dm_frame, "parse": self.input_dm_frame.currentIndex, "set" : self.input_dm_frame.setCurrentIndex, "typeof" : int, "default": None, "callback": None, "filters": None},
+            "CPUCores" : {"field": self.textinput_cpucores, "parse": self.textinput_cpucores.text, "set" : self.textinput_cpucores.setText, "typeof" : str, "default": None, "callback": None, "filters": None},
+            "Settingfile" : {"field": self.textinput_path_to_settingfile, "parse": self.textinput_path_to_settingfile.text, "set" : self.textinput_path_to_settingfile.setText, "typeof" : str, "default": None, "callback": None, "filters": None},
+            "qdaccRun" : {"field": self.text_output_program_qdacc_command, "parse": self.text_output_program_qdacc_command.toPlainText, "set" : self.text_output_program_qdacc_command.setPlainText, "typeof" : str, "default": None, "callback": None, "filters": None},
         }
         self.system_components_fields["OutputFlags"] = {
-            "eigenvalues" : {"parse" : self.input_add_output_eigenvalues.isChecked, "set" : self.input_add_output_eigenvalues.setChecked, "typeof" : bool},
-            "operators" : {"parse" : self.input_add_output_operators.isChecked, "set" : self.input_add_output_operators.setChecked, "typeof" : bool},
-            "rkerror" : {"parse" : self.input_add_output_rkerror.isChecked, "set" : self.input_add_output_rkerror.setChecked, "typeof" : bool},
-            "path" : {"parse" : self.input_add_output_vonneumannpath.isChecked, "set" : self.input_add_output_vonneumannpath.setChecked, "typeof" : bool},
-            "detectortrafo" : {"parse" : self.input_add_output_detecotrtrafo.isChecked, "set" : self.input_add_output_detecotrtrafo.setChecked, "typeof" : bool},
-            "greenf" : {"parse" : self.input_add_output_greenf.isChecked, "set" : self.input_add_output_greenf.setChecked, "typeof" : bool}, # also for PIkernel if PI is used
-            "phononJ" : {"parse" : self.input_add_output_phononj.isChecked, "set" : self.input_add_output_phononj.setChecked, "typeof" : bool},
-            "phononcoefficients" : {"parse" : self.input_add_output_phononcoeffs.isChecked, "set" : self.input_add_output_phononcoeffs.setChecked, "typeof" : bool}, 
-            "conc" : {"parse" : self.input_add_output_concurrence_eigs.isChecked, "set" : self.input_add_output_concurrence_eigs.setChecked, "typeof" : bool},
-            "tpm" : {"parse" : self.input_add_output_tpm.isChecked, "set" : self.input_add_output_tpm.setChecked, "typeof" : bool},
-            "chirpf" : {"parse" : self.input_add_output_chirp_fourier.isChecked, "set" : self.input_add_output_chirp_fourier.setChecked, "typeof" : bool},
-            "pulsef" : {"parse" : self.input_add_output_pulse_fourier.isChecked, "set" : self.input_add_output_pulse_fourier.setChecked, "typeof" : bool},
+            "eigenvalues" : {"field": self.input_add_output_eigenvalues, "parse": self.input_add_output_eigenvalues.isChecked, "set" : self.input_add_output_eigenvalues.setChecked, "typeof" : bool, "default": None, "callback": None, "filters": None},
+            "operators" : {"field": self.input_add_output_operators, "parse": self.input_add_output_operators.isChecked, "set" : self.input_add_output_operators.setChecked, "typeof" : bool, "default": None, "callback": None, "filters": None},
+            "rkerror" : {"field": self.input_add_output_rkerror, "parse": self.input_add_output_rkerror.isChecked, "set" : self.input_add_output_rkerror.setChecked, "typeof" : bool, "default": None, "callback": None, "filters": None},
+            "path" : {"field": self.input_add_output_vonneumannpath, "parse": self.input_add_output_vonneumannpath.isChecked, "set" : self.input_add_output_vonneumannpath.setChecked, "typeof" : bool, "default": None, "callback": None, "filters": None},
+            "detectortrafo" : {"field": self.input_add_output_detecotrtrafo, "parse": self.input_add_output_detecotrtrafo.isChecked, "set" : self.input_add_output_detecotrtrafo.setChecked, "typeof" : bool, "default": None, "callback": None, "filters": None},
+            "greenf" : {"field": self.input_add_output_greenf, "parse": self.input_add_output_greenf.isChecked, "set" : self.input_add_output_greenf.setChecked, "typeof" : bool}, # also for PIkernel if PI is , "default": None, "callback": None, "filters": Noneused
+            "phononJ" : {"field": self.input_add_output_phononj, "parse": self.input_add_output_phononj.isChecked, "set" : self.input_add_output_phononj.setChecked, "typeof" : bool, "default": None, "callback": None, "filters": None},
+            "phononcoefficients" : {"field": self.input_add_output_phononcoeffs, "parse": self.input_add_output_phononcoeffs.isChecked, "set" : self.input_add_output_phononcoeffs.setChecked, "typeof" : bool, "default": None, "callback": None, "filters": None}, 
+            "conc" : {"field": self.input_add_output_concurrence_eigs, "parse": self.input_add_output_concurrence_eigs.isChecked, "set" : self.input_add_output_concurrence_eigs.setChecked, "typeof" : bool, "default": None, "callback": None, "filters": None},
+            "tpm" : {"field": self.input_add_output_tpm, "parse": self.input_add_output_tpm.isChecked, "set" : self.input_add_output_tpm.setChecked, "typeof" : bool, "default": None, "callback": None, "filters": None},
+            "chirpf" : {"field": self.input_add_output_chirp_fourier, "parse": self.input_add_output_chirp_fourier.isChecked, "set" : self.input_add_output_chirp_fourier.setChecked, "typeof" : bool, "default": None, "callback": None, "filters": None},
+            "pulsef" : {"field": self.input_add_output_pulse_fourier, "parse": self.input_add_output_pulse_fourier.isChecked, "set" : self.input_add_output_pulse_fourier.setChecked, "typeof" : bool, "default": None, "callback": None, "filters": None},
+            "photons" : {"field": self.input_add_output_photon_expv, "parse": self.input_add_output_photon_expv.isChecked, "set" : self.input_add_output_photon_expv.setChecked, "typeof" : bool, "default": None, "callback": None, "filters": None},
         }
         self.system_components_fields["ConcurrenceSpectrum"] = {
-            "Active" : {"parse" : self.input_concurrence_add_spectra.isChecked, "set" : self.input_concurrence_add_spectra.setChecked, "typeof" : bool},
-            "Center" : {"parse" : self.textinput_concurrence_spec_freq.text, "set" : self.textinput_concurrence_spec_freq.setText, "typeof" : str},
-            "Range" : {"parse" : self.textinput_concurrence_spec_range.text, "set" : self.textinput_concurrence_spec_range.setText, "typeof" : str},
-            "Res" : {"parse" : self.textinput_concurrence_spec_res.text, "set" : self.textinput_concurrence_spec_res.setText, "typeof" : str},
+            "Active" : {"field": self.input_concurrence_add_spectra, "parse": self.input_concurrence_add_spectra.isChecked, "set" : self.input_concurrence_add_spectra.setChecked, "typeof" : bool, "default": None, "callback": None, "filters": None},
+            "Center" : {"field": self.textinput_concurrence_spec_freq, "parse": self.textinput_concurrence_spec_freq.text, "set" : self.textinput_concurrence_spec_freq.setText, "typeof" : str, "default": None, "callback": None, "filters": None},
+            "Range" : {"field": self.textinput_concurrence_spec_range, "parse": self.textinput_concurrence_spec_range.text, "set" : self.textinput_concurrence_spec_range.setText, "typeof" : str, "default": None, "callback": None, "filters": None},
+            "Res" : {"field": self.textinput_concurrence_spec_res, "parse": self.textinput_concurrence_spec_res.text, "set" : self.textinput_concurrence_spec_res.setText, "typeof" : str, "default": None, "callback": None, "filters": None},
         }
         self.system_components_fields["Sweeper"] = {
-            "Parameter1" : {"parse" : self.checkbox_activate_scan_parameter_1.isChecked, "set" : self.checkbox_activate_scan_parameter_1.setChecked, "typeof" : bool},
-            "Parameter2" : {"parse" : self.checkbox_activate_scan_parameter_1.isChecked, "set" : self.checkbox_activate_scan_parameter_1.setChecked, "typeof" : bool},
-            "From1" : {"parse" : self.textinput_scan_parameter_1_from.text, "set" : self.textinput_scan_parameter_1_from.setText, "typeof" : str},
-            "From2" : {"parse" : self.textinput_scan_parameter_2_from.text, "set" : self.textinput_scan_parameter_2_from.setText, "typeof" : str},
-            "to1" : {"parse" : self.textinput_scan_parameter_1_to.text, "set" : self.textinput_scan_parameter_1_to.setText, "typeof" : str},
-            "to2" : {"parse" : self.textinput_scan_parameter_2_to.text, "set" : self.textinput_scan_parameter_2_to.setText, "typeof" : str},
-            "Points1" : {"parse" : self.textinput_scan_parameter_1_points.text, "set" : self.textinput_scan_parameter_1_points.setText, "typeof" : str},
-            "Points2" : {"parse" : self.textinput_scan_parameter_2_points.text, "set" : self.textinput_scan_parameter_2_points.setText, "typeof" : str},
-            "Lambda1" : {"parse" : self.textinput_scan_parameter_1_lambda.text, "set" : self.textinput_scan_parameter_1_lambda.setText, "typeof" : str},
-            "Lambda2" : {"parse" : self.textinput_scan_parameter_2_lambda.text, "set" : self.textinput_scan_parameter_2_lambda.setText, "typeof" : str},
-            "DisplayField" : {"parse" : self.text_output_program_qdlc_command_sweep.toPlainText, "set" : self.text_output_program_qdlc_command_sweep.setPlainText, "typeof" : str},
+            "Parameter1" : {"field": self.checkbox_activate_scan_parameter_1, "parse": self.checkbox_activate_scan_parameter_1.isChecked, "set" : self.checkbox_activate_scan_parameter_1.setChecked, "typeof" : bool, "default": None, "callback": None, "filters": None},
+            "Parameter2" : {"field": self.checkbox_activate_scan_parameter_1, "parse": self.checkbox_activate_scan_parameter_1.isChecked, "set" : self.checkbox_activate_scan_parameter_1.setChecked, "typeof" : bool, "default": None, "callback": None, "filters": None},
+            "From1" : {"field": self.textinput_scan_parameter_1_from, "parse": self.textinput_scan_parameter_1_from.text, "set" : self.textinput_scan_parameter_1_from.setText, "typeof" : str, "default": None, "callback": None, "filters": None},
+            "From2" : {"field": self.textinput_scan_parameter_2_from, "parse": self.textinput_scan_parameter_2_from.text, "set" : self.textinput_scan_parameter_2_from.setText, "typeof" : str, "default": None, "callback": None, "filters": None},
+            "to1" : {"field": self.textinput_scan_parameter_1_to, "parse": self.textinput_scan_parameter_1_to.text, "set" : self.textinput_scan_parameter_1_to.setText, "typeof" : str, "default": None, "callback": None, "filters": None},
+            "to2" : {"field": self.textinput_scan_parameter_2_to, "parse": self.textinput_scan_parameter_2_to.text, "set" : self.textinput_scan_parameter_2_to.setText, "typeof" : str, "default": None, "callback": None, "filters": None},
+            "Points1" : {"field": self.textinput_scan_parameter_1_points, "parse": self.textinput_scan_parameter_1_points.text, "set" : self.textinput_scan_parameter_1_points.setText, "typeof" : str, "default": None, "callback": None, "filters": None},
+            "Points2" : {"field": self.textinput_scan_parameter_2_points, "parse": self.textinput_scan_parameter_2_points.text, "set" : self.textinput_scan_parameter_2_points.setText, "typeof" : str, "default": None, "callback": None, "filters": None},
+            "Lambda1" : {"field": self.textinput_scan_parameter_1_lambda, "parse": self.textinput_scan_parameter_1_lambda.text, "set" : self.textinput_scan_parameter_1_lambda.setText, "typeof" : str, "default": None, "callback": None, "filters": None},
+            "Lambda2" : {"field": self.textinput_scan_parameter_2_lambda, "parse": self.textinput_scan_parameter_2_lambda.text, "set" : self.textinput_scan_parameter_2_lambda.setText, "typeof" : str, "default": None, "callback": None, "filters": None},
+            "DisplayField" : {"field": self.text_output_program_qdacc_command_sweep, "parse": self.text_output_program_qdacc_command_sweep.toPlainText, "set" : self.text_output_program_qdacc_command_sweep.setPlainText, "typeof" : str, "default": None, "callback": None, "filters": None},
         }
         self.system_components_fields["Detector"] = {}
+        self.system_components_fields["Plotting"] = {}
+        self.system_components_fields["Optimizer"] = {
+            "Files" : {"field": self.textinput_optimizer_files, "parse": self.textinput_optimizer_files.text, "set" : self.textinput_optimizer_files.setText, "typeof" : str, "default": None, "callback": None, "filters": None},
+            "Indices" : {"field": self.textinput_optimizer_file_indices, "parse": self.textinput_optimizer_file_indices.text, "set" : self.textinput_optimizer_file_indices.setText, "typeof" : str, "default": None, "callback": None, "filters": None},
+            "Legend" : {"field": self.textinput_optimizer_legend, "parse": self.textinput_optimizer_legend.text, "set" : self.textinput_optimizer_legend.setText, "typeof" : str, "default": None, "callback": None, "filters": None},
+            "Parameters" : {"field": self.textinput_optimizer_initial_parameters, "parse": self.textinput_optimizer_initial_parameters.text, "set" : self.textinput_optimizer_initial_parameters.setText, "typeof" : str, "default": None, "callback": None, "filters": None},
+            "Bounds" : {"field": self.textinput_optimizer_parameter_bounds, "parse": self.textinput_optimizer_parameter_bounds.text, "set" : self.textinput_optimizer_parameter_bounds.setText, "typeof" : str, "default": None, "callback": None, "filters": None},
+            "Names" : {"field": self.textinput_optimizer_parameter_names, "parse": self.textinput_optimizer_parameter_names.text, "set" : self.textinput_optimizer_parameter_names.setText, "typeof" : str, "default": None, "callback": None, "filters": None},
+            "OutputField" : {"field": self.text_output_program_qdacc_command_sweep_2, "parse": self.text_output_program_qdacc_command_sweep_2.toPlainText, "set" : self.text_output_program_qdacc_command_sweep_2.setPlainText, "typeof" : str, "default": None, "callback": None, "filters": None},
+            "Fitness" : {"field": self.textinput_optimizer_fitnessfunction, "parse": self.textinput_optimizer_fitnessfunction.text, "set" : self.textinput_optimizer_fitnessfunction.setText, "typeof" : str, "default": None, "callback": None, "filters": None},
+            "Format" : {"field": self.textinput_optimizer_formatfunction, "parse": self.textinput_optimizer_formatfunction.text, "set" : self.textinput_optimizer_formatfunction.setText, "typeof" : str, "default": None, "callback": None, "filters": None},
+            "Tol" : {"field": self.textinput_optimizer_tol, "parse": self.textinput_optimizer_tol.text, "set" : self.textinput_optimizer_tol.setText, "typeof" : str, "default": "1e-6", "callback": "Must be positive float", "filters": ("NotEmpty","PositiveFloat")},
+            "Eps" : {"field": self.textinput_optimizer_eps, "parse": self.textinput_optimizer_eps.text, "set" : self.textinput_optimizer_eps.setText, "typeof" : str, "default": "1e-6", "callback": "Must be positive float", "filters": ("NotEmpty","PositiveFloat")},
+            "MaxIt" : {"field": self.textinput_optimizer_maxit, "parse": self.textinput_optimizer_maxit.text, "set" : self.textinput_optimizer_maxit.setText, "typeof" : str, "default": "100", "callback": "Must be positive float", "filters": ("NotEmpty","PositiveFloat")},
+        }
+
+        # Connect Basic Input Checkers
+        for cat in self.system_components_fields.values():
+            for field in cat.values():
+                if "default" in field and field["default"] is not None:
+                    filters = (field["filters"],) if isinstance(field["filters"],str) else field["filters"]
+                    field["field"].editingFinished.connect( lambda cat=cat, field=field, default=field["default"], callback=field["callback"], filters=filters: field["set"](component_filter(field["parse"](), default, lambda: self.forceToolTip(field["field"], callback), *filters)) )
+
+
+        # Connect Sweeper Dropdown boxes to caching functions. Whenever dropdown is changed, cache current value and change current text to cached value
+        self.textinput_scan_parameter_1_lambda.textChanged.connect(lambda: self.system_components["SweeperLambdas"].update({self.combobox_p1_input.currentText() : self.textinput_scan_parameter_1_lambda.text()}))
+        self.textinput_scan_parameter_2_lambda.textChanged.connect(lambda: self.system_components["SweeperLambdas"].update({self.combobox_p2_input.currentText() : self.textinput_scan_parameter_2_lambda.text()}))
+        self.combobox_p1_input.currentIndexChanged.connect(lambda: self.textinput_scan_parameter_1_lambda.setText(self.system_components["SweeperLambdas"][self.combobox_p1_input.currentText()] if self.combobox_p1_input.currentText() in self.system_components["SweeperLambdas"] else ""))
+        self.combobox_p2_input.currentIndexChanged.connect(lambda: self.textinput_scan_parameter_2_lambda.setText(self.system_components["SweeperLambdas"][self.combobox_p2_input.currentText()] if self.combobox_p2_input.currentText() in self.system_components["SweeperLambdas"] else ""))
 
     def set_fields_from_components(self):
         for cat, content in self.system_components_fields.items():
             for name, struct in content.items():
-                print(cat, name)
-                print(f"Setting {cat} {name} to {struct['typeof'](self.system_components[cat][name])}")
-                struct["set"]( struct["typeof"](self.system_components[cat][name]) )
+                if cat in self.system_components and name in self.system_components[cat]:
+                    print(f"Setting {cat} {name} to {struct['typeof'](self.system_components[cat][name])}")
+                    struct["set"]( struct["typeof"](self.system_components[cat][name]) )
     
     def set_components_from_fields(self):
         for cat,content in self.system_components_fields.items():
             for name, struct in content.items():
                 self.system_components[cat][name] = struct["parse"]()
 
-    def generate_scan_or_sweep(self):
-        # Generate scans
-        x1,x2 = 0,0
-        lambda_str = "x1"
-        span1,span2 = (0,0), (0,0)
-        self.scan_sweep_values_1,self.scan_sweep_values_2 = None,None
-        if self.checkbox_activate_scan_parameter_1.isChecked():
-            span1 = (float(self.textinput_scan_parameter_1_from.text()), float(self.textinput_scan_parameter_1_to.text()))
-            points = int(self.textinput_scan_parameter_1_points.text())
-            x1 = np.linspace(span1[0], span1[1], points, endpoint=True)
-        if self.checkbox_activate_scan_parameter_2.isChecked():
-            span2 = (float(self.textinput_scan_parameter_2_from.text()), float(self.textinput_scan_parameter_2_to.text()))
-            points = int(self.textinput_scan_parameter_2_points.text())
-            x2 = np.linspace(span2[0], span2[1], points, endpoint=True)   
-        lambda_str_1 = self.textinput_scan_parameter_1_lambda.text()
-        lambda_str_2 = self.textinput_scan_parameter_2_lambda.text()
-        print(f"Executing scan with x1 in [{np.min(x1)},{np.max(x1)}] and x2 in [{np.min(x2)},{np.max(x2)}] using P1(x1,x2) = {lambda_str_1} and P2(x1,x2) = {lambda_str_2}")
-        self.mgx,self.mgy = np.meshgrid(x1,x2)
-        eval_dict = {"x1" : self.mgx, 
-                     "x2" : self.mgy,
-                     "P1" : self.scan_sweep_values_1,
-                     "np": np, 
+    def forceToolTip(self, where: QObject, error: str = "Error"):
+        from PySide6.QtCore import QTimer
+        original_tooltop = where.toolTip()
+        where.setToolTip(error)
+        QTimer.singleShot(100, lambda: QToolTip.showText(where.mapToGlobal(where.rect().center()), where.toolTip(), where, msecShowTime=10000))
+        QTimer.singleShot(200, lambda: where.setToolTip(original_tooltop))
+
+    def buildBaseEvaluationDict(self):
+        eval_dict = {"np": np, 
                      "g" : get_uv_scaled(self.textinput_rates_cavity_coupling.text()),
                      "G" : get_unit_value(self.textinput_rates_cavity_coupling.text()),
                      "k" : get_uv_scaled(self.textinput_rates_cavity_loss.text()),
@@ -982,21 +1283,57 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                      "D" : get_unit_value(self.textinput_rates_pure_dephasing.text()),
                      "T" : float(self.textinput_phonons_temperature.text()) if self.textinput_phonons_temperature.text() != "No Phonons" else 0,
                      }
-        self.scan_sweep_values_1 = eval(lambda_str_1, eval_dict)
-        self.scan_sweep_values_2 = eval(lambda_str_2, eval_dict)
+        return eval_dict
+
+    # Sweeper.
+    def generate_scan_or_sweep(self):
+        # Generate scans
+        x1,x2 = 0,0
+        span1,span2 = (0,0), (0,0)
+        self.scan_sweep_values = defaultdict(lambda: None)
+        
+        if self.checkbox_activate_scan_parameter_1.isChecked():
+            span1 = (float(self.textinput_scan_parameter_1_from.text()), float(self.textinput_scan_parameter_1_to.text()))
+            points = int(self.textinput_scan_parameter_1_points.text())
+            x1 = np.linspace(span1[0], span1[1], points, endpoint=True)
+        if self.checkbox_activate_scan_parameter_2.isChecked():
+            span2 = (float(self.textinput_scan_parameter_2_from.text()), float(self.textinput_scan_parameter_2_to.text()))
+            points = int(self.textinput_scan_parameter_2_points.text())
+            x2 = np.linspace(span2[0], span2[1], points, endpoint=True)
+        self.mgx,self.mgy = np.meshgrid(x1,x2)
+        
+        eval_dict = self.buildBaseEvaluationDict()
+        eval_dict.update({"x1" : self.mgx, "x2" : self.mgy})
+        #print(self.system_components["SweeperLambdas"])
+        try:
+            self.scan_sweep_values = {}
+            for name, lambda_str in self.system_components["SweeperLambdas"].items():
+                if len(lambda_str) > 0:
+                    self.scan_sweep_values[name] = eval(lambda_str, eval_dict)
+                    cname = name.split("(",1)[0]
+                    eval_dict[cname] = self.scan_sweep_values[name]
+            #name : eval(lambda_str, eval_dict) for name,lambda_str in self.system_components["SweeperLambdas"].items() if len(lambda_str) > 0}
+        except Exception as e:
+            self.text_output_program_qdacc_command_sweep_display.append(f"Error in Sweeper: {e}")
+            return
         # Plot
         self.plot_sweep_parameter_first.canvas.axes.clear()
         self.plot_sweep_parameter_second.canvas.axes.clear()
-        if "x2" in lambda_str_1:
-            self.plot_sweep_parameter_first.canvas.axes.pcolormesh(x1, x2, self.scan_sweep_values_1)
-        else:
-            self.plot_sweep_parameter_first.canvas.axes.plot(x1, self.scan_sweep_values_1[0])
-        if "x1" in lambda_str_2:
-            self.plot_sweep_parameter_second.canvas.axes.pcolormesh(x1, x2, self.scan_sweep_values_2)
-        else:
-            self.plot_sweep_parameter_second.canvas.axes.plot(x2, self.scan_sweep_values_2[:,0])
+        for cname,current in self.scan_sweep_values.items():
+            if "P1" in cname:
+                if "x2" in self.system_components["SweeperLambdas"][cname] or "P2" in self.system_components["SweeperLambdas"][cname]:
+                    self.plot_sweep_parameter_first.canvas.axes.pcolormesh(x1, x2, current)
+                else:
+                    self.plot_sweep_parameter_first.canvas.axes.plot(x1, current[0])
+            else:
+                if "x1" in self.system_components["SweeperLambdas"][cname] or "P1" in self.system_components["SweeperLambdas"][cname]:
+                    self.plot_sweep_parameter_second.canvas.axes.pcolormesh(x1, x2, current)
+                else:
+                    self.plot_sweep_parameter_second.canvas.axes.plot(x2, current[:,0])
         self.plot_sweep_parameter_first.canvas.draw()
         self.plot_sweep_parameter_second.canvas.draw()
+
+        self.save_settings_file()
 
 
 
@@ -1024,11 +1361,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         transition_color = QColor(self.colors["Transition"])
         reset_color = QColor(self.colors["Neutral"])
 
-        def draw_rect(_x,_y,_w,_h, name = None, offset_name = (0,0), font_size = 0.8):
+        def draw_rect(_x,_y,_w,_h, name = None, offset_name = (0,0), font_size = 0.8, color = state_color):
+            if isinstance(color, str):
+                color = QColor(color)
             pen = QPen(reset_color)
             pen.setWidth(1)
             qp.setPen(pen)   
-            qp.setBrush(state_color)
+            qp.setBrush(color)
             #qp.drawRect(int(_x),int(_y),int(_w), int(_h))
             path = QPainterPath()
             path.addRoundedRect(int(_x),int(_y),int(_w), int(_h), int(0.4*_h), int(0.4*_w))
@@ -1056,7 +1395,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             pen = QPen(_color)
             pen.setWidth(int(_pw))
             #pen.setStyle(Qt.PenStyle.DotLine)
-            pen.setCapStyle(Qt.PenCapStyle.RoundCap)
+            pen.setCapStyle(Qt.PenCapStyle.SquareCap)
             qp.setPen(pen)
             qp.drawArc(int(x1),int(y1),int(_w),int(_h),int(startangle),int(arcangle))
 
@@ -1075,15 +1414,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         highest_level = 0.2*h
         level_height = (lowest_level - highest_level) * 0.05
         level_width_factor = 0.3
-        artificial_y_seperation = 0 # Group members get seperated by this much times the level height at least
+        artificial_grouping_offset = self.slider_state_separator.value()/10 # Group members get seperated by this much times the level height at least
         for group_of_levels in self.system_energy_level_groups:
             level_width = max(2,w*level_width_factor if len(group_of_levels) < 2 else 0.6*w/(len(group_of_levels)))
             last_y = lowest_energy
             for l,level in enumerate(group_of_levels,1):
                 # X,Y
                 y_seperation = 0 
-                if abs(last_y - get_uv_scaled(level["Energy"])) / energy_normalization < artificial_y_seperation * level_height: 
-                    y_seperation = level_height*artificial_y_seperation*(l-1)
+                if abs(last_y - get_uv_scaled(level["Energy"])) / energy_normalization < artificial_grouping_offset * level_height: 
+                    y_seperation = level_height*artificial_grouping_offset*(l-1)
                 level_y = lowest_level - (lowest_level - highest_level)*(get_uv_scaled(level["Energy"])-lowest_energy) / energy_normalization - y_seperation
                 level_x = w/(len(group_of_levels)+1)*l - level_width/2.# center of individual level - delta/2
                 last_y = get_uv_scaled(level["Energy"])
@@ -1091,7 +1430,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     name = f"{level['Name']} - E = {level['Energy']}, |{level['DecayScaling']}|{level['DephasingScaling']}|{level['PhononScaling']}|"
                 else:
                     name = f"{level['Name']}"
-                draw_rect(level_x,level_y,level_width,level_height,name,(0.05*level_width,0) if self.plot_system_details else (0.5*level_width,0))
+                # Determine Color
+                color_to_draw = state_color
+                for t,transto in enumerate(level["CoupledTo"]):
+                    if transto not in self.system_components["EnergyLevels"]:
+                        color_to_draw = self.colors["Red"]
+                draw_rect(level_x,level_y,level_width,level_height,name,(0.05*level_width,0) if self.plot_system_details else (0.5*level_width,0), color=color_to_draw)
                 # Save Coordinates for easier drawing
                 level["Coords"] = (level_x, level_y, level_width, level_height) #x,y,w,h
         # Draw Transitions
@@ -1099,6 +1443,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             for t,transto in enumerate(level["CoupledTo"]):
                 if transto is None or len(transto) == 0 or transto not in self.system_components["EnergyLevels"]:
                     continue
+
                 level2 = self.system_components["EnergyLevels"][transto]
                 if len(level2) == 0:
                     continue
@@ -1127,6 +1472,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 draw_arc(cavity_x2 + c*cavity_x_delta, cavity_y1, cavity_width, cavity_height,270*16,16*180,cavity_strokewidth,cavity_color)
             else:
                 for transition in cavity["CoupledTo"]:
+                    if transition in self.system_components["CavityLevels"]:
+                        continue
                     t0,t1 = transition.split("=")
                     if t0 not in self.system_components["EnergyLevels"] or t1 not in self.system_components["EnergyLevels"]:
                         if t0 not in self.system_components["CavityLevels"] or t1 not in self.system_components["CavityLevels"]:
@@ -1176,26 +1523,30 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.label_output_system.setPixmap(self.output_system_canvas)
         self.update()
 
-    def qdlc_generate_start_command(self, escape_symbol = "'"):
+    def generateCommandString(self, escape_symbol = "'"):
         escaped = self.input_escape_output_command.isChecked()
         # Generate Commands
         commands = [component_parser(component,escaped,self.system_components,escape_symbol=escape_symbol,callback=self.sendHintMessage) for component in self.system_components.keys()]
 
-        final_command = f"[QDLC] {' '.join(commands)} [FILEPATH]"
+        final_command = f"[QDaCC] {' '.join(commands)} [FILEPATH]"
         while "  " in final_command:
             final_command = final_command.replace("  "," ")
         return final_command
         #self.output_start_command.setText(final_command)
 
-    def qdlc_start_command_to_real(self, commands = None, escape_symbol = "'") -> str:
+    def commandToCLAList(self, commands = None, escape_symbol = "'") -> str:
         if commands is None:
-            commands = self.qdlc_generate_start_command(escape_symbol=escape_symbol)
-        executable = self.textinput_file_qdlc.text() or "./QDLC.exe"
+            commands = self.generateCommandString(escape_symbol=escape_symbol)
+        commands = commands.split()
+        _, qdacc_executable, _ = self.getQDaCCPaths()
         filepath = f"{escape_symbol}{self.textinput_file_destination.text() or self.filepath}{escape_symbol}"
         settingfilepath = f"{escape_symbol}{self.textinput_path_to_settingfile.text() or self.filepath}{escape_symbol}"
-        commands = commands.replace("[QDLC]",executable).replace("[FILEPATH]",filepath).replace("[SETTINGFILE]",settingfilepath)
+        for el,rep in zip(["[QDaCC]", "[FILEPATH]", "[SETTINGFILEPATH]"],[qdacc_executable, filepath, settingfilepath]):
+            if el not in commands:
+                continue
+            index = commands.index(el)
+            commands[index] = rep
         return commands
-        
 
     def resizeEvent(self, event):
         self.drawSystem()

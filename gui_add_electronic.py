@@ -1,5 +1,6 @@
 from ui_add_electronic import Ui_AddElectronic
-from PySide6.QtWidgets import QDialog
+from PySide6.QtWidgets import QDialog, QInputDialog
+from dialogs import getCheckedItems
 
 class DialogAddElectronic(QDialog, Ui_AddElectronic):
     def __init__(self, *args, main_window=None, load_existing = None, style_sheet = "", **kwargs):
@@ -7,6 +8,7 @@ class DialogAddElectronic(QDialog, Ui_AddElectronic):
         self.setupUi(self)
         self.retranslateUi(self)
         self.setStyleSheet(style_sheet)
+        self.name_when_loaded = None
         def add(replace = False):
             name = self.textinput_name.text()
             energy = self.textinput_energy.text()
@@ -16,7 +18,7 @@ class DialogAddElectronic(QDialog, Ui_AddElectronic):
             phonons = self.textinput_phonons.text()
             if replace:
                 main_window.system_components["EnergyLevels"].pop(self.name_when_loaded)
-            main_window.addEnergyLevel({"Name": name, "Energy": energy, "CoupledTo": transitions, "DephasingScaling": dephasing, "DecayScaling": decay, "PhononScaling": phonons})
+            main_window.addEnergyLevel({"Name": name, "Energy": energy, "CoupledTo": transitions, "DephasingScaling": dephasing, "DecayScaling": decay, "PhononScaling": phonons}, replaced=self.name_when_loaded if replace else None)
             main_window.drawSystem()
         def set_scalings(a: str, b: str, c: str):
             for t,m in zip([self.textinput_dephasing ,self.textinput_phonons, self.textinput_decay],[a,b,c]):
@@ -37,6 +39,19 @@ class DialogAddElectronic(QDialog, Ui_AddElectronic):
             self.textinput_dephasing.setText( level["DephasingScaling"] )
             self.textinput_decay.setText( level["DecayScaling"] )
             self.textinput_phonons.setText( level["PhononScaling"] )
+        def pick_states():
+            states = main_window.generate_list_of_available_electronic_states()
+            checked_items, ok = getCheckedItems(states, parent=self)
+            if not ok:
+                return
+            current_states = self.textinput_transitions.text().split(",")
+            new_states = ",".join(states+current_states)
+            # Prune final ","
+            if new_states.endswith(","):
+                new_states = new_states[:-1]
+            self.textinput_transitions.setText(new_states)
+
+        self.button_coupled_to.clicked.connect(pick_states)
         self.button_confirm.clicked.connect(add)
         self.button_confirm_replace.clicked.connect(lambda: add(replace=True))
         self.button_setzero.clicked.connect(lambda: set_scalings("1","0","0"))
@@ -49,4 +64,4 @@ class DialogAddElectronic(QDialog, Ui_AddElectronic):
         self.exec()
 
 if __name__ == "__main__":
-    print(f"This file ({__file__}) is part of the QDLC GUI and should be imported, not executed.")
+    print(f"This file ({__file__}) is part of the QDaCC GUI and should be imported, not executed.")

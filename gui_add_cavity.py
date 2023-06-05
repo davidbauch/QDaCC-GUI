@@ -1,5 +1,6 @@
 from ui_add_cavity import Ui_AddCavity
 from PySide6.QtWidgets import QDialog
+from dialogs import getCheckedItems
 
 class DialogAddCavity(QDialog, Ui_AddCavity):
     def __init__(self, *args, main_window=None, load_existing = None, style_sheet = "", **kwargs):
@@ -7,6 +8,7 @@ class DialogAddCavity(QDialog, Ui_AddCavity):
         self.setupUi(self)
         self.retranslateUi(self)
         self.setStyleSheet(style_sheet)
+        self.name_when_loaded = None
         def finished(replace=False):
             name = self.textinput_name.text()
             energy = self.textinput_energy.text()
@@ -16,7 +18,7 @@ class DialogAddCavity(QDialog, Ui_AddCavity):
             photonnumber = self.textinput_photonnumber.text()
             if replace:
                 main_window.system_components["CavityLevels"].pop(self.name_when_loaded)
-            main_window.addCavity({"Name": name, "Energy": energy, "CoupledTo": transitions, "CoupledToScalings": transition_scaling, "DecayScaling": decay, "PhotonNumber": photonnumber})
+            main_window.addCavity({"Name": name, "Energy": energy, "CoupledTo": transitions, "CoupledToScalings": transition_scaling, "DecayScaling": decay, "PhotonNumber": photonnumber}, replaced=self.name_when_loaded if replace else None)
             main_window.drawSystem()
         def set_scalings():
             self.textinput_transition_scalings.setText(",".join(["1" for _ in self.textinput_transitions.text().split(",")]))
@@ -35,6 +37,18 @@ class DialogAddCavity(QDialog, Ui_AddCavity):
             self.textinput_transition_scalings.setText( ",".join(level["CoupledToScalings"]) )
             self.textinput_decay.setText( level["DecayScaling"] ) 
             self.textinput_photonnumber.setText( level["PhotonNumber"] ) 
+        def pick_states():
+            states = main_window.generate_list_of_available_electronic_transitions() + main_window.generate_list_of_available_cavity_states()
+            checked_items, ok = getCheckedItems(states, parent=self)
+            if not ok:
+                return
+            current_states = self.textinput_transitions.text().split(",")
+            new_states = ",".join(checked_items+current_states)
+            # Prune final ","
+            if new_states.endswith(","):
+                new_states = new_states[:-1]
+            self.textinput_transitions.setText(new_states)
+        self.button_coupled_to.clicked.connect(pick_states)
         self.button_confirm.clicked.connect(finished)
         self.button_confirm_replace.clicked.connect(lambda: finished(replace=True))
         self.button_setone.clicked.connect(set_scalings)
@@ -46,4 +60,4 @@ class DialogAddCavity(QDialog, Ui_AddCavity):
         self.exec()
         
 if __name__ == "__main__":
-    print(f"This file ({__file__}) is part of the QDLC GUI and should be imported, not executed.")
+    print(f"This file ({__file__}) is part of the QDaCC GUI and should be imported, not executed.")
