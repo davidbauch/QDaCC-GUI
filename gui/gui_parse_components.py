@@ -1,4 +1,4 @@
-from unit_seperator import  get_uv_scaled, get_unit, get_unit_value
+from .unit_seperator import  get_uv_scaled, get_unit, get_unit_value
 
 def _parse_electronic_system(components: dict, escape_symbol: str = "'", callback = None) -> str:
     ret = ""

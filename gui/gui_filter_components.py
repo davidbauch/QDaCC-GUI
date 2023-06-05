@@ -1,4 +1,4 @@
-from unit_seperator import is_unit_convertible, get_unit_value
+from .unit_seperator import is_unit_convertible, get_unit_value
 
 def _component_filter_type(component: str, type) -> bool:
     try:

@@ -1,7 +1,7 @@
-from ui_add_fitness_function import Ui_AddFitnessFunction
+from .ui_add_fitness_function import Ui_AddFitnessFunction
 from PySide6.QtWidgets import QDialog
 import numpy as np
-from unit_seperator import get_uv_scaled, get_unit_value
+from .unit_seperator import get_uv_scaled, get_unit_value
 
 class DialogAddFitness(QDialog, Ui_AddFitnessFunction):
     def __init__(self, *args, main_window=None, load_existing = None, style_sheet = "", **kwargs):

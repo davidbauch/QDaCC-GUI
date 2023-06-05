@@ -1,7 +1,7 @@
-from ui_grid_and_tolerance import Ui_AddGridTolerance
+from .ui_grid_and_tolerance import Ui_AddGridTolerance
 from PySide6.QtWidgets import QDialog
 import numpy as np
-from unit_seperator import get_uv_scaled
+from .unit_seperator import get_uv_scaled
 
 class DialogAddGridOrTolerance(QDialog, Ui_AddGridTolerance):
     def __init__(self, *args, main_window=None, name = "Grid", style_sheet = "", **kwargs):

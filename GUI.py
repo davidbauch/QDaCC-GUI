@@ -5,24 +5,24 @@ from PySide6.QtCore import Qt,QRect,QPropertyAnimation,QThread,Signal,QObject, Q
 
 import sys, os
 #from hoverbutton import HoverButton
-from ui_main_window import Ui_MainWindow
-from unit_seperator import get_unit, get_unit_scaling, get_unit_value,get_uv_scaled
-from gui_add_electronic import DialogAddElectronic
-from gui_add_cavity import DialogAddCavity
-from gui_add_pulse import DialogAddPulse
-from gui_add_chirp import DialogAddChirp
-from gui_add_fitness_function import DialogAddFitness
-from gui_parse_components import component_parser
-from gui_time_grid_or_tolerance import DialogAddGridOrTolerance
+from gui.ui_main_window import Ui_MainWindow
+from gui.unit_seperator import get_unit, get_unit_scaling, get_unit_value,get_uv_scaled
+from gui.gui_add_electronic import DialogAddElectronic
+from gui.gui_add_cavity import DialogAddCavity
+from gui.gui_add_pulse import DialogAddPulse
+from gui.gui_add_chirp import DialogAddChirp
+from gui.gui_add_fitness_function import DialogAddFitness
+from gui.gui_parse_components import component_parser
+from gui.gui_time_grid_or_tolerance import DialogAddGridOrTolerance
 import numpy as np
-from parse_ansi import replace_ansi_escape_sequences
+from gui.parse_ansi import replace_ansi_escape_sequences
 from collections import defaultdict
 from subprocess import Popen, PIPE
 import markdown
 from time import time
-from gui_filter_components import component_filter
-from dialogs import getGeneralItems
-from worker import QDaCCMainWoker, QDaCCSettingGenerator, QDaCCOptimizer
+from gui.gui_filter_components import component_filter
+from gui.dialogs import getGeneralItems
+from gui.worker import QDaCCMainWoker, QDaCCSettingGenerator, QDaCCOptimizer
 
 # todo: alles in funktionen umwälzen die über kontextmenü callbar sind
 # save/loading.
@@ -48,20 +48,20 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         "Red" : "#FF0000",
         }
         self.resources = {
-            "Icon" : os.path.join(self.filepath,"resources/test.png"),
-            "Logo" : os.path.join(self.filepath,"resources/logo.png"),
-            "Tree" : os.path.join(self.filepath,"resources/add_random.png"),
-            "Arrow_Down_Save" : os.path.join(self.filepath,"resources/arrow_down_save.png"),
-            "Arrow_Up_Load" : os.path.join(self.filepath,"resources/arrow_up_load.png"),
-            "Save" : os.path.join(self.filepath,"resources/save.png"),
-            "Rings" : os.path.join(self.filepath,"resources/rings.png"),
-            "Gear" : os.path.join(self.filepath,"resources/gear.png"),
-            "OnOff" : os.path.join(self.filepath,"resources/onoff.png"),
-            "marrow_right" : os.path.join(self.filepath,"resources/marrow_right.png"),
-            "marrow_left" : os.path.join(self.filepath,"resources/marrow_left.png"),
-            "graph1" : os.path.join(self.filepath,"resources/graph1.png"),
-            "graph2" : os.path.join(self.filepath,"resources/graph2.png"),
-            "loading" : os.path.join(self.filepath,"resources/loading_6.gif"),
+            "Icon" : os.path.join(self.filepath,"gui/resources/test.png"),
+            "Logo" : os.path.join(self.filepath,"gui/resources/logo.png"),
+            "Tree" : os.path.join(self.filepath,"gui/resources/add_random.png"),
+            "Arrow_Down_Save" : os.path.join(self.filepath,"gui/resources/arrow_down_save.png"),
+            "Arrow_Up_Load" : os.path.join(self.filepath,"gui/resources/arrow_up_load.png"),
+            "Save" : os.path.join(self.filepath,"gui/resources/save.png"),
+            "Rings" : os.path.join(self.filepath,"gui/resources/rings.png"),
+            "Gear" : os.path.join(self.filepath,"gui/resources/gear.png"),
+            "OnOff" : os.path.join(self.filepath,"gui/resources/onoff.png"),
+            "marrow_right" : os.path.join(self.filepath,"gui/resources/marrow_right.png"),
+            "marrow_left" : os.path.join(self.filepath,"gui/resources/marrow_left.png"),
+            "graph1" : os.path.join(self.filepath,"gui/resources/graph1.png"),
+            "graph2" : os.path.join(self.filepath,"gui/resources/graph2.png"),
+            "loading" : os.path.join(self.filepath,"gui/resources/loading_6.gif"),
         }
 
         self.loading_animation = QMovie(self.resources["loading"])

@@ -1,8 +1,8 @@
-from ui_add_chirp import Ui_AddChirp
+from .ui_add_chirp import Ui_AddChirp
 from PySide6.QtWidgets import QDialog
 import numpy as np
-from unit_seperator import get_uv_scaled
-from dialogs import getCheckedItems
+from .unit_seperator import get_uv_scaled
+from .dialogs import getCheckedItems
 
 class DialogAddChirp(QDialog, Ui_AddChirp):
     def __init__(self, *args, main_window=None, load_existing = None, style_sheet = "", **kwargs):

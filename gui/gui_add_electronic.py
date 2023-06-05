@@ -1,6 +1,6 @@
-from ui_add_electronic import Ui_AddElectronic
+from .ui_add_electronic import Ui_AddElectronic
 from PySide6.QtWidgets import QDialog, QInputDialog
-from dialogs import getCheckedItems
+from .dialogs import getCheckedItems
 
 class DialogAddElectronic(QDialog, Ui_AddElectronic):
     def __init__(self, *args, main_window=None, load_existing = None, style_sheet = "", **kwargs):

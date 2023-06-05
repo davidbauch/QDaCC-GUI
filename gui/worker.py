@@ -1,9 +1,8 @@
 from PySide6.QtCore import QObject, Signal, QThread
 from PySide6.QtWidgets import QTextBrowser
 from subprocess import Popen, PIPE
-from parse_ansi import replace_ansi_escape_sequences
+from .parse_ansi import replace_ansi_escape_sequences
 from os import environ
-import numpy as np
 
 class QDaCCThread(QThread):
     finished = Signal()

@@ -1,6 +1,6 @@
-from ui_add_cavity import Ui_AddCavity
+from .ui_add_cavity import Ui_AddCavity
 from PySide6.QtWidgets import QDialog
-from dialogs import getCheckedItems
+from .dialogs import getCheckedItems
 
 class DialogAddCavity(QDialog, Ui_AddCavity):
     def __init__(self, *args, main_window=None, load_existing = None, style_sheet = "", **kwargs):

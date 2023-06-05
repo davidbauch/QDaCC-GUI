@@ -1,8 +1,8 @@
-from ui_add_pulse import Ui_AddPulse
+from .ui_add_pulse import Ui_AddPulse
 from PySide6.QtWidgets import QDialog
 import numpy as np
-from unit_seperator import get_uv_scaled
-from dialogs import getCheckedItems
+from .unit_seperator import get_uv_scaled
+from .dialogs import getCheckedItems
 
 class DialogAddPulse(QDialog, Ui_AddPulse):
     def __init__(self, *args, main_window=None, load_existing = None, style_sheet = "", **kwargs):

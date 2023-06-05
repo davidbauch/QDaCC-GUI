@@ -19,7 +19,7 @@ from PySide6.QtWidgets import (QApplication, QCheckBox, QDialog, QFrame,
     QLabel, QLineEdit, QPushButton, QSizePolicy,
     QWidget)
 
-from plotwidget import PlotWidget
+from .plotwidget import PlotWidget
 
 class Ui_AddGridTolerance(object):
     def setupUi(self, AddGridTolerance):

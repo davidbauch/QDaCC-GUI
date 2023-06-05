@@ -19,7 +19,7 @@ from PySide6.QtWidgets import (QApplication, QCheckBox, QDialog, QFrame,
     QGridLayout, QLabel, QLineEdit, QListView,
     QPushButton, QSizePolicy, QTextBrowser, QWidget)
 
-from plotwidget import PlotWidget
+from .plotwidget import PlotWidget
 
 class Ui_AddChirp(object):
     def setupUi(self, AddChirp):

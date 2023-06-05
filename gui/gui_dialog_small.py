@@ -1,5 +1,5 @@
-from ui_confirm_reject_form_small import Ui_Dialog
-from ui_input_form import Ui_InputDialog
+from .ui_confirm_reject_form_small import Ui_Dialog
+from .ui_input_form import Ui_InputDialog
 from PySide6.QtWidgets import QDialog
 
 class DialogSmall(QDialog, Ui_Dialog):

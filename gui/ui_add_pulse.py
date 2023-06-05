@@ -19,7 +19,7 @@ from PySide6.QtWidgets import (QApplication, QCheckBox, QDialog, QFrame,
     QGridLayout, QLabel, QLineEdit, QPushButton,
     QSizePolicy, QWidget)
 
-from plotwidget import PlotWidget
+from .plotwidget import PlotWidget
 
 class Ui_AddPulse(object):
     def setupUi(self, AddPulse):

@@ -22,9 +22,9 @@ from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QFrame,
     QPushButton, QSizePolicy, QSlider, QStatusBar,
     QTabWidget, QTextBrowser, QTextEdit, QWidget)
 
-from hoverbutton import HoverButton
-from plotwidget import PlotWidget
-from textbrowserexternal import TextBrowserExternal
+from .hoverbutton import HoverButton
+from .plotwidget import PlotWidget
+from .textbrowserexternal import TextBrowserExternal
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
