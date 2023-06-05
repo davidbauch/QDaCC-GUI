@@ -89,7 +89,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.connect_functionality()
 
         # Set Name
-        self.current_qdacc_file_path = "untitled.qdacc"
+        self.window_title_unsaved = "[unsaved changes]"
+        self.is_currently_unsaved = False
+        self.connectObjectsToEdited()
+        self.current_qdacc_file_path = f"untitled.qdacc {self.window_title_unsaved}"
         self.refreshWindowTitle()
         # Set .svg logo
         self.setWindowIcon(QIcon(self.resources["Logo"]))
@@ -98,10 +101,23 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.connect_config_to_fields()
         self.set_components_from_fields()
         
-        path = os.path.dirname(os.path.realpath(__file__))
+        self.path = os.path.dirname(os.path.realpath(__file__))
         self.set_components_from_fields()
         self.update_component_list()
         self.drawSystem()
+
+
+    def connectObjectsToEdited(self):
+        def func():
+            self.is_currently_unsaved = True
+            self.refreshWindowTitle()
+        for name, obj in self.__dict__.items():
+            if isinstance(obj, QPushButton):
+                obj.clicked.connect(func)
+            elif isinstance(obj, (QTextEdit, QLineEdit)):
+                obj.textChanged.connect(func)
+            elif isinstance(obj, QCheckBox):
+                obj.stateChanged.connect(func)
 
     def generateQAnimationTimer(self):
         timer = QTimer(self)
@@ -110,13 +126,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         return timer
 
     def refreshWindowTitle(self, name = None):
-        print(f"Refreshing Window Title to {name}")
         if name is not None:
             self.current_qdacc_file_path = name
+        print(f"Refreshing Window Title to {name}")
         #if not isinstance(name, str):
         #    self.sendErrorMessage("Invalid Filepath", "The filepath is not a string.")
         display_name = os.path.basename(self.current_qdacc_file_path)
-        self.setWindowTitle(f"QDaCC - {display_name}")
+        unsaved = f" {self.window_title_unsaved}" if self.is_currently_unsaved else ""
+        self.setWindowTitle(f"QDaCC - {display_name}{unsaved}")
+    
+    def getWindowTitle(self):
+        return self.windowTitle().replace("QDaCC - ","")
 
     def save_to_qdacc_file(self, filepath = "settings.qdacc"):
         from pickle import dump, HIGHEST_PROTOCOL
@@ -126,6 +146,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         with open(filepath, "wb") as f:
             print(f"Current Dict: {dict(self.system_components)}")
             dump(dict(self.system_components), f, protocol=HIGHEST_PROTOCOL)
+        self.is_currently_unsaved = False
+        self.refreshWindowTitle()
 
     def load_from_qdacc_file(self, filepath = "settings.qdacc", key: str | None = None):
         from pickle import load
@@ -139,6 +161,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.system_components.update(loaded)
             print(f"Current Dict: {dict(self.system_components)}")
         self.set_fields_from_components()
+        self.is_currently_unsaved = False
+        self.refreshWindowTitle()
 
     def connect_functionality(self):
         # "Next" Buttons
@@ -234,6 +258,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     return
             else:
                 filename = name
+            if filename.endswith(self.window_title_unsaved):
+                filename = filename[:-1]
             print(f"Exporting to {filename}")
             self.save_to_qdacc_file(filepath = filename)
 
@@ -856,37 +882,37 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         # Menu
         actions_to_add = [  
-            ["Print Component Dict", lambda: print(self.system_components), self.menuDeveloper_Tools, None, None],
-            ["Set Components from Fields", self.set_components_from_fields, self.menuDeveloper_Tools, None, None],
-            ["Set Fields from Components", self.set_fields_from_components, self.menuDeveloper_Tools, None, None],
-            ["Connect Fields", self.connect_config_to_fields, self.menuDeveloper_Tools, None, None],
-            ["Plot Predicted Spectra", spectrum_predict_plot, self.menuFunctions, self.resources["graph2"], None],
-            ["Plot Phonon Functions", plot_phonon_spectral_function, self.menuFunctions, self.resources["graph2"], None],
-            ["Add N TLS with statistical deviation", dialog_add_N_levels, self.menuEdit, self.resources["Tree"], None],
-            ["Print All Transitions", print_all_transitions, self.menuDeveloper_Tools, None, None],
-            ["Copy List of Transitions", clipboard_copy_transition_list, self.menuEdit, self.resources["marrow_right"], None],
-            ["Copy Sum of Transitions", clipboard_copy_sum_of_transition_list, self.menuEdit, self.resources["marrow_right"], None],
-            ["Abbreviate State Names", abbreviate_names, self.menuEdit, self.resources["marrow_right"], None],
-            ["Export", lambda: export_command(), self.menuMenu, self.resources["Arrow_Up_Load"], None],
-            ["Import", import_command, self.menuMenu, self.resources["Arrow_Down_Save"], None],
+            ["Print Component Dict", lambda: print(self.system_components), self.menuDeveloper_Tools, None, None, None],
+            ["Set Components from Fields", self.set_components_from_fields, self.menuDeveloper_Tools, None, None, None],
+            ["Set Fields from Components", self.set_fields_from_components, self.menuDeveloper_Tools, None, None, None],
+            ["Connect Fields", self.connect_config_to_fields, self.menuDeveloper_Tools, None, None, None],
+            ["Plot Predicted Spectra", spectrum_predict_plot, self.menuFunctions, self.resources["graph2"], None, None],
+            ["Plot Phonon Functions", plot_phonon_spectral_function, self.menuFunctions, self.resources["graph2"], None, None],
+            ["Add N TLS with statistical deviation", dialog_add_N_levels, self.menuEdit, self.resources["Tree"], None, None],
+            ["Print All Transitions", print_all_transitions, self.menuDeveloper_Tools, None, None, None],
+            ["Copy List of Transitions", clipboard_copy_transition_list, self.menuEdit, self.resources["marrow_right"], None, None],
+            ["Copy Sum of Transitions", clipboard_copy_sum_of_transition_list, self.menuEdit, self.resources["marrow_right"], None, None],
+            ["Abbreviate State Names", abbreviate_names, self.menuEdit, self.resources["marrow_right"], None, None],
+            ["Export", lambda: export_command(), self.menuMenu, self.resources["Arrow_Up_Load"], None, None],
+            ["Import", import_command, self.menuMenu, self.resources["Arrow_Down_Save"], None, None],
             ["Import", None, self.menuMenu, self.resources["Arrow_Down_Save"], [
-                ["States", lambda: import_command("EnergyLevels"), "parent", None, None],
-                ["Cavities", lambda: import_command("CavityLevels"), "parent", None, None],
-                ["Pulses", lambda: import_command("Pulse"), "parent", None, None],
-                ["Shifts", lambda: import_command("Shift"), "parent", None, None],
-                ["Paths", lambda: import_command("RunConfig"), "parent", None, None],
-                ["Sweeper", lambda: import_command("Sweeper"), "parent", None, None],
-                ["System Config", lambda: import_command("ConfigSystem"), "parent", None, None],]],
-            ["Save Current", export_save_existing, self.menuMenu, self.resources["Save"], None],
-            ["Redraw System", self.drawSystem, self.menuDeveloper_Tools, None, None],
-            ["Clear System", self.clearSystem, self.menuDeveloper_Tools, None, None],
-            ["Generate QDaCC Command", generate_command, self.menuDeveloper_Tools, None, None],
-            ["Set initial State", pick_from_list_of_available_states, self.menuDeveloper_Tools, None, None],
-            ["Set File Destination", set_file_path, self.menuDeveloper_Tools, None, None],
-            ["Set QDaCC Filepath", set_qdacc_filepath, self.menuDeveloper_Tools, None, None],
-            ["Run QDaCC", lambda: run_command(None), self.menuMenu, self.resources["Gear"], None],
+                ["States", lambda: import_command("EnergyLevels"), "parent", None, None, None],
+                ["Cavities", lambda: import_command("CavityLevels"), "parent", None, None, None],
+                ["Pulses", lambda: import_command("Pulse"), "parent", None, None, None],
+                ["Shifts", lambda: import_command("Shift"), "parent", None, None, None],
+                ["Paths", lambda: import_command("RunConfig"), "parent", None, None, None],
+                ["Sweeper", lambda: import_command("Sweeper"), "parent", None, None, None],
+                ["System Config", lambda: import_command("ConfigSystem"), "parent", None, None, None],], None],
+            ["Save Current", export_save_existing, self.menuMenu, self.resources["Save"], None, "Ctrl+S"],
+            ["Redraw System", self.drawSystem, self.menuDeveloper_Tools, None, None, None],
+            ["Clear System", self.clearSystem, self.menuDeveloper_Tools, None, None, None],
+            ["Generate QDaCC Command", generate_command, self.menuDeveloper_Tools, None, None, None],
+            ["Set initial State", pick_from_list_of_available_states, self.menuDeveloper_Tools, None, None, None],
+            ["Set File Destination", set_file_path, self.menuDeveloper_Tools, None, None, None],
+            ["Set QDaCC Filepath", set_qdacc_filepath, self.menuDeveloper_Tools, None, None, None],
+            ["Run QDaCC", lambda: run_command(None), self.menuMenu, self.resources["Gear"], None, None],
         ]
-        def add_to_menu(name, connect, where, icon, children):
+        def add_to_menu(name, connect, where, icon, children, shortcut):
             if children:
                 submenu = where.addMenu(name)
                 if icon:
@@ -897,11 +923,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 return
             action = QAction(name, self)
             action.triggered.connect(connect)
+            if shortcut:
+                action.setShortcut(shortcut)
             if icon:
                 action.setIcon(QIcon(icon))
             where.addAction(action)
-        for name, connect, where, icon, children in actions_to_add:
-            add_to_menu(name, connect, where, icon, children)
+        for name, connect, where, icon, children, shortcut in actions_to_add:
+            add_to_menu(name, connect, where, icon, children, shortcut)
 
 
         self.slider_state_grouping.valueChanged.connect(self.drawSystem)
